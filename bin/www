@@ -12,7 +12,12 @@ const http = require('http');
 require('dotenv').config();
 
 //Configuración de la base de datos
-require('../config/db');
+const { checkDB } = require('../config/db');
+
+checkDB();
+
+
+
 
 /**
  * Get port from environment and store in Express.
