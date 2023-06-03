@@ -12,10 +12,10 @@ const http = require('http');
 require('dotenv').config();
 
 //Configuración de la base de datos
-const { checkDB } = require('../config/db');
+//const { checkDB } = require('../config/db');
+//checkDB();
 
-checkDB();
-
+require('../config/db');
 
 
 
