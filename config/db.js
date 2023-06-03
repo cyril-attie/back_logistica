@@ -19,8 +19,8 @@ const checkDB = async ()=>{
 };
 
 
-module.exports = { checkDB };
+// module.exports = { checkDB };
 // =====================================
 
-global.db = pool.promise ;
+global.db = pool.promise() ;
 
