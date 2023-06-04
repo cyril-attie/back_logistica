@@ -208,10 +208,10 @@ DROP TABLE IF EXISTS `roles`;
 CREATE TABLE `roles` (
   `roles_id` int NOT NULL AUTO_INCREMENT,
   `descripcion_rol` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `responsibalidad` int NOT NULL,
+  `responsabilidad` int NOT NULL,
   `comentario` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`roles_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -220,6 +220,7 @@ CREATE TABLE `roles` (
 
 LOCK TABLES `roles` WRITE;
 /*!40000 ALTER TABLE `roles` DISABLE KEYS */;
+INSERT INTO `roles` VALUES (1,'Superusuario',50,NULL),(2,'Jefe de Equipo',40,NULL),(3,'Encargado',30,NULL),(4,'Operario de camion',20,NULL);
 /*!40000 ALTER TABLE `roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -275,7 +276,7 @@ CREATE TABLE `usuarios` (
   UNIQUE KEY `email_UNIQUE` (`email`),
   KEY `fk_usuarios_rol_idx` (`roles_id`),
   CONSTRAINT `fk_usuarios_rol` FOREIGN KEY (`roles_id`) REFERENCES `roles` (`roles_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -284,6 +285,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
+INSERT INTO `usuarios` VALUES (1,'Mario','Giron','mario.giron@example.com','password123',1,29,'Madrid','28043','España',1),(2,'Sarah','Johnson','sarah.johnson@example.com','password123',1,31,'Madrid','28043','España',2),(3,'Robert','Garcia','robert.garcia@example.com','password123',1,29,'Zaragoza',NULL,NULL,3),(4,'Michelle','Chen','michelle.chen@example.com','password123',1,33,'Zaragoza',NULL,NULL,4),(5,'Daniel','Kim','daniel.kim@example.com','password123',1,26,'Barcelona',NULL,NULL,3),(6,'Sophia','Martinez','sophia.martinez@example.com','password456',1,30,'Barcelona',NULL,NULL,4);
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -296,4 +298,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-06-03 15:11:19
+-- Dump completed on 2023-06-04  7:40:06
