@@ -2,3 +2,18 @@
 
 //Recupera todos los usuarios
 GET {{host}}/api/usuarios
+
+###
+
+// Crear nuevo usuario
+POST {{host}}/api/usuarios/nuevo
+Content-Type: application/json
+
+{
+    "nombre": "cyril",
+    "apellido":"attie",
+    "email":"cyril@logisticamente.es",
+    "contrasena": "password123",
+    "roles_id":4,
+    "usuarios_id_lider":8
+}

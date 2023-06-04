@@ -8,5 +8,13 @@ router.get('/', async (req, res) =>{
     res.json(result);
 });
 
+// Crear nuevo usuario
+router.post('/nuevo', async (req, res) =>{
+	
+    console.log(req.body );
+    const [result] = await create( req.body ); 
+    res.json(result);
+   
+});
 
 module.exports = router;
