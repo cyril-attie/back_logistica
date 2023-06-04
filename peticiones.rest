@@ -2,6 +2,7 @@
 
 //Recupera todos los usuarios
 GET {{host}}/api/usuarios
+authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlc19pZCI6MSwiZXhwIjoxNjg2MzI0Mjg1LCJpYXQiOjE2ODU4OTIyODV9.kh4BtmMdhjAWMC8ZnYYwFvp36Dt3jgtmDWQrEoxY06o
 
 ###
 
@@ -10,10 +11,23 @@ POST {{host}}/api/usuarios/nuevo
 Content-Type: application/json
 
 {
-    "nombre": "cyril",
-    "apellido":"attie",
-    "email":"cyril@logisticamente.es",
+    "nombre": "super",
+    "apellido":"usuario",
+    "email":"superusuario1@almacen.es",
     "contrasena": "password123",
-    "roles_id":4,
-    "usuarios_id_lider":8
+    "roles_id":1,
+    "usuarios_id_lider":20
 }
+
+###
+
+
+
+POST {{host}}/api/usuarios/login
+Content-Type: application/json
+
+{
+    "email":"superusuario1@almacen.es",
+    "contrasena": "password123"
+}
+###
