@@ -1,28 +1,7 @@
 @host = http://localhost:3000
 
-//Recupera todos los usuarios
-GET {{host}}/api/usuarios
-authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlc19pZCI6MSwiZXhwIjoxNjg2MzI0Mjg1LCJpYXQiOjE2ODU4OTIyODV9.kh4BtmMdhjAWMC8ZnYYwFvp36Dt3jgtmDWQrEoxY06o
 
-###
-
-// Crear nuevo usuario
-POST {{host}}/api/usuarios/nuevo
-Content-Type: application/json
-
-{
-    "nombre": "super",
-    "apellido":"usuario",
-    "email":"superusuario1@almacen.es",
-    "contrasena": "password123",
-    "roles_id":1,
-    "usuarios_id_lider":20
-}
-
-###
-
-
-
+//=====LOGIN========
 POST {{host}}/api/usuarios/login
 Content-Type: application/json
 
@@ -30,4 +9,48 @@ Content-Type: application/json
     "email":"superusuario1@almacen.es",
     "contrasena": "password123"
 }
+
+
+//=====USUARIOS========
 ###
+// Crear nuevo usuario
+POST {{host}}/api/usuarios/nuevo
+Content-Type: application/json
+
+{
+    "nombre": "super",
+    "apellido":"mario",
+    "email":"supermario@almacen.es",
+    "contrasena": "password123",
+    "roles_id":4,
+    "usuarios_id_lider":8
+}
+
+###
+//Recupera todos los usuarios
+GET {{host}}/api/usuarios
+authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlc19pZCI6MSwiZXhwIjoxNjg2MzI0Mjg1LCJpYXQiOjE2ODU4OTIyODV9.kh4BtmMdhjAWMC8ZnYYwFvp36Dt3jgtmDWQrEoxY06o
+
+
+###
+// para ver los detalles de un usuario
+GET {{host}}/api/usuarios/23
+
+###
+// para actualizar los detalles de un usuario
+PUT {{host}}/api/usuarios/23
+Content-Type: application/json 
+
+{
+    "nombre": "Roberto",
+    "apellido":"usuario",
+    "email":"supermario1@almacen.es",
+    "contrasena": "password123",
+    "roles_id":3,
+    "inutil":7564
+}
+
+
+###
+// para borrar un usuario
+DELETE {{host}}/api/usuarios/19
