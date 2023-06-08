@@ -27,7 +27,7 @@ router.post('/nuevo', async (req, res) =>{
 router.post('/login', async (req, res) => {
     // ¿Existe el email en la base de datos?
     
-    const [usuarios] = await getByEmail(req.body.email);
+    const [usuarios]= await getByEmail(req.body.email);
    
     if (usuarios.length === 0) {
         return res.json({ fatal: 'Error en email y/o contraseña' });
@@ -44,6 +44,7 @@ router.post('/login', async (req, res) => {
 
     res.json({
         success: "Login correcto",
+        usuarios_id: usuario.usuarios_id,
         token: createToken(usuario)
     });
 

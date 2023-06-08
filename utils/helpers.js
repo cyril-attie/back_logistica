@@ -5,9 +5,9 @@ const createToken = (usuario) => {
 
     console.log('Entra en createToken. Usuario es\n' + JSON.stringify(usuario));
     const obj = {
-        usuario_id: usuario.usuarios_id,
+        usuarios_id: usuario.usuarios_id,
         roles_id: usuario.roles_id,
-        exp: dayjs().add(5, 'days').unix()
+        exp: dayjs().add(30, 'days').unix()
     }
 
     console.log(JSON.stringify(obj));

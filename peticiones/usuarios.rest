@@ -1,12 +1,12 @@
 
-@host=http://34.65.131.41:3000
+@host=http://localhost:3000
 
 //=====LOGIN========
 POST {{host}}/api/usuarios/login
 Content-Type: application/json
 
 {
-    "email":"operarioprimero@almacen.es",
+    "email":"pepitogarrofe@almacen.es",
     "contrasena": "password123"
 }
 
@@ -18,13 +18,13 @@ POST {{host}}/api/usuarios/nuevo
 Content-Type: application/json
 
 {
-    "nombre": "Operario",
-    "apellido":"Primero",
-    "email":"operarioprimero@almacen.es",
+    "nombre": "pepito",
+    "apellido":"Garrofe",
+    "email":"pepitogarrofe@almacen.es",
     "contrasena": "password123",
     "ciudad": "Barcelona",
     "codigo_postal":"08005",
-    "roles_id":3,
+    "roles_id":2,
     "usuarios_id_lider":26
 }
 
@@ -51,6 +51,7 @@ Content-Type: application/json
 
 ###
 // para borrar un usuario
-DELETE {{host}}/api/usuarios/25
+DELETE {{host}}/api/usuarios/29
+
 
 
