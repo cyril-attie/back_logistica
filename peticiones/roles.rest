@@ -1,4 +1,4 @@
-@host = http://localhost:3000
+@host = http://34.65.131.41:3000
 
 
 
@@ -22,11 +22,11 @@ authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlc19pZCI6MSwiZXhwIjo
 
 ###
 // para ver los detalles de un role
-GET {{host}}/api/roles/19
+GET {{host}}/api/roles/21
 
 ###
 // para actualizar los detalles de un role
-PUT {{host}}/api/roles/19
+PUT {{host}}/api/roles/21
 Content-Type: application/json 
 
 {
@@ -36,4 +36,4 @@ Content-Type: application/json
 
 ###
 // para borrar un role
-DELETE {{host}}/api/roles/19
+DELETE {{host}}/api/roles/21
