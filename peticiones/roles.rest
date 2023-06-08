@@ -1,0 +1,39 @@
+@host = http://localhost:3000
+
+
+
+//=====ROLES========
+###
+// Crear nuevo rol
+POST {{host}}/api/roles/nuevo
+Content-Type: application/json
+
+{
+    "descripcion_rol":"Programador de aplicaciones",
+    "responsabilidad":"50",
+    "comentario":""
+}
+
+###
+//Recupera todos los roles
+GET {{host}}/api/roles
+authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlc19pZCI6MSwiZXhwIjoxNjg2MzI0Mjg1LCJpYXQiOjE2ODU4OTIyODV9.kh4BtmMdhjAWMC8ZnYYwFvp36Dt3jgtmDWQrEoxY06o
+
+
+###
+// para ver los detalles de un role
+GET {{host}}/api/roles/19
+
+###
+// para actualizar los detalles de un role
+PUT {{host}}/api/roles/19
+Content-Type: application/json 
+
+{
+    "comentario":"Este rol es una prueba"
+}
+
+
+###
+// para borrar un role
+DELETE {{host}}/api/roles/19

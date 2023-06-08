@@ -6,7 +6,7 @@ POST {{host}}/api/usuarios/login
 Content-Type: application/json
 
 {
-    "email":"superusuario1@almacen.es",
+    "email":"operarioprimero@almacen.es",
     "contrasena": "password123"
 }
 
@@ -18,12 +18,14 @@ POST {{host}}/api/usuarios/nuevo
 Content-Type: application/json
 
 {
-    "nombre": "super",
-    "apellido":"mario",
-    "email":"supermario@almacen.es",
+    "nombre": "Operario",
+    "apellido":"Primero",
+    "email":"operarioprimero@almacen.es",
     "contrasena": "password123",
-    "roles_id":4,
-    "usuarios_id_lider":8
+    "ciudad": "Barcelona",
+    "codigo_postal":"08005",
+    "roles_id":3,
+    "usuarios_id_lider":26
 }
 
 ###
@@ -34,23 +36,21 @@ authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlc19pZCI6MSwiZXhwIjo
 
 ###
 // para ver los detalles de un usuario
-GET {{host}}/api/usuarios/23
+GET {{host}}/api/usuarios/25
 
 ###
 // para actualizar los detalles de un usuario
-PUT {{host}}/api/usuarios/23
+PUT {{host}}/api/usuarios/25
 Content-Type: application/json 
 
 {
-    "nombre": "Roberto",
-    "apellido":"usuario",
-    "email":"supermario1@almacen.es",
-    "contrasena": "password123",
-    "roles_id":3,
-    "inutil":7564
+    "edad":26,
+    "codigo_postul":"08006"
 }
 
 
 ###
 // para borrar un usuario
-DELETE {{host}}/api/usuarios/19
+DELETE {{host}}/api/usuarios/25
+
+

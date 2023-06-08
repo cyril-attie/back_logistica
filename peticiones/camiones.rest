@@ -1,0 +1,39 @@
+@host = http://localhost:3000
+
+
+
+//=====CAMIONES========
+###
+// Crear nuevo rol
+POST {{host}}/api/camiones/nuevo
+Content-Type: application/json
+
+{
+    "matricula_camion":"ABC1234",
+    "capacidad_maxima":"40",
+    "estado":"Habilitado"
+}
+
+###
+//Recupera todos los camiones
+GET {{host}}/api/camiones
+authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlc19pZCI6MSwiZXhwIjoxNjg2MzI0Mjg1LCJpYXQiOjE2ODU4OTIyODV9.kh4BtmMdhjAWMC8ZnYYwFvp36Dt3jgtmDWQrEoxY06o
+
+
+###
+// para ver los detalles de un role
+GET {{host}}/api/camiones/1
+
+###
+// para actualizar los detalles de un role
+PUT {{host}}/api/camiones/1
+Content-Type: application/json 
+
+{
+    "estado":"Inactivo"
+}
+
+
+###
+// para borrar un role
+DELETE {{host}}/api/camiones/1

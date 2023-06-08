@@ -1,7 +1,5 @@
 
 
-
-
 const create = (usuario) => {
     let { nombre, apellido, email, contrasena, activo, edad, ciudad, codigo_postal, pais, roles_id, usuarios_id_lider } = usuario;
     let values = [nombre, apellido, email, contrasena, activo ? activo : 1, edad, ciudad, codigo_postal, pais, roles_id, usuarios_id_lider];
@@ -12,16 +10,19 @@ const create = (usuario) => {
     );
 };
 
+
 const getAll = () => {
     return db.query('   SELECT *\
                         FROM usuarios as u'
     );
 }
 
+
 const getById = (usuarios_id) => {
     console.log(usuarios_id)
     return db.query('select * from usuarios where usuarios_id = ?', [usuarios_id])
 }
+
 
 const getByEmail = (email) => {
     console.log(email)
@@ -44,7 +45,7 @@ const updateById = async (usuarios_id, datosQueActualizar) => {
     const [[usuario]] = await getById(usuarios_id);
 
     // Actualizar usuario
-    Object.keys(usuario).forEach((k, i, arr)=>{
+    Object.keys(usuario).forEach((k)=>{
         datosQueActualizar[k]?usuario[k]=datosQueActualizar[k]:1;
     });
     
@@ -67,6 +68,7 @@ const updateById = async (usuarios_id, datosQueActualizar) => {
     );
 };
 
+
 const deleteById = async (usuarios_id) => {
     // Pedir usuario
     const [[usuario]] = await getById(usuarios_id);
@@ -76,7 +78,6 @@ const deleteById = async (usuarios_id) => {
 
     return db.query('DELETE from usuarios where usuarios_id = ?', [usuarios_id]);
 }
-
 
 module.exports = {
     create, getAll, getById, getByEmail, updateById, deleteById
