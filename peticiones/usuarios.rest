@@ -36,7 +36,7 @@ authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlc19pZCI6MSwiZXhwIjo
 
 ###
 // para ver los detalles de un usuario
-GET {{host}}/api/usuarios/25
+GET {{host}}/api/usuarios/31
 
 ###
 // para actualizar los detalles de un usuario
@@ -52,6 +52,5 @@ Content-Type: application/json
 ###
 // para borrar un usuario
 DELETE {{host}}/api/usuarios/29
-
 
 

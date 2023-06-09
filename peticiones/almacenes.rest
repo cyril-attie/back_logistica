@@ -1,0 +1,44 @@
+@host = http://localhost:3000
+
+
+
+//=====CAMIONES========
+###
+// Crear nuevo rol
+POST {{host}}/api/almacenes/nuevo
+Content-Type: application/json
+
+{
+    "nombre_almacen" : "UNIR"
+        , "calle": "Calle"
+        , "codigo_postal":"43104"
+        , "localidad":"Rioja"
+        , "pais":"Es"
+        , "coordenadas":{"x":40.71727401,"y" :-74.00898606}
+        , "capacidad_almacen":1
+        , "usuarios_id_encargado":26
+}
+
+###
+//Recupera todos los almacenes
+GET {{host}}/api/almacenes
+authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlc19pZCI6MSwiZXhwIjoxNjg2MzI0Mjg1LCJpYXQiOjE2ODU4OTIyODV9.kh4BtmMdhjAWMC8ZnYYwFvp36Dt3jgtmDWQrEoxY06o
+
+
+###
+// para ver los detalles de un role
+GET {{host}}/api/almacenes/1
+
+###
+// para actualizar los detalles de un role
+PUT {{host}}/api/almacenes/1
+Content-Type: application/json 
+
+{
+    "pais":"LUNA"
+}
+
+
+###
+// para borrar un role
+DELETE {{host}}/api/almacenes/1

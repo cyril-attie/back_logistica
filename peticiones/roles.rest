@@ -1,4 +1,4 @@
-@host = http://34.65.131.41:3000
+@host = http://localhost:3000
 
 
 

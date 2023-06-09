@@ -54,7 +54,7 @@ const updateById = async (camiones_id, datosQueActualizar) => {
 
 
 const deleteById = async (camiones_id) => {
-    // Borrar un rol
+    // Borrar un camion
     // Evitar borrar camiones predeterminados 1,2,3,4. 
     const [[camione]]=await getById(camiones_id);
     if (camione.estado != 'Inactivo') {
