@@ -8,7 +8,7 @@ const DB_ENV= {
 	database:process.env.DB_NAME,
 }
 
-const conn = mysql2.createConnection(DB_ENV);
+// const conn = mysql2.createConnection(DB_ENV);
 const pool = mysql2.createPool(DB_ENV);
 
 // =================================A colocar en tests=====================
@@ -24,4 +24,4 @@ const checkDB = async ()=>{
 // =====================================
 
 global.db = pool.promise() ;
-global.conn = conn ;
+// global.conn = conn ;
