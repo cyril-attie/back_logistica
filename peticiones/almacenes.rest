@@ -4,7 +4,7 @@
 
 //=====CAMIONES========
 ###
-// Crear nuevo rol
+// Crear nuevo almacen
 POST {{host}}/api/almacenes/nuevo
 Content-Type: application/json
 
@@ -26,11 +26,11 @@ authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlc19pZCI6MSwiZXhwIjo
 
 
 ###
-// para ver los detalles de un role
+// para ver los detalles de un almacen
 GET {{host}}/api/almacenes/1
 
 ###
-// para actualizar los detalles de un role
+// para actualizar los detalles de un almacen
 PUT {{host}}/api/almacenes/1
 Content-Type: application/json 
 
@@ -40,5 +40,5 @@ Content-Type: application/json
 
 
 ###
-// para borrar un role
+// para borrar un almacen
 DELETE {{host}}/api/almacenes/1

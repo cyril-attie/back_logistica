@@ -1,11 +1,11 @@
 
 
 const create = (usuario) => {
-    let { nombre, apellido, email, contrasena, activo, edad, ciudad, codigo_postal, pais, roles_id, usuarios_id_lider } = usuario;
-    let values = [nombre, apellido, email, contrasena, activo ? activo : 1, edad, ciudad, codigo_postal, pais, roles_id, usuarios_id_lider];
-    return db.query('   INSERT INTO usuarios (nombre, apellido, email, contrasena, activo, edad, ciudad, codigo_postal, pais, roles_id,usuarios_id_lider) \
+    let { nombre, apellido, email, contrasena, activo, edad, ciudad, codigo_postal, pais, roles_id, usuarios_id_lider,estado, imagen } = usuario;
+    let values = [nombre, apellido, email, contrasena, activo ? activo : 1, edad, ciudad, codigo_postal, pais, roles_id, usuarios_id_lider,estado, imagen];
+    return db.query('   INSERT INTO usuarios (nombre, apellido, email, contrasena, activo, edad, ciudad, codigo_postal, pais, roles_id,usuarios_id_lider, estado, imagen) \
                         VALUES \
-                        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)',
+                        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?)',
         values
     );
 };
@@ -62,7 +62,7 @@ const updateById = async (usuarios_id, datosQueActualizar) => {
     
     const extractValues = (u) => ["nombre", "apellido", "email", "contrasena",
     "activo", "edad", "ciudad", "codigo_postal",
-    "pais", "roles_id", "usuarios_id_lider","usuarios_id"].map(k => u[k]);
+    "pais", "roles_id", "usuarios_id_lider","usuarios_id","estado", "imagen"].map(k => u[k]);
 
     const values = extractValues(usuario);
 
@@ -72,7 +72,7 @@ const updateById = async (usuarios_id, datosQueActualizar) => {
                         SET \
                         nombre = ?, apellido = ?, email = ?, contrasena = ?, \
                         activo = ?, edad = ?, ciudad = ?, codigo_postal = ?, \
-                        pais = ?, roles_id = ?, usuarios_id_lider = ? \
+                        pais = ?, roles_id = ?, usuarios_id_lider = ?, estado=?, imagen=?\
                         WHERE usuarios_id = ?'
         ,
         values

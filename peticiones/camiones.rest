@@ -21,11 +21,11 @@ authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlc19pZCI6MSwiZXhwIjo
 
 
 ###
-// para ver los detalles de un role
+// para ver los detalles de un camion
 GET {{host}}/api/camiones/1
 
 ###
-// para actualizar los detalles de un role
+// para actualizar los detalles de un camion
 PUT {{host}}/api/camiones/1
 Content-Type: application/json 
 
@@ -35,5 +35,5 @@ Content-Type: application/json
 
 
 ###
-// para borrar un role
+// para borrar un camion
 DELETE {{host}}/api/camiones/1

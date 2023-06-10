@@ -1,0 +1,40 @@
+@host = http://localhost:3000
+
+
+
+//=====CAMIONES========
+###
+// Crear nuevo material
+POST {{host}}/api/materiales/nuevo
+Content-Type: application/json
+
+{
+    "estado":"Nuevo",
+    "peso":2.38,
+    "descripcion_material":"fresas de verano",
+    "categorias_materiales_id":1
+}
+
+###
+//Recupera todos los materiales
+GET {{host}}/api/materiales
+authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlc19pZCI6MSwiZXhwIjoxNjg2MzI0Mjg1LCJpYXQiOjE2ODU4OTIyODV9.kh4BtmMdhjAWMC8ZnYYwFvp36Dt3jgtmDWQrEoxY06o
+
+
+###
+// para ver los detalles de un material
+GET {{host}}/api/materiales/4
+
+###
+// para actualizar los detalles de un metarial
+PUT {{host}}/api/materiales/4
+Content-Type: application/json 
+
+{
+    "descripcion_material":"Fresón "
+}
+
+
+###
+// para borrar un material
+DELETE {{host}}/api/materiales/3

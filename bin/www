@@ -11,10 +11,6 @@ const http = require('http');
 //Configuración de .env
 require('dotenv').config();
 
-//Configuración de la base de datos
-//const { checkDB } = require('../config/db');
-//checkDB();
-
 require('../config/db');
 
 
