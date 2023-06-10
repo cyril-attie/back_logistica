@@ -22,7 +22,7 @@ authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlc19pZCI6MSwiZXhwIjo
 
 ###
 // para ver los detalles de un stock
-GET {{host}}/api/stocks/1
+GET {{host}}/api/stocks/3
 
 ###
 // para actualizar los detalles de un stock
