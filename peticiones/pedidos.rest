@@ -19,7 +19,8 @@ Content-Type: application/json
     "almacenes_id_origen":2,
     "almacenes_id_destion":3,
     "camiones_id":2,
-    "usuario_id_aprobador":28
+    "usuario_id_aprobador":28,
+    "stocks":{"3":50,"4": 30}
 }
 
 ###
@@ -34,14 +35,15 @@ GET {{host}}/api/pedidos/2
 
 ###
 // para actualizar los detalles de un pedido
-PUT {{host}}/api/pedidos/2
+PUT {{host}}/api/pedidos/12
 Content-Type: application/json 
 
 {
-    "estado_pedido":"En preparacion"
+    "medida":3.14,
+    "stocks":{"3":49,"4": 81}
 }
 
 
 ###
 // para borrar un pedido
-DELETE {{host}}/api/pedidos/1
+DELETE {{host}}/api/pedidos/2
