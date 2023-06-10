@@ -9,7 +9,6 @@ router.use('/almacenes', require('./api/almacenes'));
 router.use('/materiales', require('./api/materiales'));
 router.use('/categorias', require('./api/categorias_de_materiales'))
 router.use('/pedidos', require('./api/pedidos'));
-/*
 router.use('/stocks', require('./api/stocks'));
-*/
+
 module.exports = router;

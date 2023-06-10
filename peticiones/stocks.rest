@@ -1,0 +1,39 @@
+@host = http://localhost:3000
+
+
+
+//=====STOCKS========
+###
+// Crear nuevo stock
+POST {{host}}/api/stocks/nuevo
+Content-Type: application/json
+
+{
+    "unidades":"60",
+    "materiales_id":"4",
+    "almacenes_id":"3"
+}
+
+###
+//Recupera todos los stocks
+GET {{host}}/api/stocks
+authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlc19pZCI6MSwiZXhwIjoxNjg2MzI0Mjg1LCJpYXQiOjE2ODU4OTIyODV9.kh4BtmMdhjAWMC8ZnYYwFvp36Dt3jgtmDWQrEoxY06o
+
+
+###
+// para ver los detalles de un stock
+GET {{host}}/api/stocks/1
+
+###
+// para actualizar los detalles de un stock
+PUT {{host}}/api/stocks/1
+Content-Type: application/json 
+
+{
+    "unidades":23
+}
+
+
+###
+// para borrar un stock
+DELETE {{host}}/api/stocks/1
