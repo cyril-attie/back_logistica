@@ -30,7 +30,7 @@ const getById = (categoria_id) => {
 
 // ACTUALIZAR
 
-const update = (categoria_id, {descripcion, comentario}) => {
+const updateById = (categoria_id, {descripcion, comentario}) => {
     return db.query(
         'update categorias_materiales set descripcion = ?, comentario = ? where categorias_materiales_id = ?', 
         [descripcion, comentario, categoria_id]
@@ -50,7 +50,7 @@ module.exports = {
     create, 
     getAll, 
     getById,
-    update, 
+    updateById,
     deleteById
 
 }
