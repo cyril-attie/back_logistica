@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.33, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.32, for Linux (x86_64)
 --
 -- Host: localhost    Database: almacen
 -- ------------------------------------------------------
--- Server version	8.0.33
+-- Server version	8.0.32-1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -86,7 +86,7 @@ CREATE TABLE `categorias_materiales` (
   `descripcion` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `comentario` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`categorias_materiales_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -95,6 +95,7 @@ CREATE TABLE `categorias_materiales` (
 
 LOCK TABLES `categorias_materiales` WRITE;
 /*!40000 ALTER TABLE `categorias_materiales` DISABLE KEYS */;
+INSERT INTO `categorias_materiales` VALUES (1,'frutas','frutas frescas');
 /*!40000 ALTER TABLE `categorias_materiales` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -110,12 +111,11 @@ CREATE TABLE `materiales` (
   `estado` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `peso` decimal(12,2) NOT NULL,
   `descripcion_material` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `categoria_material` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `categorias_materiales_id` int NOT NULL,
   PRIMARY KEY (`materiales_id`),
   KEY `fk_materiales_categorias_materiales1_idx` (`categorias_materiales_id`),
   CONSTRAINT `fk_materiales_categorias_materiales1` FOREIGN KEY (`categorias_materiales_id`) REFERENCES `categorias_materiales` (`categorias_materiales_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -124,6 +124,7 @@ CREATE TABLE `materiales` (
 
 LOCK TABLES `materiales` WRITE;
 /*!40000 ALTER TABLE `materiales` DISABLE KEYS */;
+INSERT INTO `materiales` VALUES (4,'Nuevo',2.38,'Fresón ',1);
 /*!40000 ALTER TABLE `materiales` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -160,7 +161,7 @@ CREATE TABLE `pedidos` (
   CONSTRAINT `fk_pedidos_usuarios1` FOREIGN KEY (`usuarios_id_creador`) REFERENCES `usuarios` (`usuarios_id`),
   CONSTRAINT `fk_pedidos_usuarios2` FOREIGN KEY (`usuarios_id_revisador`) REFERENCES `usuarios` (`usuarios_id`),
   CONSTRAINT `fk_pedidos_usuarios3` FOREIGN KEY (`usuario_id_aprobador`) REFERENCES `usuarios` (`usuarios_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -169,6 +170,7 @@ CREATE TABLE `pedidos` (
 
 LOCK TABLES `pedidos` WRITE;
 /*!40000 ALTER TABLE `pedidos` DISABLE KEYS */;
+INSERT INTO `pedidos` VALUES (3,'2023-06-10 16:30:30','2023-06-10 16:30:30','Entregado',2.3,'2023-06-10 16:30:30',34,27,2,3,2,28),(4,'2023-06-10 17:24:08','2023-06-10 17:24:08','Entregado',2.3,'2023-06-10 17:24:08',34,27,2,3,2,28),(5,'2023-06-10 17:27:09','2023-06-10 17:27:09','Entregado',2.3,'2023-06-10 17:27:09',34,27,2,3,2,28),(6,'2023-06-10 17:31:09','2023-06-10 17:31:09','Entregado',2.3,'2023-06-10 17:31:09',34,27,2,3,2,28),(7,'2023-06-10 17:32:23','2023-06-10 17:32:23','Entregado',2.3,'2023-06-10 17:32:23',34,27,2,3,2,28),(8,'2023-06-10 17:33:12','2023-06-10 17:33:12','Entregado',2.3,'2023-06-10 17:33:12',34,27,2,3,2,28),(9,'2023-06-10 17:33:50','2023-06-10 17:33:50','Entregado',2.3,'2023-06-10 17:33:50',34,27,2,3,2,28),(10,'2023-06-10 17:34:44','2023-06-10 17:34:44','Entregado',2.3,'2023-06-10 17:34:44',34,27,2,3,2,28),(11,'2023-06-10 18:16:11','2023-06-10 18:16:11','Entregado',2.3,'2023-06-10 18:16:11',34,27,2,3,2,28),(12,'2023-06-10 18:41:02','2023-06-10 18:41:02','Entregado',3.1,'2023-06-10 18:41:02',34,27,2,3,2,28);
 /*!40000 ALTER TABLE `pedidos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -186,7 +188,7 @@ CREATE TABLE `pedidos_have_stocks` (
   KEY `fk_pedidos_has_stock_stock1_idx` (`stocks_id`),
   KEY `fk_pedidos_has_stock_pedidos1_idx` (`pedidos_id`),
   CONSTRAINT `fk_pedidos_has_stock_pedidos1` FOREIGN KEY (`pedidos_id`) REFERENCES `pedidos` (`pedidos_id`),
-  CONSTRAINT `fk_pedidos_has_stock_stock1` FOREIGN KEY (`stocks_id`) REFERENCES `stocks` (`stock_id`)
+  CONSTRAINT `fk_pedidos_has_stock_stock1` FOREIGN KEY (`stocks_id`) REFERENCES `stocks` (`stocks_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -196,6 +198,7 @@ CREATE TABLE `pedidos_have_stocks` (
 
 LOCK TABLES `pedidos_have_stocks` WRITE;
 /*!40000 ALTER TABLE `pedidos_have_stocks` DISABLE KEYS */;
+INSERT INTO `pedidos_have_stocks` VALUES (10,3,50),(10,4,30),(11,4,30),(11,3,50);
 /*!40000 ALTER TABLE `pedidos_have_stocks` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -234,16 +237,16 @@ DROP TABLE IF EXISTS `stocks`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `stocks` (
-  `stock_id` int NOT NULL AUTO_INCREMENT,
+  `stocks_id` int NOT NULL AUTO_INCREMENT,
   `unidades` int DEFAULT NULL,
   `materiales_id` int NOT NULL,
   `almacenes_id` int NOT NULL,
-  PRIMARY KEY (`stock_id`),
+  PRIMARY KEY (`stocks_id`),
   KEY `fk_stock_materiales1_idx` (`materiales_id`),
   KEY `fk_stock_almacenes1_idx` (`almacenes_id`),
   CONSTRAINT `fk_stock_almacenes1` FOREIGN KEY (`almacenes_id`) REFERENCES `almacenes` (`almacenes_id`),
   CONSTRAINT `fk_stock_materiales1` FOREIGN KEY (`materiales_id`) REFERENCES `materiales` (`materiales_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -252,6 +255,7 @@ CREATE TABLE `stocks` (
 
 LOCK TABLES `stocks` WRITE;
 /*!40000 ALTER TABLE `stocks` DISABLE KEYS */;
+INSERT INTO `stocks` VALUES (3,60,4,3),(4,60,4,3),(5,60,4,3);
 /*!40000 ALTER TABLE `stocks` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -275,7 +279,7 @@ CREATE TABLE `usuarios` (
   `pais` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `roles_id` int NOT NULL,
   `usuarios_id_lider` int NOT NULL,
-  `imagen` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `imagen` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `estado` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`usuarios_id`),
   UNIQUE KEY `email_UNIQUE` (`email`),
@@ -283,7 +287,7 @@ CREATE TABLE `usuarios` (
   KEY `fk_usuarios_liderado_por` (`usuarios_id_lider`),
   CONSTRAINT `fk_usuarios_liderado_por` FOREIGN KEY (`usuarios_id_lider`) REFERENCES `usuarios` (`usuarios_id`),
   CONSTRAINT `fk_usuarios_rol` FOREIGN KEY (`roles_id`) REFERENCES `roles` (`roles_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -292,7 +296,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (19,'super','usuario','superusuario@almacen.es','$2a$08$CGurYqfcr1/BR73zzxR.J.KqSX87mlONkVvbj6.OQc3yV1Dxd.x0G',1,NULL,NULL,NULL,NULL,1,19,NULL,NULL),(20,'super','usuario','superusuario1@almacen.es','$2a$08$ltz1Yt5HmcPqvqkjuq7JbuZTWCDIIuNjNxL1EYK2jET/DkgQoNfXy',1,NULL,NULL,NULL,NULL,1,20,NULL,NULL),(26,'Jefe','Primero','jefedeequipo2@almacen.es','$2a$08$5W4um/Sxxa9qYxACobNckesS1q4uazZDGj4tALgHIdGJDzKrrY3Aa',1,NULL,'Barcelona','08005',NULL,2,7,NULL,NULL),(27,'Encargado','Primero','encargadoprimero@almacen.es','$2a$08$wA9Q81kPfYqpZVdPFdvARek7a/30hfedyyaLp7PEeZVEe7o0PVGFa',1,NULL,'Barcelona','08005',NULL,3,26,NULL,NULL),(28,'Operario','Primero','operarioprimero@almacen.es','$2a$08$GAAByc3GUA0vpEJyV2nomuojakqoQjWdUeCNc/RfJ3PEIRzfkKiS6',1,NULL,'Barcelona','08005',NULL,3,26,NULL,NULL),(31,'pepito','Garrofe','pepitogarrofe@almacen.es','$2a$08$.L1QI6KLtCfySSwhHH0Bn.AqIeMotbSB8ZB26PGHMYFEIzlO7YcA2',1,NULL,'Barcelona','08005',NULL,2,26,NULL,NULL),(33,'transporter','transporter','transporter@almacen.es','$2a$08$PCaQd2/T749BSKB7U9kvvONX7crncNb5UFWhVAdTZ04GPYd/oq14a',1,NULL,'Barcelona','08005',NULL,2,26,NULL,NULL);
+INSERT INTO `usuarios` VALUES (19,'super','usuario','superusuario@almacen.es','$2a$08$CGurYqfcr1/BR73zzxR.J.KqSX87mlONkVvbj6.OQc3yV1Dxd.x0G',1,NULL,NULL,NULL,NULL,1,19,NULL,NULL),(20,'super','usuario','superusuario1@almacen.es','$2a$08$ltz1Yt5HmcPqvqkjuq7JbuZTWCDIIuNjNxL1EYK2jET/DkgQoNfXy',1,NULL,NULL,NULL,NULL,1,20,NULL,NULL),(26,'Jefe','Primero','jefedeequipo2@almacen.es','$2a$08$5W4um/Sxxa9qYxACobNckesS1q4uazZDGj4tALgHIdGJDzKrrY3Aa',1,NULL,'Barcelona','08005',NULL,2,7,NULL,NULL),(27,'Encargado','Primero','encargadoprimero@almacen.es','$2a$08$wA9Q81kPfYqpZVdPFdvARek7a/30hfedyyaLp7PEeZVEe7o0PVGFa',1,NULL,'Barcelona','08005',NULL,3,26,NULL,NULL),(28,'Operario','Primero','operarioprimero@almacen.es','$2a$08$GAAByc3GUA0vpEJyV2nomuojakqoQjWdUeCNc/RfJ3PEIRzfkKiS6',1,NULL,'Barcelona','08005',NULL,3,26,NULL,NULL),(31,'pepito','Garrofe','pepitogarrofe@almacen.es','$2a$08$.L1QI6KLtCfySSwhHH0Bn.AqIeMotbSB8ZB26PGHMYFEIzlO7YcA2',1,NULL,'Barcelona','08005',NULL,2,26,NULL,NULL),(33,'transporter','transporter','transporter@almacen.es','$2a$08$PCaQd2/T749BSKB7U9kvvONX7crncNb5UFWhVAdTZ04GPYd/oq14a',1,NULL,'Barcelona','08005',NULL,2,26,NULL,NULL),(34,'cyril','operario','operario@almacen.es','$2a$08$GTcg8mPKblhTAnAShQAglebG6E2dDt9jETxeWcYcRzUMVY3V2KJhi',1,NULL,'Barcelona','08005',NULL,4,26,NULL,NULL);
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -305,4 +309,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-06-10 11:56:40
+-- Dump completed on 2023-06-10 20:50:55
