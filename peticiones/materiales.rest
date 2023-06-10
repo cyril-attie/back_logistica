@@ -2,7 +2,7 @@
 
 
 
-//=====CAMIONES========
+//=====MATERIALES========
 ###
 // Crear nuevo material
 POST {{host}}/api/materiales/nuevo

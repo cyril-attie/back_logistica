@@ -1,0 +1,47 @@
+@host = http://localhost:3000
+
+
+
+//=====PEDIDOS========
+###
+// Crear nuevo pedido
+POST {{host}}/api/pedidos/nuevo
+Content-Type: application/json
+
+{
+    "fecha_salida":"{{$datetime 'YYYY-MM-DD HH:mm:ss' +2 d}}",
+    "fecha_llegada":"{{$datetime 'YYYY-MM-DD HH:mm:ss' +2 d}}",
+    "estado_pedido":"Entregado",
+    "medida":2.3,
+    "fecha_creacion":"{{$datetime 'YYYY-MM-DD HH:mm:ss'}}",
+    "usuarios_id_creador":34,
+    "usuarios_id_revisador":27,
+    "almacenes_id_origen":2,
+    "almacenes_id_destion":3,
+    "camiones_id":2,
+    "usuario_id_aprobador":28
+}
+
+###
+//Recupera todos los pedidos
+GET {{host}}/api/pedidos
+authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlc19pZCI6MSwiZXhwIjoxNjg2MzI0Mjg1LCJpYXQiOjE2ODU4OTIyODV9.kh4BtmMdhjAWMC8ZnYYwFvp36Dt3jgtmDWQrEoxY06o
+
+
+###
+// para ver los detalles de un pedido
+GET {{host}}/api/pedidos/2
+
+###
+// para actualizar los detalles de un pedido
+PUT {{host}}/api/pedidos/2
+Content-Type: application/json 
+
+{
+    "estado_pedido":"En preparacion"
+}
+
+
+###
+// para borrar un pedido
+DELETE {{host}}/api/pedidos/1

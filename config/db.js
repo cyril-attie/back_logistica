@@ -27,3 +27,5 @@ const checkDB = (async ()=>{
 global.db = pool.promise() ;
 
 // global.conn = conn ;
+
+

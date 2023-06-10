@@ -2,7 +2,7 @@
 
 
 
-//=====CAMIONES========
+//=====ALMACENES========
 ###
 // Crear nuevo almacen
 POST {{host}}/api/almacenes/nuevo

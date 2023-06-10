@@ -18,13 +18,13 @@ POST {{host}}/api/usuarios/nuevo
 Content-Type: application/json
 
 {
-    "nombre": "pepito",
-    "apellido":"Garrofe",
-    "email":"pepitogarrofe@almacen.es",
+    "nombre": "cyril",
+    "apellido":"operario",
+    "email":"operario@almacen.es",
     "contrasena": "password123",
     "ciudad": "Barcelona",
     "codigo_postal":"08005",
-    "roles_id":2,
+    "roles_id":4,
     "usuarios_id_lider":26
 }
 
