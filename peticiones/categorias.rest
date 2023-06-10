@@ -1,0 +1,48 @@
+@host = http://localhost:3000
+
+
+
+//=====CATEGORIAS DE MATERIALES========
+
+
+
+
+// Crear una nueva categoría 
+
+###
+POST {{host}}/api/categorias/nuevo
+Content-Type: application/json
+
+{
+    "descripcion":"descripcion 2 desde categorias.rest",
+    "comentario":"comentario 2 desde categorias.rest"
+}
+
+// Recupera todas las categorías
+
+###
+GET {{host}}/api/categorias
+
+
+// Recupera categoría por id
+
+###
+GET {{host}}/api/categorias/2
+
+
+// Actualiza una categoría 
+
+###
+PUT {{host}}/api/categorias/2
+Content-Type: application/json 
+
+{
+    "descripcion":"editando descripcion con petición put desde categorias.rest",
+    "comentario":"editando comentario con petición put desde categorias.rest"
+}
+
+
+// Borrar una categoría 
+
+###
+DELETE {{host}}/api/categorias/2
