@@ -12,21 +12,32 @@ const create = (usuario) => {
 
 
 const getAll = () => {
-    return db.query('   SELECT *\
-                        FROM usuarios as u'
+    return db.query('SELECT * ' +
+                    'FROM usuarios AS u ' +
+                    'JOIN roles AS r ON r.roles_id = u.roles_id'
     );
 }
 
 
 const getById = (usuarios_id) => {
     console.log(usuarios_id)
-    return db.query('select * from usuarios where usuarios_id = ?', [usuarios_id])
+    return db.query('SELECT * ' +
+                    'FROM usuarios AS u ' +
+                    'JOIN roles AS r ON r.roles_id = u.roles_id ' +
+                    'WHERE usuarios_id = ?',
+                    [usuarios_id]
+    );
 }
 
 
 const getByEmail = (email) => {
     console.log(email)
-    return db.query('select * from usuarios where email = ?', [email])
+    return db.query('SELECT * ' +
+                    'FROM usuarios AS u ' +
+                    'JOIN roles AS r ON r.roles_id = u.roles_id ' +
+                    'WHERE email = ?',
+                    [email]
+    );
 }
 
 

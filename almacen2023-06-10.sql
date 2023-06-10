@@ -26,17 +26,16 @@ CREATE TABLE `almacenes` (
   `almacenes_id` int NOT NULL AUTO_INCREMENT,
   `nombre_almacen` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `calle` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `codigo postal` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `codigo_postal` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `localidad` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `pais` varchar(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `latitud` point NOT NULL,
-  `longitud` point NOT NULL,
+  `coordenadas` point NOT NULL,
   `capacidad_almacen` decimal(3,1) NOT NULL,
   `usuarios_id_encargado` int NOT NULL,
   PRIMARY KEY (`almacenes_id`),
   KEY `fk_almacenes_usuarios1_idx` (`usuarios_id_encargado`),
   CONSTRAINT `fk_almacenes_usuarios1` FOREIGN KEY (`usuarios_id_encargado`) REFERENCES `usuarios` (`usuarios_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -45,6 +44,7 @@ CREATE TABLE `almacenes` (
 
 LOCK TABLES `almacenes` WRITE;
 /*!40000 ALTER TABLE `almacenes` DISABLE KEYS */;
+INSERT INTO `almacenes` VALUES (2,'UNIR','Calle','43104','Rioja','Es',_binary '\0\0\0\0\0\0\0Bœ¢\Ï[D@ytD:“€RÀ',1.0,26),(3,'UNIR','Calle','43104','Rioja','Es',_binary '\0\0\0\0\0\0\0Bœ¢\Ï[D@ytD:“€RÀ',1.0,26);
 /*!40000 ALTER TABLE `almacenes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -61,7 +61,7 @@ CREATE TABLE `camiones` (
   `capacidad_maxima` decimal(12,2) NOT NULL,
   `estado` enum('Habilitado','Inactivo','Completo') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`camiones_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -70,6 +70,7 @@ CREATE TABLE `camiones` (
 
 LOCK TABLES `camiones` WRITE;
 /*!40000 ALTER TABLE `camiones` DISABLE KEYS */;
+INSERT INTO `camiones` VALUES (2,'ABC1234',40.00,'Habilitado');
 /*!40000 ALTER TABLE `camiones` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -81,7 +82,7 @@ DROP TABLE IF EXISTS `categorias_materiales`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `categorias_materiales` (
-  `categorias_materiales_id` int NOT NULL,
+  `categorias_materiales_id` int NOT NULL AUTO_INCREMENT,
   `descripcion` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `comentario` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`categorias_materiales_id`)
@@ -210,8 +211,9 @@ CREATE TABLE `roles` (
   `descripcion_rol` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `responsabilidad` int NOT NULL,
   `comentario` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`roles_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  PRIMARY KEY (`roles_id`),
+  UNIQUE KEY `unique_description` (`descripcion_rol`)
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -220,7 +222,7 @@ CREATE TABLE `roles` (
 
 LOCK TABLES `roles` WRITE;
 /*!40000 ALTER TABLE `roles` DISABLE KEYS */;
-INSERT INTO `roles` VALUES (1,'Superusuario',50,NULL),(2,'Jefe de Equipo',40,NULL),(3,'Encargado',30,NULL),(4,'Operario de camion',20,NULL);
+INSERT INTO `roles` VALUES (1,'Superusuario',50,NULL),(2,'Jefe de Equipo',40,NULL),(3,'Encargado',30,NULL),(4,'Operario de camion',20,NULL),(17,'Repostador de gasolina',10,'Repone los camiones con gasolina. Limpia los camiones.');
 /*!40000 ALTER TABLE `roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -266,17 +268,22 @@ CREATE TABLE `usuarios` (
   `apellido` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `contrasena` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `activo` tinyint(1) NOT NULL,
+  `activo` tinyint(1) NOT NULL DEFAULT '1',
   `edad` int DEFAULT NULL,
   `ciudad` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `codigo_postal` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `pais` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `roles_id` int NOT NULL,
+  `usuarios_id_lider` int NOT NULL,
+  `imagen` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `estado` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`usuarios_id`),
   UNIQUE KEY `email_UNIQUE` (`email`),
   KEY `fk_usuarios_rol_idx` (`roles_id`),
+  KEY `fk_usuarios_liderado_por` (`usuarios_id_lider`),
+  CONSTRAINT `fk_usuarios_liderado_por` FOREIGN KEY (`usuarios_id_lider`) REFERENCES `usuarios` (`usuarios_id`),
   CONSTRAINT `fk_usuarios_rol` FOREIGN KEY (`roles_id`) REFERENCES `roles` (`roles_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -285,7 +292,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (1,'Mario','Giron','mario.giron@example.com','password123',1,29,'Madrid','28043','EspaÃ±a',1),(2,'Sarah','Johnson','sarah.johnson@example.com','password123',1,31,'Madrid','28043','EspaÃ±a',2),(3,'Robert','Garcia','robert.garcia@example.com','password123',1,29,'Zaragoza',NULL,NULL,3),(4,'Michelle','Chen','michelle.chen@example.com','password123',1,33,'Zaragoza',NULL,NULL,4),(5,'Daniel','Kim','daniel.kim@example.com','password123',1,26,'Barcelona',NULL,NULL,3),(6,'Sophia','Martinez','sophia.martinez@example.com','password456',1,30,'Barcelona',NULL,NULL,4);
+INSERT INTO `usuarios` VALUES (19,'super','usuario','superusuario@almacen.es','$2a$08$CGurYqfcr1/BR73zzxR.J.KqSX87mlONkVvbj6.OQc3yV1Dxd.x0G',1,NULL,NULL,NULL,NULL,1,19,NULL,NULL),(20,'super','usuario','superusuario1@almacen.es','$2a$08$ltz1Yt5HmcPqvqkjuq7JbuZTWCDIIuNjNxL1EYK2jET/DkgQoNfXy',1,NULL,NULL,NULL,NULL,1,20,NULL,NULL),(26,'Jefe','Primero','jefedeequipo2@almacen.es','$2a$08$5W4um/Sxxa9qYxACobNckesS1q4uazZDGj4tALgHIdGJDzKrrY3Aa',1,NULL,'Barcelona','08005',NULL,2,7,NULL,NULL),(27,'Encargado','Primero','encargadoprimero@almacen.es','$2a$08$wA9Q81kPfYqpZVdPFdvARek7a/30hfedyyaLp7PEeZVEe7o0PVGFa',1,NULL,'Barcelona','08005',NULL,3,26,NULL,NULL),(28,'Operario','Primero','operarioprimero@almacen.es','$2a$08$GAAByc3GUA0vpEJyV2nomuojakqoQjWdUeCNc/RfJ3PEIRzfkKiS6',1,NULL,'Barcelona','08005',NULL,3,26,NULL,NULL),(31,'pepito','Garrofe','pepitogarrofe@almacen.es','$2a$08$.L1QI6KLtCfySSwhHH0Bn.AqIeMotbSB8ZB26PGHMYFEIzlO7YcA2',1,NULL,'Barcelona','08005',NULL,2,26,NULL,NULL),(33,'transporter','transporter','transporter@almacen.es','$2a$08$PCaQd2/T749BSKB7U9kvvONX7crncNb5UFWhVAdTZ04GPYd/oq14a',1,NULL,'Barcelona','08005',NULL,2,26,NULL,NULL);
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -298,4 +305,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-06-04  7:40:06
+-- Dump completed on 2023-06-10 11:56:40
