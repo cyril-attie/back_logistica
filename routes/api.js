@@ -12,18 +12,20 @@ router.use('/perfil', require('./api/perfil'));
 router.use('/usuarios', checkJefeDeEquipo, require('./api/usuarios'));
 router.use('/roles', checkJefeDeEquipo, require('./api/roles'));
 router.use('/camiones', checkJefeDeEquipo, require('./api/camiones'));
-router.use('/almacenes', checkJefeDeEquipo, require('./api/almacenes'));
 
+// Encargado accede solo al detalle de almacen **que el es encargado**
+// jefe a todas las rutas.
+router.use('/almacenes', require('./api/almacenes'));
 
+// Encargado todas salvo borrar y editar, Jefe todas, Operario lee
+router.use('/materiales', require('./api/materiales'));  
+router.use('/categorias', require('./api/categorias_de_materiales')) 
 
-
-
-// rutas comunes a varios roles 
-router.use('/materiales', require('./api/materiales'));
-router.use('/pedidos', require('./api/pedidos'));
-router.use('/categorias', require('./api/categorias_de_materiales'))
+// Encargado todas, jefe ?, operario lee, 
 router.use('/stocks', require('./api/stocks'));
 
+// Operario crea, Encargado Edita,  
+router.use('/pedidos', require('./api/pedidos'));    // crear operario, 
 
 
 module.exports = router;

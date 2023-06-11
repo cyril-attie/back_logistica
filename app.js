@@ -2,11 +2,15 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-
+var cors = require('cors');
 const apiRouter = require('./routes/api');
 
 const app = express();
  
+
+
+app.use(cors()) // Use this after the variable declaration
+
 // Add headers
 app.use(function (req, res, next) {
 
