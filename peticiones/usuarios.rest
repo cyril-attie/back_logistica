@@ -11,7 +11,7 @@ Content-Type: application/json
 {
     "nombre": "cyril",
     "apellido":"operario",
-    "email":"operario@almacen.es",
+    "email":"encargadoprimero@almacen.es",
     "contrasena": "password123",
     "ciudad": "Barcelona",
     "codigo_postal":"08005",
@@ -22,7 +22,7 @@ Content-Type: application/json
 ###
 //Recupera todos los usuarios
 GET {{host}}/api/usuarios
-authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MzYsInJvbGVzX2lkIjoyLCJleHAiOjE2ODkwNzg3NzYsImlhdCI6MTY4NjQ4Njc3Nn0.kOSiD_4EsGTkCR6gfZh_ynyv4OKqJLK90GuruQLxL-M
+authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjcsInJvbGVzX2lkIjozLCJleHAiOjE2ODkwODcxMDAsImlhdCI6MTY4NjQ5NTEwMH0.IIA47mgdQOAfEcHBiy02defOlmhkq0nBigJH03930AI
 
 
 ###

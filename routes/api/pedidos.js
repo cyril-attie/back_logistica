@@ -2,10 +2,11 @@ const router = require('express').Router();
 const bcrypt = require('bcryptjs');
 
 const {getAll,create, getById, updateById, deleteById } = require('../../models/pedidos.model'); 
+const { checkOperario } = require('../../utils/middlewares');
 
 
 // Crear nuevo pedido
-router.post('/nuevo', async (req, res) =>{
+router.post('/nuevo', checkOperario, async (req, res) =>{
 	console.log(JSON.stringify(req.body));
     
     try {
@@ -22,14 +23,13 @@ router.post('/nuevo', async (req, res) =>{
 //Recupera todos los pedidos
 router.get('/', async (req, res) =>{
     try {
-        const [result] = await getAll(); 
-        res.json(result);
+        const [result] = await getAll();
     } catch (error) {
         res.json({ fatal: error.message });
     }
+
+    res.json(result);
 });
-
-
 
 
 //Recupera un pedido por id

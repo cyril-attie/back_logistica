@@ -6,7 +6,7 @@ POST {{host}}/api/auth/login
 Content-Type: application/json
 
 {
-    "email":"operario4@almacen.es",
+    "email":"encargadoprimero@almacen.es",
     "contrasena": "password123"
 }
 

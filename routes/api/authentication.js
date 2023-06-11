@@ -2,7 +2,8 @@ const router = require('express').Router();
 const bcrypt = require('bcryptjs');
 
 const { createToken } = require('../../utils/helpers');
-const { getByEmail, create } = require('../../models/usuarios.model')
+const { getByEmail, create } = require('../../models/usuarios.model');
+const { checkToken } = require('../../utils/middlewares');
 
 // register
 router.post('/register', async (req, res) => {
@@ -35,8 +36,10 @@ router.post('/register', async (req, res) => {
 });
 
 
+
+
 // login
-router.post('/login', async (req, res) => {
+router.post('/login', checkToken, async (req, res) => {
     // ¿Existe el email en la base de datos?
     const [usuarios]= await getByEmail(req.body.email);
    
