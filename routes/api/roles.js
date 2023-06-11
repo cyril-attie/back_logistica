@@ -6,7 +6,7 @@ const {getAll,create, getById, updateById, deleteById } = require('../../models/
 
 
 // Crear nuevo rol
-router.post('/nuevo', async (req, res) =>{
+router.post('/', async (req, res) =>{
 	console.log(JSON.stringify(req.body));
     
     try {

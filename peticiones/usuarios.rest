@@ -1,15 +1,6 @@
 
 @host=http://localhost:3000
 
-//=====LOGIN========
-POST {{host}}/api/usuarios/login
-Content-Type: application/json
-
-{
-    "email":"pepitogarrofe@almacen.es",
-    "contrasena": "password123"
-}
-
 
 //=====USUARIOS========
 ###
@@ -31,7 +22,7 @@ Content-Type: application/json
 ###
 //Recupera todos los usuarios
 GET {{host}}/api/usuarios
-authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlc19pZCI6MSwiZXhwIjoxNjg2MzI0Mjg1LCJpYXQiOjE2ODU4OTIyODV9.kh4BtmMdhjAWMC8ZnYYwFvp36Dt3jgtmDWQrEoxY06o
+authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MzYsInJvbGVzX2lkIjoyLCJleHAiOjE2ODkwNzg3NzYsImlhdCI6MTY4NjQ4Njc3Nn0.kOSiD_4EsGTkCR6gfZh_ynyv4OKqJLK90GuruQLxL-M
 
 
 ###

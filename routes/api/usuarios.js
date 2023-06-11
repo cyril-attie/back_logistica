@@ -1,8 +1,8 @@
 const router = require('express').Router();
 const bcrypt = require('bcryptjs');
 
-const { createToken } = require('../../utils/helpers');
-const {getAll,create, getById, getByEmail, updateById, deleteById } = require('../../models/usuarios.model') 
+
+const {getAll,create, getById, updateById, deleteById } = require('../../models/usuarios.model') 
 
 
 
@@ -23,32 +23,6 @@ router.post('/nuevo', async (req, res) =>{
 
 
 
-// login
-router.post('/login', async (req, res) => {
-    // ¿Existe el email en la base de datos?
-    
-    const [usuarios]= await getByEmail(req.body.email);
-   
-    if (usuarios.length === 0) {
-        return res.json({ fatal: 'Error en email y/o contraseña' });
-    }
-
-    // Recuperamos el usuario
-    const usuario = usuarios[0];
-
-    // ¿Coinciden las password?
-    const iguales = bcrypt.compareSync(req.body.contrasena, usuario.contrasena);
-    if (!iguales) {
-        return res.json({ fatal: 'Error en email y/o contraseña' });
-    }
-
-    res.json({
-        success: "Login correcto",
-        usuarios_id: usuario.usuarios_id,
-        token: createToken(usuario)
-    });
-
-});
 
 //Recupera todos los usuarios
 router.get('/', async (req, res) =>{

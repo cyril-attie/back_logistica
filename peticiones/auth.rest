@@ -1,0 +1,27 @@
+
+@host=http://localhost:3000
+
+//=====AUTHETICATION========
+POST {{host}}/api/auth/login
+Content-Type: application/json
+
+{
+    "email":"operario4@almacen.es",
+    "contrasena": "password123"
+}
+
+###
+// Registra nuevo jefe de equipo
+POST {{host}}/api/auth/register
+Content-Type: application/json
+
+{
+    "nombre": "cyril",
+    "apellido":"operario",
+    "email":"operario4@almacen.es",
+    "contrasena": "password123",
+    "ciudad": "Barcelona",
+    "codigo_postal":"08005",
+    "roles_id":2
+}
+###

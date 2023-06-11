@@ -2,6 +2,11 @@ const { checkToken, checkJefeDeEquipo } = require('../utils/middlewares');
 
 const router = require('express').Router();
 
+
+router.use('/auth',require('./api/authentication'));
+
+router.use(checkToken);
+
 router.use('/usuarios',require('./api/usuarios'));
 router.use('/roles', require('./api/roles'));
 router.use('/camiones', require('./api/camiones'));
