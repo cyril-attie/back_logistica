@@ -39,7 +39,7 @@ router.post('/register', async (req, res) => {
 
 
 // login
-router.post('/login', checkToken, async (req, res) => {
+router.post('/login', async (req, res) => {
     // ¿Existe el email en la base de datos?
     const [usuarios]= await getByEmail(req.body.email);
    
