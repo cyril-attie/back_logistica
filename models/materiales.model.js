@@ -1,12 +1,13 @@
 const create = (material) => {
     let { estado,
         peso,
+        nombre,
         descripcion_material,
         categorias_materiales_id } = material;
-    let values = [estado, peso, descripcion_material, categorias_materiales_id];
-    return db.query('   INSERT INTO materiales (estado,peso,descripcion_material,categorias_materiales_id  ) \
+    let values = [estado, peso, nombre,descripcion_material, categorias_materiales_id];
+    return db.query('   INSERT INTO materiales (estado,peso,nombre,descripcion_material,categorias_materiales_id  ) \
                         VALUES \
-                        (?, ?, ?,?)',
+                        (?, ?,?, ?,?)',
         values
     );
 };
@@ -39,7 +40,7 @@ const updateById = async (materiales_id, datosQueActualizar) => {
         datosQueActualizar[k] ? materiale[k] = datosQueActualizar[k] : 1;
     });
 
-    const extractValues = (r) => ["estado", "peso", "descripcion_material", "categorias_materiales_id","materiales_id"].map(k => r[k]);
+    const extractValues = (r) => ["estado", "peso","nombre", "descripcion_material", "categorias_materiales_id","materiales_id"].map(k => r[k]);
     const values = extractValues(materiale);
 
     // Guardar en la base de datos cambiado
@@ -48,6 +49,7 @@ const updateById = async (materiales_id, datosQueActualizar) => {
                         SET\
                         estado=?,\
                         peso=?,\
+                        nombre=?,\
                         descripcion_material=?,\
                         categorias_materiales_id =?\
                         WHERE materiales_id = ? '
