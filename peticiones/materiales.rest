@@ -7,10 +7,12 @@
 // Crear nuevo material
 POST {{host}}/api/materiales/nuevo
 Content-Type: application/json
+authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjcsInJvbGVzX2lkIjozLCJleHAiOjE2ODk0MzI5MjAsImlhdCI6MTY4Njg0MDkyMH0.qxmqz2O31iHQjCq6m2lWC54EmfEyNngPz-sK5Pwoy-A
 
 {
     "estado":"Nuevo",
     "peso":2.38,
+    "nombre":"Fresas",
     "descripcion_material":"fresas de verano",
     "categorias_materiales_id":1
 }
@@ -18,7 +20,7 @@ Content-Type: application/json
 ###
 //Recupera todos los materiales
 GET {{host}}/api/materiales
-authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlc19pZCI6MSwiZXhwIjoxNjg2MzI0Mjg1LCJpYXQiOjE2ODU4OTIyODV9.kh4BtmMdhjAWMC8ZnYYwFvp36Dt3jgtmDWQrEoxY06o
+authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjcsInJvbGVzX2lkIjozLCJleHAiOjE2ODk0MzI5MjAsImlhdCI6MTY4Njg0MDkyMH0.qxmqz2O31iHQjCq6m2lWC54EmfEyNngPz-sK5Pwoy-A
 
 
 ###
