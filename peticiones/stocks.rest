@@ -7,18 +7,19 @@
 // Crear nuevo stock
 POST {{host}}/api/stocks/nuevo
 Content-Type: application/json
+authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjcsInJvbGVzX2lkIjozLCJleHAiOjE2ODk0NDE5MjAsImlhdCI6MTY4Njg0OTkyMH0.i-_lfyysvqlVasbhP05-LvPavolSmHLYZgYn98jGg5k
 
 {
     "unidades":"60",
     "materiales_id":"4",
-    "almacenes_id":"3"
+    "almacenes_id":"3",
+    "posicion":1
 }
 
 ###
 //Recupera todos los stocks
 GET {{host}}/api/stocks
-authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlc19pZCI6MSwiZXhwIjoxNjg2MzI0Mjg1LCJpYXQiOjE2ODU4OTIyODV9.kh4BtmMdhjAWMC8ZnYYwFvp36Dt3jgtmDWQrEoxY06o
-
+authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjcsInJvbGVzX2lkIjozLCJleHAiOjE2ODk0NDE5MjAsImlhdCI6MTY4Njg0OTkyMH0.i-_lfyysvqlVasbhP05-LvPavolSmHLYZgYn98jGg5k
 
 ###
 // para ver los detalles de un stock

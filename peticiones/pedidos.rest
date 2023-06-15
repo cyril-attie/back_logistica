@@ -7,6 +7,7 @@
 // Crear nuevo pedido
 POST {{host}}/api/pedidos/nuevo
 Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjcsInJvbGVzX2lkIjozLCJleHAiOjE2ODk0NDE5MjAsImlhdCI6MTY4Njg0OTkyMH0.i-_lfyysvqlVasbhP05-LvPavolSmHLYZgYn98jGg5k
 
 {
     "fecha_salida":"{{$datetime 'YYYY-MM-DD HH:mm:ss' +2 d}}",
@@ -20,27 +21,29 @@ Content-Type: application/json
     "almacenes_id_destion":3,
     "camiones_id":2,
     "usuario_id_aprobador":28,
-    "stocks":{"3":50,"4": 30}
+    "stocks":{"3":{"unidadades":30,"posicion":1},"4": {"unidadades":60,"posicion":2}}
 }
 
 ###
 //Recupera todos los pedidos
 GET {{host}}/api/pedidos
-authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlc19pZCI6MSwiZXhwIjoxNjg2MzI0Mjg1LCJpYXQiOjE2ODU4OTIyODV9.kh4BtmMdhjAWMC8ZnYYwFvp36Dt3jgtmDWQrEoxY06o
+authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjcsInJvbGVzX2lkIjozLCJleHAiOjE2ODk0NDE5MjAsImlhdCI6MTY4Njg0OTkyMH0.i-_lfyysvqlVasbhP05-LvPavolSmHLYZgYn98jGg5k
 
 
 ###
 // para ver los detalles de un pedido
-GET {{host}}/api/pedidos/2
+GET {{host}}/api/pedidos/11
+authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjcsInJvbGVzX2lkIjozLCJleHAiOjE2ODk0NDE5MjAsImlhdCI6MTY4Njg0OTkyMH0.i-_lfyysvqlVasbhP05-LvPavolSmHLYZgYn98jGg5k
 
 ###
 // para actualizar los detalles de un pedido
-PUT {{host}}/api/pedidos/12
+PUT {{host}}/api/pedidos/11
 Content-Type: application/json 
+authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjcsInJvbGVzX2lkIjozLCJleHAiOjE2ODk0NDE5MjAsImlhdCI6MTY4Njg0OTkyMH0.i-_lfyysvqlVasbhP05-LvPavolSmHLYZgYn98jGg5k
 
 {
     "medida":3.14,
-    "stocks":{"3":49,"4": 81}
+    "stocks":{"3":{"unidades":46,"posicion":1},"4": {"unidades":18,"posicion":2}}
 }
 
 

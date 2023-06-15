@@ -1,9 +1,9 @@
 const create = (stock) => {
-    let {  unidades,materiales_id,almacenes_id} = stock;
-    let values = [unidades,materiales_id,almacenes_id];
-    return db.query('   INSERT INTO stocks (unidades,materiales_id,almacenes_id) \
+    let {  unidades,materiales_id,almacenes_id,posicion} = stock;
+    let values = [unidades,materiales_id,almacenes_id,posicion];
+    return db.query('   INSERT INTO stocks (unidades,materiales_id,almacenes_id,posicion) \
                         VALUES \
-                        (?, ?, ?)',
+                        (?, ?, ?,?)',
         values
     );
 };
@@ -36,7 +36,7 @@ const updateById = async (stocks_id, datosQueActualizar) => {
         datosQueActualizar[k] ? stock[k] = datosQueActualizar[k] : 1;
     });
 
-    const extractValues = (r) => ["unidades","materiales_id","almacenes_id","stocks_id"].map(k => r[k]);
+    const extractValues = (r) => ["unidades","materiales_id","almacenes_id","posicion","stocks_id"].map(k => r[k]);
     const values = extractValues(stock);
 
     // Guardar en la base de datos cambiado
@@ -45,7 +45,8 @@ const updateById = async (stocks_id, datosQueActualizar) => {
                         SET\
                         unidades = ?, \
                         materiales_id = ?, \
-                        almacenes_id = ? \
+                        almacenes_id = ?, \
+                        posicion=?\
                         WHERE stocks_id = ? '
         ,
         values

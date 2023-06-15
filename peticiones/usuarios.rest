@@ -22,8 +22,7 @@ Content-Type: application/json
 ###
 //Recupera todos los usuarios
 GET {{host}}/api/usuarios
-authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjcsInJvbGVzX2lkIjozLCJleHAiOjE2ODkwODcxMDAsImlhdCI6MTY4NjQ5NTEwMH0.IIA47mgdQOAfEcHBiy02defOlmhkq0nBigJH03930AI
-
+authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJvbGVzX2lkIjoyLCJleHAiOjE2ODk0NDE5OTQsImlhdCI6MTY4Njg0OTk5NH0.qVo6IEZNa8z6oPuiIU_P78wcDObQimiIxp9zZruEBcc
 
 ###
 // para ver los detalles de un usuario
