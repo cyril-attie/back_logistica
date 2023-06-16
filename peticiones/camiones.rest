@@ -18,16 +18,20 @@ authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJvb
 ###
 //Recupera todos los camiones
 GET {{host}}/api/camiones
-authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJvbGVzX2lkIjoyLCJleHAiOjE2ODk1MzQ3OTAsImlhdCI6MTY4Njk0Mjc5MH0.IBDqWTdTYe7LtTe10CpO-97yIsVRXUg5YKYdGqNrwZg
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJvbGVzX2lkIjoyLCJleHAiOjE2ODk1MzQ3OTAsImlhdCI6MTY4Njk0Mjc5MH0.IBDqWTdTYe7LtTe10CpO-97yIsVRXUg5YKYdGqNrwZg
 
 ###
 // para ver los detalles de un camion
 GET {{host}}/api/camiones/1
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJvbGVzX2lkIjoyLCJleHAiOjE2ODk1Mzg0NjIsImlhdCI6MTY4Njk0NjQ2Mn0.hZSdW-M7svEtMSh5zZSyKcMlPphq3kfaekHvDNHtH8k
+
 
 ###
 // para actualizar los detalles de un camion
 PUT {{host}}/api/camiones/1
 Content-Type: application/json 
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJvbGVzX2lkIjoyLCJleHAiOjE2ODk1Mzg0NjIsImlhdCI6MTY4Njk0NjQ2Mn0.hZSdW-M7svEtMSh5zZSyKcMlPphq3kfaekHvDNHtH8k
+
 
 {
     "estado":"Inactivo"
@@ -37,3 +41,4 @@ Content-Type: application/json
 ###
 // para borrar un camion
 DELETE {{host}}/api/camiones/1
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJvbGVzX2lkIjoyLCJleHAiOjE2ODk1Mzg0NjIsImlhdCI6MTY4Njk0NjQ2Mn0.hZSdW-M7svEtMSh5zZSyKcMlPphq3kfaekHvDNHtH8k

@@ -4,6 +4,8 @@
 //=====AUTHETICATION========
 POST {{host}}/api/auth/login
 Content-Type: application/json
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJvbGVzX2lkIjoyLCJleHAiOjE2ODk1Mzg0NjIsImlhdCI6MTY4Njk0NjQ2Mn0.hZSdW-M7svEtMSh5zZSyKcMlPphq3kfaekHvDNHtH8k
+
 
 {
     "email":"jefedeequipo2@almacen.es",
@@ -14,6 +16,8 @@ Content-Type: application/json
 // Registra nuevo jefe de equipo
 POST {{host}}/api/auth/register
 Content-Type: application/json
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJvbGVzX2lkIjoyLCJleHAiOjE2ODk1Mzg0NjIsImlhdCI6MTY4Njk0NjQ2Mn0.hZSdW-M7svEtMSh5zZSyKcMlPphq3kfaekHvDNHtH8k
+
 
 {
     "nombre": "cyril",

@@ -12,6 +12,8 @@
 ###
 POST {{host}}/api/categorias/nuevo
 Content-Type: application/json
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJvbGVzX2lkIjoyLCJleHAiOjE2ODk1Mzg0NjIsImlhdCI6MTY4Njk0NjQ2Mn0.hZSdW-M7svEtMSh5zZSyKcMlPphq3kfaekHvDNHtH8k
+
 
 {
     "descripcion":"descripcion 2 desde categorias.rest",
@@ -22,12 +24,16 @@ Content-Type: application/json
 
 ###
 GET {{host}}/api/categorias
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJvbGVzX2lkIjoyLCJleHAiOjE2ODk1Mzg0NjIsImlhdCI6MTY4Njk0NjQ2Mn0.hZSdW-M7svEtMSh5zZSyKcMlPphq3kfaekHvDNHtH8k
+
 
 
 // Recupera categoría por id
 
 ###
 GET {{host}}/api/categorias/2
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJvbGVzX2lkIjoyLCJleHAiOjE2ODk1Mzg0NjIsImlhdCI6MTY4Njk0NjQ2Mn0.hZSdW-M7svEtMSh5zZSyKcMlPphq3kfaekHvDNHtH8k
+
 
 
 // Actualiza una categoría 
@@ -35,6 +41,8 @@ GET {{host}}/api/categorias/2
 ###
 PUT {{host}}/api/categorias/2
 Content-Type: application/json 
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJvbGVzX2lkIjoyLCJleHAiOjE2ODk1Mzg0NjIsImlhdCI6MTY4Njk0NjQ2Mn0.hZSdW-M7svEtMSh5zZSyKcMlPphq3kfaekHvDNHtH8k
+
 
 {
     "descripcion":"editando descripcion con petición put desde categorias.rest",
@@ -46,3 +54,5 @@ Content-Type: application/json
 
 ###
 DELETE {{host}}/api/categorias/2
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJvbGVzX2lkIjoyLCJleHAiOjE2ODk1Mzg0NjIsImlhdCI6MTY4Njk0NjQ2Mn0.hZSdW-M7svEtMSh5zZSyKcMlPphq3kfaekHvDNHtH8k
+
