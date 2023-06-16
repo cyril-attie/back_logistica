@@ -27,19 +27,19 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjcsInJv
 ###
 //Recupera todos los pedidos
 GET {{host}}/api/pedidos
-authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjcsInJvbGVzX2lkIjozLCJleHAiOjE2ODk0NDE5MjAsImlhdCI6MTY4Njg0OTkyMH0.i-_lfyysvqlVasbhP05-LvPavolSmHLYZgYn98jGg5k
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjcsInJvbGVzX2lkIjozLCJleHAiOjE2ODk0NDE5MjAsImlhdCI6MTY4Njg0OTkyMH0.i-_lfyysvqlVasbhP05-LvPavolSmHLYZgYn98jGg5k
 
 
 ###
 // para ver los detalles de un pedido
 GET {{host}}/api/pedidos/11
-authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjcsInJvbGVzX2lkIjozLCJleHAiOjE2ODk0NDE5MjAsImlhdCI6MTY4Njg0OTkyMH0.i-_lfyysvqlVasbhP05-LvPavolSmHLYZgYn98jGg5k
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjcsInJvbGVzX2lkIjozLCJleHAiOjE2ODk0NDE5MjAsImlhdCI6MTY4Njg0OTkyMH0.i-_lfyysvqlVasbhP05-LvPavolSmHLYZgYn98jGg5k
 
 ###
 // para actualizar los detalles de un pedido
 PUT {{host}}/api/pedidos/11
 Content-Type: application/json 
-authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjcsInJvbGVzX2lkIjozLCJleHAiOjE2ODk0NDE5MjAsImlhdCI6MTY4Njg0OTkyMH0.i-_lfyysvqlVasbhP05-LvPavolSmHLYZgYn98jGg5k
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjcsInJvbGVzX2lkIjozLCJleHAiOjE2ODk0NDE5MjAsImlhdCI6MTY4Njg0OTkyMH0.i-_lfyysvqlVasbhP05-LvPavolSmHLYZgYn98jGg5k
 
 {
     "medida":3.14,
@@ -50,3 +50,4 @@ authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjcsInJ
 ###
 // para borrar un pedido
 DELETE {{host}}/api/pedidos/2
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJvbGVzX2lkIjoyLCJleHAiOjE2ODk1Mzg0NjIsImlhdCI6MTY4Njk0NjQ2Mn0.hZSdW-M7svEtMSh5zZSyKcMlPphq3kfaekHvDNHtH8k

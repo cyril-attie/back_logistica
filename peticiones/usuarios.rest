@@ -7,7 +7,7 @@
 // Crear nuevo usuario
 POST {{host}}/api/usuarios/nuevo
 Content-Type: application/json
-authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJvbGVzX2lkIjoyLCJleHAiOjE2ODk0NDE5OTQsImlhdCI6MTY4Njg0OTk5NH0.qVo6IEZNa8z6oPuiIU_P78wcDObQimiIxp9zZruEBcc
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJvbGVzX2lkIjoyLCJleHAiOjE2ODk0NDE5OTQsImlhdCI6MTY4Njg0OTk5NH0.qVo6IEZNa8z6oPuiIU_P78wcDObQimiIxp9zZruEBcc
 
 {
     "nombre": "cyril",
@@ -23,17 +23,20 @@ authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJ
 ###
 //Recupera todos los usuarios
 GET {{host}}/api/usuarios
-authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJvbGVzX2lkIjoyLCJleHAiOjE2ODk0NDE5OTQsImlhdCI6MTY4Njg0OTk5NH0.qVo6IEZNa8z6oPuiIU_P78wcDObQimiIxp9zZruEBcc
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJvbGVzX2lkIjoyLCJleHAiOjE2ODk0NDE5OTQsImlhdCI6MTY4Njg0OTk5NH0.qVo6IEZNa8z6oPuiIU_P78wcDObQimiIxp9zZruEBcc
 
 ###
 // para ver los detalles de un usuario
 GET {{host}}/api/usuarios/31
-authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJvbGVzX2lkIjoyLCJleHAiOjE2ODk0NDE5OTQsImlhdCI6MTY4Njg0OTk5NH0.qVo6IEZNa8z6oPuiIU_P78wcDObQimiIxp9zZruEBcc
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJvbGVzX2lkIjoyLCJleHAiOjE2ODk0NDE5OTQsImlhdCI6MTY4Njg0OTk5NH0.qVo6IEZNa8z6oPuiIU_P78wcDObQimiIxp9zZruEBcc
 
 ###
 // para actualizar los detalles de un usuario
 PUT {{host}}/api/usuarios/25
 Content-Type: application/json 
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJvbGVzX2lkIjoyLCJleHAiOjE2ODk1Mzg0NjIsImlhdCI6MTY4Njk0NjQ2Mn0.hZSdW-M7svEtMSh5zZSyKcMlPphq3kfaekHvDNHtH8k
+
+
 
 {
     "edad":26,
@@ -44,5 +47,7 @@ Content-Type: application/json
 ###
 // para borrar un usuario
 DELETE {{host}}/api/usuarios/29
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJvbGVzX2lkIjoyLCJleHAiOjE2ODk1Mzg0NjIsImlhdCI6MTY4Njk0NjQ2Mn0.hZSdW-M7svEtMSh5zZSyKcMlPphq3kfaekHvDNHtH8k
+
 
 
