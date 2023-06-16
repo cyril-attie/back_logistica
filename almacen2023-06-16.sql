@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.32, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.33, for Linux (x86_64)
 --
 -- Host: localhost    Database: almacen
 -- ------------------------------------------------------
--- Server version	8.0.32-1
+-- Server version	8.0.33
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -112,6 +112,7 @@ CREATE TABLE `materiales` (
   `peso` decimal(12,2) NOT NULL,
   `descripcion_material` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `categorias_materiales_id` int NOT NULL,
+  `nombre` varchar(64) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`materiales_id`),
   KEY `fk_materiales_categorias_materiales1_idx` (`categorias_materiales_id`),
   CONSTRAINT `fk_materiales_categorias_materiales1` FOREIGN KEY (`categorias_materiales_id`) REFERENCES `categorias_materiales` (`categorias_materiales_id`)
@@ -124,7 +125,7 @@ CREATE TABLE `materiales` (
 
 LOCK TABLES `materiales` WRITE;
 /*!40000 ALTER TABLE `materiales` DISABLE KEYS */;
-INSERT INTO `materiales` VALUES (4,'Nuevo',2.38,'Fresón ',1);
+INSERT INTO `materiales` VALUES (4,'Nuevo',2.38,'Fresón ',1,NULL);
 /*!40000 ALTER TABLE `materiales` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -185,6 +186,7 @@ CREATE TABLE `pedidos_have_stocks` (
   `pedidos_id` int NOT NULL,
   `stocks_id` int NOT NULL,
   `unidades_utilizadas` int DEFAULT NULL,
+  `posicion` int DEFAULT NULL,
   KEY `fk_pedidos_has_stock_stock1_idx` (`stocks_id`),
   KEY `fk_pedidos_has_stock_pedidos1_idx` (`pedidos_id`),
   CONSTRAINT `fk_pedidos_has_stock_pedidos1` FOREIGN KEY (`pedidos_id`) REFERENCES `pedidos` (`pedidos_id`),
@@ -198,7 +200,7 @@ CREATE TABLE `pedidos_have_stocks` (
 
 LOCK TABLES `pedidos_have_stocks` WRITE;
 /*!40000 ALTER TABLE `pedidos_have_stocks` DISABLE KEYS */;
-INSERT INTO `pedidos_have_stocks` VALUES (10,3,50),(10,4,30),(11,4,30),(11,3,50);
+INSERT INTO `pedidos_have_stocks` VALUES (10,3,50,NULL),(10,4,30,NULL),(11,4,30,NULL),(11,3,50,NULL);
 /*!40000 ALTER TABLE `pedidos_have_stocks` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -241,6 +243,7 @@ CREATE TABLE `stocks` (
   `unidades` int DEFAULT NULL,
   `materiales_id` int NOT NULL,
   `almacenes_id` int NOT NULL,
+  `posicion` int DEFAULT NULL,
   PRIMARY KEY (`stocks_id`),
   KEY `fk_stock_materiales1_idx` (`materiales_id`),
   KEY `fk_stock_almacenes1_idx` (`almacenes_id`),
@@ -255,7 +258,7 @@ CREATE TABLE `stocks` (
 
 LOCK TABLES `stocks` WRITE;
 /*!40000 ALTER TABLE `stocks` DISABLE KEYS */;
-INSERT INTO `stocks` VALUES (3,60,4,3),(4,60,4,3),(5,60,4,3);
+INSERT INTO `stocks` VALUES (3,60,4,3,NULL),(4,60,4,3,NULL),(5,60,4,3,NULL);
 /*!40000 ALTER TABLE `stocks` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -287,7 +290,7 @@ CREATE TABLE `usuarios` (
   KEY `fk_usuarios_liderado_por` (`usuarios_id_lider`),
   CONSTRAINT `fk_usuarios_liderado_por` FOREIGN KEY (`usuarios_id_lider`) REFERENCES `usuarios` (`usuarios_id`),
   CONSTRAINT `fk_usuarios_rol` FOREIGN KEY (`roles_id`) REFERENCES `roles` (`roles_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -296,7 +299,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (19,'super','usuario','superusuario@almacen.es','$2a$08$CGurYqfcr1/BR73zzxR.J.KqSX87mlONkVvbj6.OQc3yV1Dxd.x0G',1,NULL,NULL,NULL,NULL,1,19,NULL,NULL),(20,'super','usuario','superusuario1@almacen.es','$2a$08$ltz1Yt5HmcPqvqkjuq7JbuZTWCDIIuNjNxL1EYK2jET/DkgQoNfXy',1,NULL,NULL,NULL,NULL,1,20,NULL,NULL),(26,'Jefe','Primero','jefedeequipo2@almacen.es','$2a$08$5W4um/Sxxa9qYxACobNckesS1q4uazZDGj4tALgHIdGJDzKrrY3Aa',1,NULL,'Barcelona','08005',NULL,2,7,NULL,NULL),(27,'Encargado','Primero','encargadoprimero@almacen.es','$2a$08$wA9Q81kPfYqpZVdPFdvARek7a/30hfedyyaLp7PEeZVEe7o0PVGFa',1,NULL,'Barcelona','08005',NULL,3,26,NULL,NULL),(28,'Operario','Primero','operarioprimero@almacen.es','$2a$08$GAAByc3GUA0vpEJyV2nomuojakqoQjWdUeCNc/RfJ3PEIRzfkKiS6',1,NULL,'Barcelona','08005',NULL,3,26,NULL,NULL),(31,'pepito','Garrofe','pepitogarrofe@almacen.es','$2a$08$.L1QI6KLtCfySSwhHH0Bn.AqIeMotbSB8ZB26PGHMYFEIzlO7YcA2',1,NULL,'Barcelona','08005',NULL,2,26,NULL,NULL),(33,'transporter','transporter','transporter@almacen.es','$2a$08$PCaQd2/T749BSKB7U9kvvONX7crncNb5UFWhVAdTZ04GPYd/oq14a',1,NULL,'Barcelona','08005',NULL,2,26,NULL,NULL),(34,'cyril','operario','operario@almacen.es','$2a$08$GTcg8mPKblhTAnAShQAglebG6E2dDt9jETxeWcYcRzUMVY3V2KJhi',1,NULL,'Barcelona','08005',NULL,4,26,NULL,NULL);
+INSERT INTO `usuarios` VALUES (19,'super','usuario','superusuario@almacen.es','$2a$08$CGurYqfcr1/BR73zzxR.J.KqSX87mlONkVvbj6.OQc3yV1Dxd.x0G',1,NULL,NULL,NULL,NULL,1,19,NULL,NULL),(20,'super','usuario','superusuario1@almacen.es','$2a$08$ltz1Yt5HmcPqvqkjuq7JbuZTWCDIIuNjNxL1EYK2jET/DkgQoNfXy',1,NULL,NULL,NULL,NULL,1,20,NULL,NULL),(26,'Jefe','Primero','jefedeequipo2@almacen.es','$2a$08$5W4um/Sxxa9qYxACobNckesS1q4uazZDGj4tALgHIdGJDzKrrY3Aa',1,NULL,'Barcelona','08005',NULL,2,7,NULL,NULL),(27,'Encargado','Primero','encargadoprimero@almacen.es','$2a$08$wA9Q81kPfYqpZVdPFdvARek7a/30hfedyyaLp7PEeZVEe7o0PVGFa',1,NULL,'Barcelona','08005',NULL,3,26,NULL,NULL),(28,'Operario','Primero','operarioprimero@almacen.es','$2a$08$GAAByc3GUA0vpEJyV2nomuojakqoQjWdUeCNc/RfJ3PEIRzfkKiS6',1,NULL,'Barcelona','08005',NULL,3,26,NULL,NULL),(31,'pepito','Garrofe','pepitogarrofe@almacen.es','$2a$08$.L1QI6KLtCfySSwhHH0Bn.AqIeMotbSB8ZB26PGHMYFEIzlO7YcA2',1,NULL,'Barcelona','08005',NULL,2,26,NULL,NULL),(33,'transporter','transporter','transporter@almacen.es','$2a$08$PCaQd2/T749BSKB7U9kvvONX7crncNb5UFWhVAdTZ04GPYd/oq14a',1,NULL,'Barcelona','08005',NULL,2,26,NULL,NULL),(34,'cyril','operario','operario@almacen.es','$2a$08$GTcg8mPKblhTAnAShQAglebG6E2dDt9jETxeWcYcRzUMVY3V2KJhi',1,NULL,'Barcelona','08005',NULL,4,26,NULL,NULL),(36,'Pedro','Jimenez','encargado3@almacen.es','$2a$08$zvmU2ofdDDYTH15t/ksGsezpxnfpmaRQtBPiyfuHpRTgadWLLed/S',1,23,'Port d\'Alcúdia','07400','España',3,26,'https://upload.wikimedia.org/wikipedia/commons/3/38/Rhinoc%C3%A9ros_blanc_JHE.jpg',NULL),(38,'Cyril Joseph','Attie','operario73@almacen.es','$2a$08$n9mj0MKwkVebsIToVgPP0uDvturAiWXb/sPzr96Lm7ZaAreQNlu4.',1,26,'Port d\'Alcúdia','07400','Spain',4,26,'https://upload.wikimedia.org/wikipedia/commons/3/38/Rhinoc%C3%A9ros_blanc_JHE.jpg',NULL);
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -309,4 +312,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-06-10 20:50:55
+-- Dump completed on 2023-06-16  5:10:06
