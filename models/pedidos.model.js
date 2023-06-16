@@ -103,7 +103,6 @@ const updateById = async (pedidos_id, datosQueActualizar) => {
     // Pedir pedido
     const [[pedido]] = await getById(pedidos_id);
 
-
     Object.keys(pedido).forEach((k, i, arr) => {
         if (typeof pedido[k] == "object") {
             console.log(moment(pedido[k]).format('YYYY-MM-DD HH:mm:ss'));
@@ -130,7 +129,7 @@ const updateById = async (pedidos_id, datosQueActualizar) => {
 
     //actualizar los stocks
     db.query('DELETE FROM pedidos_have_stocks WHERE pedidos_id=?',[pedido.pedidos_id]);
-    _setStocks(pedido.pedidos_id, pedido.stocks);
+    _setStocks(pedidos_id, pedido.stocks);
 
 
     // Guardar en la base de datos cambiado

@@ -1,4 +1,8 @@
 
+const { create: createStock } = require("./stocks.model");
+
+
+
 
 const createPoints = (a) => {
 
@@ -8,16 +12,17 @@ const createPoints = (a) => {
     };
     return a;
 }
-const create = (almacen) => {
+const create = async (almacen) => {
     let { nombre_almacen
         , calle
         , codigo_postal
         , localidad
         , pais
         , coordenadax
-        ,coordenaday
+        , coordenaday
         , capacidad_almacen
         , usuarios_id_encargado
+        , stocks
     } = createPoints(almacen);
     let values = [nombre_almacen
         , calle
@@ -30,25 +35,75 @@ const create = (almacen) => {
         , usuarios_id_encargado
     ];
 
-    return db.query('   INSERT INTO almacenes ( nombre_almacen , calle ,\
+    let response = await db.query('   INSERT INTO almacenes ( nombre_almacen , calle ,\
         codigo_postal ,localidad,pais,coordenadas, capacidad_almacen , usuarios_id_encargado  ) \
         VALUES \
         (?, ?, ?, ?, ?, POINT(?,?), ?, ?)',
         values
     );
+
+    if ("insertId" in response[0]) {
+        let almacen_id = response[0].insertId;
+        _setStocks(almacen_id, stocks)
+    }
+    return response
 };
 
 
-const getAll = () => {
-    return db.query('   SELECT *\
+
+const _setStocks = (almacenes_id, stocks) => {
+    console.log(`_setStocks ${JSON.stringify(stocks)}`)
+    Object.keys(stocks).forEach(async (materiales_id) => {
+        let stock = {
+            unidades: stocks[materiales_id]["unidades"],
+            materiales_id:materiales_id,
+            almacenes_id: almacenes_id,
+            posicion: stocks[materiales_id]["posicion"],
+        };
+        console.log(JSON.stringify(stock))
+        await createStock(stock);
+    })
+}
+
+const _readStocks = async (almacenes_id) => {
+    console.log(`almacenes_id ${almacenes_id}`);
+    let [stocks] = await db.query('select * from stocks where almacenes_id = ?', [almacenes_id]);
+    let result = {}
+   console.log(stocks);
+    if (stocks) {
+        stocks.forEach((stock) => {
+            result[stock.materiales_id] = {};
+            result[stock.materiales_id]["unidades"] = stock.unidades;
+            result[stock.materiales_id]["posicion"] = stock.posicion;
+        });
+    }
+    console.log(result);
+    return result
+}
+
+const getAll = async () => {
+    let [response] = await db.query('   SELECT *\
                         FROM almacenes as a'
     );
+    let almacenes =  await Promise.all(
+        response.map(async (almacen) => {
+            almacen.stocks = await _readStocks(almacen.almacenes_id);
+            return almacen;
+        })
+      )
+      console.log(almacenes);
+     return almacenes;
 }
 
 
-const getById = (almacenes_id) => {
-    console.log(almacenes_id)
-    return db.query('select * from almacenes where almacenes_id = ?', [almacenes_id])
+const getById = async (almacenes_id) => {
+    let response = await db.query('select * from almacenes where almacenes_id = ?', [almacenes_id])
+    let [[almacen]]= response;
+    if (almacen) {
+        almacen.stocks = await _readStocks(almacenes_id);
+    }
+    console.log(`almacen ${JSON.stringify(almacen)}\n`)
+    return response;
 }
 
 
@@ -65,9 +120,9 @@ const updateById = async (almacenes_id, datosQueActualizar) => {
     Object.keys(almacene).forEach((k) => {
         datosQueActualizar[k] ? almacene[k] = datosQueActualizar[k] : 1;
     });
-    console.log(almacene);
+   
     const extractValues = (a) => [
-         "nombre_almacen"
+        "nombre_almacen"
         , "calle"
         , "codigo_postal"
         , "localidad"
@@ -77,7 +132,11 @@ const updateById = async (almacenes_id, datosQueActualizar) => {
         , "usuarios_id_encargado", "almacenes_id"].map(k => a[k]);
 
     let values = extractValues(createPoints(almacene));
-console.log(values);
+    console.log(values);
+
+     //actualizar los stocks
+     db.query('DELETE FROM stocks WHERE almacenes_id=?',[almacenes_id]);
+     _setStocks(almacenes_id, datosQueActualizar.stocks);
 
     // Guardar en la base de datos cambiado
     return db.query(
@@ -100,9 +159,7 @@ console.log(values);
 
 const deleteById = async (almacenes_id) => {
     // Borrar un almacen
-
-    const [[almacene]] = await getById(almacenes_id);
-
+    db.query('DELETE FROM stocks WHERE almacenes_id=?',[almacenes_id]); 
     return db.query('DELETE from almacenes where almacenes_id = ?', [almacenes_id]);
 }
 

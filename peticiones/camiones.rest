@@ -1,12 +1,13 @@
-@host = http://localhost:3000
+@host = http://113.30.148.96:3000
 
 
 
 //=====CAMIONES========
 ###
-// Crear nuevo rol
+// Crear nuevo camion
 POST {{host}}/api/camiones/nuevo
 Content-Type: application/json
+authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJvbGVzX2lkIjoyLCJleHAiOjE2ODk1MzQ3OTAsImlhdCI6MTY4Njk0Mjc5MH0.IBDqWTdTYe7LtTe10CpO-97yIsVRXUg5YKYdGqNrwZg
 
 {
     "matricula_camion":"ABC1234",
@@ -17,8 +18,7 @@ Content-Type: application/json
 ###
 //Recupera todos los camiones
 GET {{host}}/api/camiones
-authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlc19pZCI6MSwiZXhwIjoxNjg2MzI0Mjg1LCJpYXQiOjE2ODU4OTIyODV9.kh4BtmMdhjAWMC8ZnYYwFvp36Dt3jgtmDWQrEoxY06o
-
+authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJvbGVzX2lkIjoyLCJleHAiOjE2ODk1MzQ3OTAsImlhdCI6MTY4Njk0Mjc5MH0.IBDqWTdTYe7LtTe10CpO-97yIsVRXUg5YKYdGqNrwZg
 
 ###
 // para ver los detalles de un camion

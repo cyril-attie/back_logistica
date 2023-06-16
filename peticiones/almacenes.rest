@@ -2,11 +2,13 @@
 
 
 
+
 //=====ALMACENES========
 ###
 // Crear nuevo almacen
 POST {{host}}/api/almacenes/nuevo
 Content-Type: application/json
+authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJvbGVzX2lkIjoyLCJleHAiOjE2ODk1Mzg0NjIsImlhdCI6MTY4Njk0NjQ2Mn0.hZSdW-M7svEtMSh5zZSyKcMlPphq3kfaekHvDNHtH8k
 
 {
     "nombre_almacen" : "UNIR"
@@ -17,17 +19,21 @@ Content-Type: application/json
         , "coordenadas":{"x":40.71727401,"y" :-74.00898606}
         , "capacidad_almacen":1
         , "usuarios_id_encargado":26
+        , "stocks":{
+            "4":{"unidades": 4000, "posicion":1},
+            "6":{"unidades": 2000, "posicion":2}
+        }
 }
 
 ###
 //Recupera todos los almacenes
 GET {{host}}/api/almacenes
-authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlc19pZCI6MSwiZXhwIjoxNjg2MzI0Mjg1LCJpYXQiOjE2ODU4OTIyODV9.kh4BtmMdhjAWMC8ZnYYwFvp36Dt3jgtmDWQrEoxY06o
-
+authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJvbGVzX2lkIjoyLCJleHAiOjE2ODk1MzQ3OTAsImlhdCI6MTY4Njk0Mjc5MH0.IBDqWTdTYe7LtTe10CpO-97yIsVRXUg5YKYdGqNrwZg
 
 ###
 // para ver los detalles de un almacen
-GET {{host}}/api/almacenes/1
+GET {{host}}/api/almacenes/9
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJvbGVzX2lkIjoyLCJleHAiOjE2ODk1Mzg0NjIsImlhdCI6MTY4Njk0NjQ2Mn0.hZSdW-M7svEtMSh5zZSyKcMlPphq3kfaekHvDNHtH8k
 
 ###
 // para actualizar los detalles de un almacen
