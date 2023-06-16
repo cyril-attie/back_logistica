@@ -1,5 +1,8 @@
 const jwt = require('jsonwebtoken');
 const { getById } = require('../models/usuarios.model');
+const { getRolePermissionsOf } = require('../models/roles.model');
+const { getIdByMetodoRuta } = require('../models/permisos.model');
+
 
 const checkToken = async (req, res, next) => {
     // ¿Viene incluida la cabecera de Authorization?
@@ -26,6 +29,65 @@ const checkToken = async (req, res, next) => {
     // Object.keys(req).forEach(k => { try { console.log(`${k} : ${req[k]}`) } catch (e) { 1 } })
     next();
 }
+
+
+const checkPermisos = async (req, res, next) => {
+
+    let roles_id = req.usuario.roles_id;
+    let ruta = req.originalUrl;
+    let metodo = req.method;
+
+    const [response] = await getRolePermissionsOf(roles_id);
+    if (!response) { 
+        
+        let stringError= `No hay ningún permiso asociado al rol ${roles_id}. 
+        Contacta con tu lider de equipo ${req.usuario.lider}`;
+        console.log(stringError);
+        res.json({fatal:stringError});
+    }
+    const permisos_ids = response.map(row => row.permisos_id);
+    const [[permiso]] = await getIdByMetodoRuta(metodo, ruta);
+
+    if (permisos_ids.find(e=>e==permiso.permisos_id)) {
+        console.log("Yes authorized");
+        next();
+    } else {
+        res.json({fatal:`Permisos insuficientes. Hable con el jefe de equipo ${req.usuario.lider} para obtener el permiso ${metodo} ${ruta}.`})
+    }
+
+    //console.log(`permisos_ids ${JSON.stringify(permisos_ids)}\n\n permiso ${JSON.stringify(permiso)}\n\nmetodo ${metodo}\n ruta ${ruta}\npermiso ${permiso}.`);
+    
+}
+
+
+
+/* console.log("we are in checkpermisos")
+Object.keys(req).forEach((k) => {
+    try {
+        console.log(`k: ${k}\nreq[k]=${JSON.stringify(req[k])}\n\n`)
+    } catch (err) { 1 }
+}
+); */
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const checkJefeDeEquipo = (req, res, next) => {
 
@@ -75,4 +137,4 @@ const checkSuperusuario = (req, res, next) => {
     next();
 }
 
-module.exports = { checkToken, checkEncargado, checkOperario, checkSuperusuario, checkJefeDeEquipo };
+module.exports = { checkToken, checkPermisos, checkEncargado, checkOperario, checkSuperusuario, checkJefeDeEquipo };

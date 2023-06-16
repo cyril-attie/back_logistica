@@ -16,6 +16,10 @@ const getAll = () => {
 }
 
 
+const getRolePermissionsOf = (roles_id)=>{
+    return db.query('select permisos_id from roles_have_permisos where roles_id = ?', [roles_id]);
+}
+
 const getById = (roles_id) => {
     console.log(roles_id)
     return db.query('select * from roles where roles_id = ?', [roles_id])
@@ -67,5 +71,5 @@ const deleteById = async (roles_id) => {
 
 
 module.exports = {
-    create, getAll, getById, updateById, deleteById
+    create, getAll, getById, updateById, deleteById, getRolePermissionsOf
 }

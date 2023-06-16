@@ -7,25 +7,24 @@
 // Crear nuevo material
 POST {{host}}/api/materiales/nuevo
 Content-Type: application/json
-authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjcsInJvbGVzX2lkIjozLCJleHAiOjE2ODk0MzI5MjAsImlhdCI6MTY4Njg0MDkyMH0.qxmqz2O31iHQjCq6m2lWC54EmfEyNngPz-sK5Pwoy-A
+authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MzQsInJvbGVzX2lkIjo0LCJleHAiOjE2ODk1MzA1NzIsImlhdCI6MTY4NjkzODU3Mn0.g9iSI5nuJuaPBmHGt2r4kZdLRgsx8NCuGjOhn285BRE
 
 {
     "estado":"Nuevo",
-    "peso":2.38,
-    "nombre":"Fresas",
-    "descripcion_material":"fresas de verano",
+    "peso":6.28,
+    "nombre":"Fresones",
+    "descripcion_material":"fresones de verano",
     "categorias_materiales_id":1
 }
 
 ###
 //Recupera todos los materiales
 GET {{host}}/api/materiales
-authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjcsInJvbGVzX2lkIjozLCJleHAiOjE2ODk0MzI5MjAsImlhdCI6MTY4Njg0MDkyMH0.qxmqz2O31iHQjCq6m2lWC54EmfEyNngPz-sK5Pwoy-A
-
-
+authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MzQsInJvbGVzX2lkIjo0LCJleHAiOjE2ODk1MjU5ODMsImlhdCI6MTY4NjkzMzk4M30.Ji9AGfgu56Snr5RHn50pVH2Y8-exviYVeBoA6quPZbo
 ###
 // para ver los detalles de un material
-GET {{host}}/api/materiales/4
+GET {{host}}/api/materiales/6
+authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjcsInJvbGVzX2lkIjozLCJleHAiOjE2ODk0MzI5MjAsImlhdCI6MTY4Njg0MDkyMH0.qxmqz2O31iHQjCq6m2lWC54EmfEyNngPz-sK5Pwoy-A
 
 ###
 // para actualizar los detalles de un metarial
@@ -40,3 +39,4 @@ Content-Type: application/json
 ###
 // para borrar un material
 DELETE {{host}}/api/materiales/3
+authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjcsInJvbGVzX2lkIjozLCJleHAiOjE2ODk0MzI5MjAsImlhdCI6MTY4Njg0MDkyMH0.qxmqz2O31iHQjCq6m2lWC54EmfEyNngPz-sK5Pwoy-A

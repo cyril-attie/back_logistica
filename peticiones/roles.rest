@@ -17,8 +17,7 @@ Content-Type: application/json
 ###
 //Recupera todos los roles
 GET {{host}}/api/roles
-authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlc19pZCI6MSwiZXhwIjoxNjg2MzI0Mjg1LCJpYXQiOjE2ODU4OTIyODV9.kh4BtmMdhjAWMC8ZnYYwFvp36Dt3jgtmDWQrEoxY06o
-
+authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MzQsInJvbGVzX2lkIjo0LCJleHAiOjE2ODk1MzA1NzIsImlhdCI6MTY4NjkzODU3Mn0.g9iSI5nuJuaPBmHGt2r4kZdLRgsx8NCuGjOhn285BRE
 
 ###
 // para ver los detalles de un role

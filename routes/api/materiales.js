@@ -5,11 +5,6 @@ const { getAll, create, getById, updateById, deleteById } = require('../../model
 const { checkJefeDeEquipo } = require('../../utils/middlewares');
 
 
-
-
-
-
-
 // Crear nuevo material
 router.post('/nuevo', async (req, res) => {
     console.log(JSON.stringify(req.body));

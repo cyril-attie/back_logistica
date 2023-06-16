@@ -7,6 +7,7 @@
 // Crear nuevo usuario
 POST {{host}}/api/usuarios/nuevo
 Content-Type: application/json
+authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJvbGVzX2lkIjoyLCJleHAiOjE2ODk0NDE5OTQsImlhdCI6MTY4Njg0OTk5NH0.qVo6IEZNa8z6oPuiIU_P78wcDObQimiIxp9zZruEBcc
 
 {
     "nombre": "cyril",
@@ -27,6 +28,7 @@ authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJ
 ###
 // para ver los detalles de un usuario
 GET {{host}}/api/usuarios/31
+authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJvbGVzX2lkIjoyLCJleHAiOjE2ODk0NDE5OTQsImlhdCI6MTY4Njg0OTk5NH0.qVo6IEZNa8z6oPuiIU_P78wcDObQimiIxp9zZruEBcc
 
 ###
 // para actualizar los detalles de un usuario

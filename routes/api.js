@@ -1,4 +1,4 @@
-const { checkToken, checkJefeDeEquipo } = require('../utils/middlewares');
+const { checkToken, checkJefeDeEquipo, checkPermisos } = require('../utils/middlewares');
 const router = require('express').Router();
 
 // rutas públicas
@@ -8,10 +8,13 @@ router.use('/auth', require('./api/authentication'));
 router.use(checkToken);
 router.use('/perfil', require('./api/perfil'));
 
+// Verificar la authorización al método y ruta llamados en función del rol.
+router.use(checkPermisos);
+
 // rutas de jefe de Equipo
-router.use('/usuarios', checkJefeDeEquipo, require('./api/usuarios'));
-router.use('/roles', checkJefeDeEquipo, require('./api/roles'));
-router.use('/camiones', checkJefeDeEquipo, require('./api/camiones'));
+router.use('/usuarios', require('./api/usuarios'));
+router.use('/roles', require('./api/roles'));
+router.use('/camiones', require('./api/camiones'));
 
 // Encargado accede solo al detalle de almacen **que el es encargado**
 // jefe a todas las rutas.
