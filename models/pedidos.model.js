@@ -58,9 +58,10 @@ const _setStocks= (pedidos_id,stocks) =>{
     console.log(`_setStocks ${JSON.stringify(stocks)}`)
 
     stocks.forEach(async (stock) => {
+        console.log(stock)
         await db.query('   INSERT INTO pedidos_have_stocks \
         (pedidos_id,stocks_id,unidades_utilizadas,posicion) VALUES (?,?,?,?)',
-            [pedidos_id, stock.stocks_id, stock["unidades"], stocks["posicion"] ])
+            [pedidos_id, stock.stocks_id, stock["unidades"], stock["posicion"] ])
     });
 }
 

@@ -21,8 +21,8 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MzQsInJv
     "almacenes_id_destion":3,
     "camiones_id":2,
     "usuario_id_aprobador":28,
-    "stocks":[{"materiales_id":3,"stock_id":7,"unidadades":30,"posicion":1},
-    {"materiales_id":4,"unidadades":60,"stock_id":7,"posicion":2}]
+    "stocks":[{"materiales_id":3,"stocks_id":7,"unidades":30,"posicion":1},
+            {"materiales_id":4,"unidades":60,"stocks_id":7,"posicion":2}]
 }
 
 ###
@@ -33,7 +33,7 @@ authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjcsInJv
 
 ###
 // para ver los detalles de un pedido
-GET {{host}}/api/pedidos/16
+GET {{host}}/api/pedidos/37
 
 ###
 // para actualizar los detalles de un pedido
