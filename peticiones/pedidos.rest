@@ -34,7 +34,6 @@ authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjcsInJv
 ###
 // para ver los detalles de un pedido
 GET {{host}}/api/pedidos/16
-authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjcsInJvbGVzX2lkIjozLCJleHAiOjE2ODk0NDE5MjAsImlhdCI6MTY4Njg0OTkyMH0.i-_lfyysvqlVasbhP05-LvPavolSmHLYZgYn98jGg5k
 
 ###
 // para actualizar los detalles de un pedido
