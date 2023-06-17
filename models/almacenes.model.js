@@ -52,29 +52,26 @@ const create = async (almacen) => {
 
 
 const _setStocks = (almacenes_id, stocks) => {
-    console.log(`_setStocks ${JSON.stringify(stocks)}`)
-    Object.keys(stocks).forEach(async (materiales_id) => {
-        let stock = {
-            unidades: stocks[materiales_id]["unidades"],
-            materiales_id:materiales_id,
-            almacenes_id: almacenes_id,
-            posicion: stocks[materiales_id]["posicion"],
+    console.log(`_setStocks ${JSON.stringify(stocks)}\n\n almacenes_id ${almacenes_id} `)
+    stocks.forEach(async (stock) => {
+        let stock2create = {
+            unidades: stock["unidades"],
+            materiales_id:stock["materiales_id"],
+            "almacenes_id": almacenes_id,
+            posicion: stock["posicion"]
         };
-        console.log(JSON.stringify(stock))
-        await createStock(stock);
+        await createStock(stock2create);
     })
 }
 
 const _readStocks = async (almacenes_id) => {
     console.log(`almacenes_id ${almacenes_id}`);
     let [stocks] = await db.query('select * from stocks where almacenes_id = ?', [almacenes_id]);
-    let result = {}
+    let result = []
    console.log(stocks);
     if (stocks) {
         stocks.forEach((stock) => {
-            result[stock.materiales_id] = {};
-            result[stock.materiales_id]["unidades"] = stock.unidades;
-            result[stock.materiales_id]["posicion"] = stock.posicion;
+            result.push({"material_id": stock.materiales_id, "unidades":stock.unidades , "posicion": stock.posicion});
         });
     }
     console.log(result);

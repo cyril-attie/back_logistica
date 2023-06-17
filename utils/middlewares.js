@@ -25,7 +25,7 @@ const checkToken = async (req, res, next) => {
     // obj dispone de las siguientes claves: user_id, user_role, exp
     const [usuarios] = await getById(obj.usuarios_id);
     req.usuario = usuarios[0];
-    // console.log(`req.usuario \n\n ${JSON.stringify(req.usuario)}`)
+    console.log(`req.usuario \n\n ${JSON.stringify(req.usuario)}`)
     // Object.keys(req).forEach(k => { try { console.log(`${k} : ${req[k]}`) } catch (e) { 1 } })
     next();
 }
