@@ -1,0 +1,31 @@
+
+@host=http://localhost:3000
+
+
+//=====PERFIL========
+
+###
+//Recupera PERFIL
+GET {{host}}/api/perfil
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJvbGVzX2lkIjoyLCJleHAiOjE2ODk0NDE5OTQsImlhdCI6MTY4Njg0OTk5NH0.qVo6IEZNa8z6oPuiIU_P78wcDObQimiIxp9zZruEBcc
+
+
+###
+// para actualizar los detalles de perfil
+PUT {{host}}/api/perfil
+Content-Type: application/json 
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJvbGVzX2lkIjoyLCJleHAiOjE2ODk1Mzg0NjIsImlhdCI6MTY4Njk0NjQ2Mn0.hZSdW-M7svEtMSh5zZSyKcMlPphq3kfaekHvDNHtH8k
+
+{
+    "edad":26,
+    "codigo_postul":"08006"
+}
+
+
+###
+// para borrar un perfil
+DELETE {{host}}/api/perfil
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJvbGVzX2lkIjoyLCJleHAiOjE2ODk1Mzg0NjIsImlhdCI6MTY4Njk0NjQ2Mn0.hZSdW-M7svEtMSh5zZSyKcMlPphq3kfaekHvDNHtH8k
+
+
+

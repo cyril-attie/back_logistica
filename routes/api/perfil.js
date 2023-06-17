@@ -1,14 +1,13 @@
 const router = require('express').Router();
 const bcrypt = require('bcryptjs');
 
-
 const { updateById, deleteById } = require('../../models/usuarios.model')
 
 // Obtener el perfil 
 router.get('/', async (req, res) => {
     try {
         req.usuario.contrasena = '';
-        res.json(usuario);
+        res.json(req.usuario);
     } catch (error) {
         res.json({ fatal: error.message });
     }

@@ -1,4 +1,4 @@
-@host = http://113.30.148.96:3000
+@host = http://localhost:3000
 
 
 
@@ -21,7 +21,8 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MzQsInJv
     "almacenes_id_destion":3,
     "camiones_id":2,
     "usuario_id_aprobador":28,
-    "stocks":{"3":{"unidadades":30,"posicion":1},"4": {"unidadades":60,"posicion":2}}
+    "stocks":[{"materiales_id":3,"stock_id":7,"unidadades":30,"posicion":1},
+    {"materiales_id":4,"unidadades":60,"stock_id":7,"posicion":2}]
 }
 
 ###
@@ -32,7 +33,7 @@ authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjcsInJv
 
 ###
 // para ver los detalles de un pedido
-GET {{host}}/api/pedidos/11
+GET {{host}}/api/pedidos/16
 authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjcsInJvbGVzX2lkIjozLCJleHAiOjE2ODk0NDE5MjAsImlhdCI6MTY4Njg0OTkyMH0.i-_lfyysvqlVasbhP05-LvPavolSmHLYZgYn98jGg5k
 
 ###

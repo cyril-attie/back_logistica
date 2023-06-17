@@ -20,10 +20,10 @@ authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJv
         , "coordenadas":{"x":40.71727401,"y" :-74.00898606}
         , "capacidad_almacen":1
         , "usuarios_id_encargado":26
-        , "stocks":{
-            "4":{"unidades": 4000, "posicion":1},
-            "6":{"unidades": 2000, "posicion":2}
-        }
+        , "stocks":[
+            {"materiales_id":4,"unidades": 4000, "posicion":1},
+            {"materiales_id":6, "unidades": 2000, "posicion":2}
+        ]
 }
 
 ###
@@ -33,7 +33,7 @@ authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJv
 
 ###
 // para ver los detalles de un almacen
-GET {{host}}/api/almacenes/9
+GET {{host}}/api/almacenes/19
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJvbGVzX2lkIjoyLCJleHAiOjE2ODk1Mzg0NjIsImlhdCI6MTY4Njk0NjQ2Mn0.hZSdW-M7svEtMSh5zZSyKcMlPphq3kfaekHvDNHtH8k
 
 ###

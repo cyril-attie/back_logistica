@@ -57,24 +57,25 @@ const getAll = async () => {
 const _setStocks= (pedidos_id,stocks) =>{
     console.log(`_setStocks ${JSON.stringify(stocks)}`)
 
-    Object.keys(stocks).forEach(async (stocks_id) => {
+    stocks.forEach(async (stock) => {
         await db.query('   INSERT INTO pedidos_have_stocks \
         (pedidos_id,stocks_id,unidades_utilizadas,posicion) VALUES (?,?,?,?)',
-            [pedidos_id, stocks_id, stocks[stocks_id]["unidades"], stocks[stocks_id]["posicion"] ])
+            [pedidos_id, stock.stocks_id, stock["unidades"], stocks["posicion"] ])
     });
 }
 
 
 const _readStocks = async (pedidos_id) => {
     let [stocks] = await db.query('select * from pedidos_have_stocks where pedidos_id = ?', [pedidos_id]);
-    let result = {} 
+    let result = [] 
+    console.log(stocks)
     if (stocks) {
         stocks.forEach((stock) => {
-            result[stock.stocks_id]={};
-            result[stock.stocks_id]["unidades"] = stock.unidades_utilizadas;
-            result[stock.stocks_id]["posicion"] = stock.posicion;
+            console.log(stock)
+            result.push({"unidades_utilizadas":stock.unidades_utilizadas,"posicion":stock.posicion, "stocks_id":stock.stocks_id})
         });
     }
+    console.log(result)
     return result
 }
 
