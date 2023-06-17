@@ -1,6 +1,6 @@
 const create = (stock) => {
-    let {  unidades,materiales_id,almacenes_id,posicion} = stock;
-    let values = [unidades,materiales_id,almacenes_id,posicion];
+    let { unidades, materiales_id, almacenes_id, posicion } = stock;
+    let values = [unidades, materiales_id, almacenes_id, posicion];
     return db.query('   INSERT INTO stocks (unidades,materiales_id,almacenes_id,posicion) \
                         VALUES \
                         (?, ?, ?,?)',
@@ -9,9 +9,14 @@ const create = (stock) => {
 };
 
 
-const getAll = () => {
-    return db.query('   SELECT *\
-                        FROM stocks as s'
+const getAll = (almacenes_id) => {
+    return db.query('select s.stocks_id, s.unidades, s.posicion, ' +
+        's.materiales_id,m.nombre as nombre_material, m.descripcion_material,m.categorias_materiales_id as categorias_materiales_id, ' +
+        'cm.descripcion as descripcion_categoria, cm.comentario as comentario_categoria ' +
+        'from stocks as s ' +
+        'join materiales as m on s.materiales_id=m.materiales_id ' +
+        'join categorias_materiales as cm on cm.categorias_materiales_id=m.categorias_materiales_id ' +
+        'where s.almacenes_id = ?',[almacenes_id]
     );
 }
 
@@ -36,7 +41,7 @@ const updateById = async (stocks_id, datosQueActualizar) => {
         datosQueActualizar[k] ? stock[k] = datosQueActualizar[k] : 1;
     });
 
-    const extractValues = (r) => ["unidades","materiales_id","almacenes_id","posicion","stocks_id"].map(k => r[k]);
+    const extractValues = (r) => ["unidades", "materiales_id", "almacenes_id", "posicion", "stocks_id"].map(k => r[k]);
     const values = extractValues(stock);
 
     // Guardar en la base de datos cambiado

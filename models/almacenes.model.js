@@ -1,5 +1,5 @@
 
-const { create: createStock } = require("./stocks.model");
+const { getAll:getallStocksFromAlmacen,create: createStock } = require("./stocks.model");
 
 
 
@@ -65,17 +65,12 @@ const _setStocks = (almacenes_id, stocks) => {
 }
 
 const _readStocks = async (almacenes_id) => {
-    console.log(`almacenes_id ${almacenes_id}`);
-    let [stocks] = await db.query('select * from stocks where almacenes_id = ?', [almacenes_id]);
+    // console.log(`almacenes_id ${almacenes_id}`);
+    let [stocks] = await getallStocksFromAlmacen(almacenes_id)
     let result = []
-   console.log(stocks);
-    if (stocks) {
-        stocks.forEach((stock) => {
-            result.push({"material_id": stock.materiales_id, "unidades":stock.unidades , "posicion": stock.posicion});
-        });
-    }
-    console.log(result);
-    return result
+   //console.log(`stocks ${JSON.stringify(stocks)}`);
+    
+    return stocks
 }
 
 const getAll = async () => {
@@ -88,7 +83,7 @@ const getAll = async () => {
             return almacen;
         })
       )
-      console.log(almacenes);
+    // console.log(almacenes);
      return almacenes;
 }
 
