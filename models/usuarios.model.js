@@ -1,3 +1,4 @@
+const { response } = require("express");
 
 
 const create = (usuario, req) => {
@@ -28,7 +29,7 @@ const getAll = (req) => {
 }
 
 
-const getById = async (usuarios_id,req) => {
+const getById = async (usuarios_id, req) => {
     console.log(req.usuario)
     const [[response]] = await db.query('select u.usuarios_id,u.nombre,u.email,u.apellido,u.activo,u.edad, u.ciudad, u.codigo_postal, u.pais, u.imagen, u.estado, u.roles_id, u.usuarios_id_lider,' +
         'r.descripcion_rol as rol_de_usuario, ' +
@@ -50,10 +51,10 @@ const getById = async (usuarios_id,req) => {
 
 
 const updateById = async (usuarios_id, datosQueActualizar, req) => {
-
+    console.log(`usuarios_id ${usuarios_id}\n datosQueActualizar ${datosQueActualizar}`)
     // Pedir usuario
-    const usuario = await getById(usuarios_id,req);
-
+    const usuario = await getById(usuarios_id, req);
+    console.log(usuario);
     // Verificar operaciones inválidas
     if ('usuarios_id' in datosQueActualizar) {
         throw new Error("Operación inválida. No se puede actualizar el id del usuario")
@@ -61,6 +62,23 @@ const updateById = async (usuarios_id, datosQueActualizar, req) => {
         throw new Error(`Operación inválida. No puede editar un usuario del cual no es el jefe de equipo. Para editar el usuario ${usuario.email} contacte con el jefe de su equipo ${usuario.email_jefe}.`)
     } else if ('roles_id' in datosQueActualizar && datosQueActualizar.roles_id <= 2) {
         throw new Error("Operación inválida. No se puede asignar el rol de jefe de equipo. Para ser jefe de equipo, crear un nuevo jefe de equipo usando la ruta /api/register.")
+    } if (datosQueActualizar.usuarios_id_lider && datosQueActualizar.usuarios_id_lider != usuario.usuarios_id_lider) {
+        const [nuevoJefe] = await _getById(datosQueActualizar.usuarios_id_lider);
+        console.log(nuevoJefe)
+        if (!nuevoJefe.roles_id) {
+            throw new Error('Operación inválida. ' +
+                'No puede asignar un usuario a otro usuario que no existe. ' +
+                'Para editar el usuarios_id_lider, debe añadir un usuario que exista. ' +
+                `${datosQueActualizar.usuarios_id_lider} es un id que no existe.`
+            )
+        }
+        else if (nuevoJefe.roles_id != 2) {
+            throw new Error('Operación inválida. ' +
+                'No puede asignar un usuario a otro usuario que no es jefe de equipo. ' +
+                'Para editar el usuarios_id_lider, debe añadir un usuario que sea Jefe de equipo. ' +
+                `${nuevoJefe.email} no es jefe de equipo.`
+            )
+        }
     }
 
     // Actualizar usuario
@@ -68,7 +86,7 @@ const updateById = async (usuarios_id, datosQueActualizar, req) => {
         datosQueActualizar[k] ? usuario[k] = datosQueActualizar[k] : 1;
     });
 
-    const extractValues = (u) => ["nombre", "apellido", "email", "contrasena",
+    const extractValues = (u) => ["nombre", "apellido", "email",
         "activo", "edad", "ciudad", "codigo_postal",
         "pais", "roles_id", "usuarios_id_lider", "estado", "imagen", "usuarios_id"].map(k => u[k]);
 
@@ -78,7 +96,7 @@ const updateById = async (usuarios_id, datosQueActualizar, req) => {
     return db.query(
         'UPDATE usuarios \
                         SET \
-                        nombre = ?, apellido = ?, email = ?, contrasena = ?, \
+                        nombre = ?, apellido = ?, email = ?, \
                         activo = ?, edad = ?, ciudad = ?, codigo_postal = ?, \
                         pais = ?, roles_id = ?,usuarios_id_lider=?, estado=?, imagen=?\
                         WHERE usuarios_id = ?'
@@ -90,11 +108,22 @@ const updateById = async (usuarios_id, datosQueActualizar, req) => {
 
 const deleteById = async (usuarios_id, req) => {
     // Pedir usuario
-    const [[usuario]] = await getById(usuarios_id);
+    const [usuario] = await _getById(usuarios_id);
+    if (!usuario){
+        throw new Error("No hay ningún usuario con este id"+`${usuarios_id}`)
+    }
     if (usuario.usuarios_id === usuario.usuarios_id_lider) {
-        throw new Error("Operación inválida. No se puede borrar un jefe de equipo.")
+        const equipo = await getAll(req);
+        if (equipo) {
+            throw new Error('Operación inválida. ' +
+                'No se puede borrar un jefe de equipo que tenga empleados en su equipo. ' +
+                'Borre los usuarios en su equipo,' +
+                ' o cambie el usuario_id_lider de los usuarios en su equipo, para poder borrar su usuario.')
+        }
     } else if (req.usuario.usuarios_id != usuario.usuarios_id_lider) {
-        throw new Error(`Operación inválida: borrar un usuario que no está en su equipo. No puede editar un usuario del cual no es el jefe de equipo. Para editar el usuario ${usuario.email} contacte con el jefe de su equipo ${usuario.email_jefe}.`)
+        throw new Error('Operación inválida: borrar un usuario que no está en su equipo. '+
+        'No puede editar un usuario del cual no es el jefe de equipo. '+
+        `Para editar el usuario ${usuario.email} contacte con el jefe de su equipo, usuario con id ${usuario.usuarios_id_lider}.`)
     }
 
     return db.query('DELETE from usuarios where usuarios_id = ?', [usuarios_id]);
@@ -102,8 +131,9 @@ const deleteById = async (usuarios_id, req) => {
 
 
 
-const _getById = (usuarios_id) => {
-    return db.query('select * from usuarios where usuarios_id=?', [usuarios_id]);
+const _getById = async (usuarios_id) => {
+    const [response] = await db.query('select * from usuarios where usuarios_id=?', [usuarios_id]);
+    return response
 }
 
 
