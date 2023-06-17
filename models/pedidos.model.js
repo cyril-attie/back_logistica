@@ -68,11 +68,14 @@ const _setStocks= (pedidos_id,stocks) =>{
 const _readStocks = async (pedidos_id) => {
     let [stocks] = await db.query('select * from pedidos_have_stocks where pedidos_id = ?', [pedidos_id]);
     let result = [] 
+    console.log(stocks)
     if (stocks) {
         stocks.forEach((stock) => {
-            result.push({"unidades":stock.unidades,"posicion":stock.posicion, "stock_id":stock.stock_id})
+            console.log(stock)
+            result.push({"unidades_utilizadas":stock.unidades_utilizadas,"posicion":stock.posicion, "stocks_id":stock.stocks_id})
         });
     }
+    console.log(result)
     return result
 }
 
