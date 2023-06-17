@@ -8,7 +8,7 @@ authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJv
 
 
 {
-    "email":"jefedeequipo2@almacen.es",
+    "email":"operario@almacen.es",
     "contrasena": "password123"
 }
 
