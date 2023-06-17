@@ -1,3 +1,33 @@
+
+
+
+select u.usuarios_id,u.nombre,u.email,u.apellido,u.activo,u.edad, u.ciudad, u.codigo_postal, u.pais, u.imagen, u.estado, u.roles_id, u.usuarios_id_lider,
+r.descripcion_rol as rol_de_usuario, 
+u2.nombre as nombre_jefe,u2.email as email_jefe, u2.roles_id as rol_jefe 
+from usuarios as u 
+join roles as r on r.roles_id=u.roles_id 
+join usuarios as u2 on u.usuarios_id_lider=u2.usuarios_id 
+where (u.usuarios_id_lider=26 or u.usuarios_id=26) and u.usuarios_id=26
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 insert into permisos (metodo, ruta) values
 ( 'GET' , '/api/usuarios%' ),
 ( 'GET' , '/api/roles%' ),

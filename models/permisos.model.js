@@ -24,7 +24,7 @@ const getById = (permisos_id) => {
 }
 
 const getIdByMetodoRuta = (metodo, ruta) => {
-    return db.query('select * from permisos where metodo= ? and ? LIKE ruta', [metodo, ruta])
+    return db.query('select * from permisos where metodo = ? and ? LIKE ruta', [metodo, ruta])
 }
 
 const updateById = async (permisos_id, datosQueActualizar) => {
