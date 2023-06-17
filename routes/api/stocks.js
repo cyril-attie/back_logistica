@@ -23,7 +23,7 @@ router.post('/nuevo', async (req, res) =>{
 //Recupera todos los stocks
 router.get('/', async (req, res) =>{
     try {
-        const [result] = await getAll(); 
+        const [result] = await getAll(req); 
         res.json(result);
     } catch (error) {
         res.json({ fatal: error.message });
@@ -36,8 +36,8 @@ router.get('/', async (req, res) =>{
 //Recupera un stock por id
 router.get('/:stocks_id', async (req, res) =>{
     try {
-        const [usuario] = await getById(req.params.stocks_id); 
-        res.json(usuario);
+        const [result] = await getById(req.params.stocks_id,req); 
+        res.json(result);
     } catch (error) {
         res.json({ fatal: error.message });
     }
