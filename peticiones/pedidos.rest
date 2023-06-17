@@ -1,4 +1,4 @@
-@host = http://localhost:3000
+@host = http://113.30.148.96:3000
 
 
 
@@ -7,7 +7,7 @@
 // Crear nuevo pedido
 POST {{host}}/api/pedidos/nuevo
 Content-Type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjcsInJvbGVzX2lkIjozLCJleHAiOjE2ODk0NDE5MjAsImlhdCI6MTY4Njg0OTkyMH0.i-_lfyysvqlVasbhP05-LvPavolSmHLYZgYn98jGg5k
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MzQsInJvbGVzX2lkIjo0LCJleHAiOjE2ODk1NTMyMjIsImlhdCI6MTY4Njk2MTIyMn0.u5RyhXWfu9Ps6oFcpHC2N4922vWssNyi_DRAEDg3xxU
 
 {
     "fecha_salida":"{{$datetime 'YYYY-MM-DD HH:mm:ss' +2 d}}",
