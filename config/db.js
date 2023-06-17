@@ -20,11 +20,11 @@ const checkDB = (async ()=>{
 	console.log(`La base de datos funciona: ${Boolean(DBbool)}`);
 })();
 
-
-
 // =====================================
 
 global.db = pool.promise() ;
+
+
 
 // global.conn = conn ;
 
