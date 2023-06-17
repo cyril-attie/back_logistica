@@ -99,6 +99,11 @@ const getById = async (almacenes_id) => {
 }
 
 
+const _getById = async (almacenes_id) => {
+    let [[response]] = await db.query('select * from almacenes where almacenes_id = ?', [almacenes_id])
+    return response;
+}
+
 const updateById = async (almacenes_id, datosQueActualizar) => {
     // Verificar operaciones inválidas
     if ('almacenes_id' in datosQueActualizar) {
@@ -157,5 +162,5 @@ const deleteById = async (almacenes_id) => {
 
 
 module.exports = {
-    create, getAll, getById, updateById, deleteById
+    create, getAll, getById, _getById, updateById, deleteById
 }

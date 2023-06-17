@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
 // Actualizar los detalles de perfil
 router.put('/', async (req, res) => {
     try {
-        const [result] = await updateById(req.usuario.usuarios_id, req.body);
+        const [result] = await updateById(req.usuario.usuarios_id, req.body,req);
         res.json(result);
     } catch (error) {
         console.log(error);
@@ -28,7 +28,7 @@ router.put('/', async (req, res) => {
 // borrar perfil 
 router.delete('/', async (req, res) => {
     try {
-        const [result] = await deleteById(req.usuario.usuarios_id);
+        const [result] = await deleteById(req.usuario.usuarios_id,req);
         res.json(result);
     } catch (error) {
         res.json({ fatal: error.message });

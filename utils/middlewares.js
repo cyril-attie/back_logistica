@@ -1,10 +1,16 @@
 const jwt = require('jsonwebtoken');
-const { getById } = require('../models/usuarios.model');
+const { _getById } = require('../models/usuarios.model');
 const { getRolePermissionsOf } = require('../models/roles.model');
 const { getIdByMetodoRuta } = require('../models/permisos.model');
 
 
+
+
+
+
 const checkToken = async (req, res, next) => {
+    
+    
     // ¿Viene incluida la cabecera de Authorization?
     if (!req.headers['authorization']) {
         return res.json({ fatal: 'Debes incluir la cabecera de Autorización' });
@@ -23,7 +29,7 @@ const checkToken = async (req, res, next) => {
 
     // Recupero los datos del usuario logado
     // obj dispone de las siguientes claves: user_id, user_role, exp
-    const [usuarios] = await getById(obj.usuarios_id);
+    const usuarios = await _getById(obj.usuarios_id);
     req.usuario = usuarios[0];
     console.log(`req.usuario \n\n ${JSON.stringify(req.usuario)}`)
     // Object.keys(req).forEach(k => { try { console.log(`${k} : ${req[k]}`) } catch (e) { 1 } })
@@ -39,7 +45,6 @@ const checkPermisos = async (req, res, next) => {
 
     const [response] = await getRolePermissionsOf(roles_id);
     if (!response) { 
-        
         let stringError= `No hay ningún permiso asociado al rol ${roles_id}. 
         Contacta con tu lider de equipo ${req.usuario.lider}`;
         console.log(stringError);

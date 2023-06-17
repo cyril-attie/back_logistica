@@ -8,12 +8,12 @@ const {getAll,create, getById, updateById, deleteById } = require('../../models/
 
 // Crear nuevo usuario
 router.post('/nuevo', async (req, res) =>{
-	console.log(JSON.stringify(req.body));
+
     // Antes de insertar encriptamos la password
     req.body.contrasena = bcrypt.hashSync(req.body.contrasena, 8);
 
     try {
-        const [result] = await create(req.body);
+        const [result] = await create(req.body,req);
         res.json(result);
     } catch (error) {
         res.json({ fatal: error.message });
@@ -27,7 +27,7 @@ router.post('/nuevo', async (req, res) =>{
 //Recupera todos los usuarios
 router.get('/', async (req, res) =>{
     try {
-        const [result] = await getAll(); 
+        const [result] = await getAll(req); 
         res.json(result);
     } catch (error) {
         res.json({ fatal: error.message });
@@ -40,7 +40,7 @@ router.get('/', async (req, res) =>{
 //Recupera un usuario por id
 router.get('/:usuarios_id', async (req, res) =>{
     try {
-        const [usuario] = await getById(req.params.usuarios_id); 
+        const usuario = await getById(req.params.usuarios_id,req); 
         res.json(usuario);
     } catch (error) {
         res.json({ fatal: error.message });
@@ -52,7 +52,7 @@ router.get('/:usuarios_id', async (req, res) =>{
 // Actualizar los detalles de un usuario
 router.put('/:usuarios_id', async (req, res) =>{
     try {
-        const [result] = await updateById( req.params.usuarios_id, req.body); 
+        const [result] = await updateById( req.params.usuarios_id, req.body, req); 
         res.json(result);
     } catch (error) {
         console.log(error);
@@ -62,12 +62,10 @@ router.put('/:usuarios_id', async (req, res) =>{
 });
 
 
-
-
 router.delete('/:usuarios_id', async (req, res) =>{
 
     try {
-        const [result] = await deleteById(req.params.usuarios_id); 
+        const [result] = await deleteById(req.params.usuarios_id,req); 
         res.json(result);
     } catch (error) {
         res.json({ fatal: error.message });

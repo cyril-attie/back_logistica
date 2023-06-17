@@ -1,0 +1,9 @@
+{
+    "setupFilesAfterEnv": [
+        "<rootDir>/__tests__/setup.js"
+    ],
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ]
+}

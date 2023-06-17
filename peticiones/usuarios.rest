@@ -1,7 +1,6 @@
+//@host=http://113.30.148.96
 
-@host=http://113.30.148.96
-
-
+@host=http://localhost:3000
 //=====USUARIOS========
 ###
 // Crear nuevo usuario
@@ -12,11 +11,11 @@ authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJv
 {
     "nombre": "cyril",
     "apellido":"operario",
-    "email":"encargadoprimero@almacen.es",
+    "email":"encargado1@almacen.es",
     "contrasena": "password123",
     "ciudad": "Barcelona",
     "codigo_postal":"08005",
-    "roles_id":4,
+    "roles_id":3,
     "usuarios_id_lider":26
 }
 
@@ -32,21 +31,21 @@ authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJv
 
 ###
 // para actualizar los detalles de un usuario
-PUT {{host}}/api/usuarios/25
+PUT {{host}}/api/usuarios/31
 Content-Type: application/json 
 authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJvbGVzX2lkIjoyLCJleHAiOjE2ODk1Mzg0NjIsImlhdCI6MTY4Njk0NjQ2Mn0.hZSdW-M7svEtMSh5zZSyKcMlPphq3kfaekHvDNHtH8k
 
-
-
 {
     "edad":26,
-    "codigo_postul":"08006"
+    "estado":1,
+    "codigo_postal":"08006",
+    "usuarios_id_lider":31
 }
 
 
 ###
 // para borrar un usuario
-DELETE {{host}}/api/usuarios/29
+DELETE {{host}}/api/usuarios/27
 authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJvbGVzX2lkIjoyLCJleHAiOjE2ODk1Mzg0NjIsImlhdCI6MTY4Njk0NjQ2Mn0.hZSdW-M7svEtMSh5zZSyKcMlPphq3kfaekHvDNHtH8k
 
 

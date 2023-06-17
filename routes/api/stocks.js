@@ -6,11 +6,9 @@ const {getAll,create, getById, updateById, deleteById } = require('../../models/
 
 
 // Crear nuevo stock
-router.post('/nuevo', async (req, res) =>{
-	console.log(JSON.stringify(req.body));
-    
+router.post('/nuevo', async (req, res) =>{    
     try {
-        const [result] = await create(req.body);
+        const [result] = await create(req.body,req);
         res.json(result);
     } catch (error) {
         res.json({ fatal: error.message });
@@ -23,7 +21,7 @@ router.post('/nuevo', async (req, res) =>{
 //Recupera todos los stocks
 router.get('/', async (req, res) =>{
     try {
-        const [result] = await getAll(); 
+        const [result] = await getAll(req); 
         res.json(result);
     } catch (error) {
         res.json({ fatal: error.message });
@@ -36,8 +34,8 @@ router.get('/', async (req, res) =>{
 //Recupera un stock por id
 router.get('/:stocks_id', async (req, res) =>{
     try {
-        const [usuario] = await getById(req.params.stocks_id); 
-        res.json(usuario);
+        const [result] = await getById(req.params.stocks_id,req); 
+        res.json(result);
     } catch (error) {
         res.json({ fatal: error.message });
     }
@@ -48,7 +46,7 @@ router.get('/:stocks_id', async (req, res) =>{
 // Actualizar los detalles de un stock
 router.put('/:stocks_id', async (req, res) =>{
     try {
-        const [result] = await updateById( req.params.stocks_id, req.body); 
+        const [result] = await updateById( req.params.stocks_id, req.body,req); 
         res.json(result);
     } catch (error) {
         console.log(error);
@@ -63,7 +61,7 @@ router.put('/:stocks_id', async (req, res) =>{
 router.delete('/:stocks_id', async (req, res) =>{
 
     try {
-        const [result] = await deleteById(req.params.stocks_id); 
+        const [result] = await deleteById(req.params.stocks_id,req); 
         res.json(result);
     } catch (error) {
         res.json({ fatal: error.message });
