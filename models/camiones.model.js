@@ -17,7 +17,7 @@ const getAll = () => {
 
 
 const getById = (camiones_id) => {
-    console.log(camiones_id)
+    console.debug(camiones_id)
     return db.query('select * from camiones where camiones_id = ?', [camiones_id])
 }
 

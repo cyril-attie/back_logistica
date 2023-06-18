@@ -32,7 +32,7 @@ const getAll = (req) => {
 
 
 const getById = async (usuarios_id, req) => {
-    //console.log(req.usuario)
+    //console.debug(req.usuario)
     // Pedir usuario del equipo a la base de datos.
     const [[response]] = await db.query('select u.usuarios_id,u.nombre,u.email,u.apellido,u.activo,u.edad, u.ciudad, u.codigo_postal, u.pais, u.imagen, u.estado, u.roles_id, u.usuarios_id_lider,' +
         'r.descripcion_rol as rol_de_usuario, ' +
@@ -46,7 +46,7 @@ const getById = async (usuarios_id, req) => {
     if (!response) {
         throw new Error(`No hay ningún usuario con id ${req.params.usuarios_id} en su equipo.`)
     } else {
-        console.log(response)
+        console.debug(response)
         return response;
     }
 
@@ -54,10 +54,10 @@ const getById = async (usuarios_id, req) => {
 
 
 const updateById = async (usuarios_id, datosQueActualizar, req) => {
-    //console.log(`usuarios_id ${usuarios_id}\n datosQueActualizar ${datosQueActualizar}`)
+    //console.debug(`usuarios_id ${usuarios_id}\n datosQueActualizar ${datosQueActualizar}`)
     // Pedir usuario
     const usuario = await getById(usuarios_id, req);
-    console.log(usuario);
+    console.debug(usuario);
 
     // Verificar operaciones inválidas
     if ('usuarios_id' in datosQueActualizar) {
@@ -68,7 +68,7 @@ const updateById = async (usuarios_id, datosQueActualizar, req) => {
         throw new Error("Operación inválida. No se puede asignar el rol de jefe de equipo. Para ser jefe de equipo, crear un nuevo jefe de equipo usando la ruta /api/register.")
     } else if (datosQueActualizar.usuarios_id_lider && datosQueActualizar.usuarios_id_lider != usuario.usuarios_id_lider) {
         const [nuevoJefe] = await _getById(datosQueActualizar.usuarios_id_lider);
-        //console.log(nuevoJefe)
+        //console.debug(nuevoJefe)
         if (!nuevoJefe) {
             throw new Error('Operación inválida. ' +
                 'No puede asignar un usuario a otro usuario que no existe. ' +

@@ -6,7 +6,7 @@ const { getAll, create, getById, updateById, deleteById } = require('../../model
 
 // Crear nuevo almacen
 router.post('/nuevo', async (req, res) => {
-    //console.log(JSON.stringify(req.body));
+    //console.debug(JSON.stringify(req.body));
 
     try {
         const [result] = await create(req.body, req);
@@ -49,7 +49,7 @@ router.put('/:almacenes_id', async (req, res) => {
         const [result] = await updateById(req.params.almacenes_id, req.body, req);
         res.json(result);
     } catch (error) {
-        console.log(error);
+        console.debug(error);
         res.json({ fatal: error.message });
     }
 

@@ -70,7 +70,7 @@ const getAll = async (req) => {
             return almacen;
         })
     )
-    // console.log(almacenes);
+    // console.debug(almacenes);
     return almacenes;
 }
 
@@ -86,7 +86,7 @@ const getById = async (almacenes_id, req) => {
     if (almacen) {
         almacen.stocks = await _readStocks(almacenes_id, req);
     }
-    // console.log(`almacen ${JSON.stringify(almacen)}\n`)
+    // console.debug(`almacen ${JSON.stringify(almacen)}\n`)
     return almacen;
 }
 
@@ -96,7 +96,7 @@ const updateById = async (almacenes_id, datosQueActualizar, req) => {
     if (!almacen) { throw new Error('Operación inválida: editar un almacen que no existe.') }
     const [encargadoDeAlmacen] = await _getUsuarioById(almacen.usuarios_id_encargado);
 
-    console.log(`almacen ${JSON.stringify(almacen)}\n encargadoAlmacen ${encargadoDeAlmacen}`)
+    console.debug(`almacen ${JSON.stringify(almacen)}\n encargadoAlmacen ${encargadoDeAlmacen}`)
 
 
     // Verificar operaciones inválidas
@@ -124,7 +124,7 @@ const updateById = async (almacenes_id, datosQueActualizar, req) => {
         , "usuarios_id_encargado", "almacenes_id"].map(k => a[k]);
 
     let values = extractValues(createPoints(almacen));
-    console.log(values);
+    console.debug(values);
 
     //actualizar los stocks
     if (datosQueActualizar.stocks) {
@@ -187,10 +187,10 @@ const _setStocks = async (almacenes_id, stocks, req) => {
     existingStocks.forEach(async (s) => {
         await updateStockById(s.stocks_id, { unidades: 0, posicion: 0 }, req)
     })
-    console.log(JSON.stringify(existingStocks))
-    console.log(`_setStocks ${JSON.stringify(stocks)}\n\n almacenes_id ${almacenes_id} `)
+    console.debug(JSON.stringify(existingStocks))
+    console.debug(`_setStocks ${JSON.stringify(stocks)}\n\n almacenes_id ${almacenes_id} `)
     stocks.forEach(async (stock) => {
-        console.log(`stocks_id_ifAlreadyExists(stock) ${JSON.stringify(stocks_id_ifAlreadyExists(stock))}\n
+        console.debug(`stocks_id_ifAlreadyExists(stock) ${JSON.stringify(stocks_id_ifAlreadyExists(stock))}\n
     STOCK ${JSON.stringify(stock)}`)
         if (stocks_id_ifAlreadyExists(stock)) {
             await updateStockById(stocks_id_ifAlreadyExists(stock).stocks_id, { unidades: stock.unidades, posicion: stock.posicion }, req)
@@ -212,7 +212,7 @@ const _readStocks = async (almacenes_id, req) => {
     
     stocks.sort((a,b)=>(a.posicion-b.poscion))
     //stocks=stocks.map(extractTheEssential)
-    //console.log(`stocks ${JSON.stringify(stocks)}`);
+    //console.debug(`stocks ${JSON.stringify(stocks)}`);
     return stocks
 }
 
@@ -238,7 +238,7 @@ const _getQueryAndValues = (req) => {
     let values = [4, 1].includes(req.usuario.roles_id) ? [req.usuario.usuarios_id_lider] : [req.usuario.usuarios_id];
 
     encargadoId ? values.push(encargadoId) : 1;
-    //console.log(`query ${query}\n values ${values}`);
+    //console.debug(`query ${query}\n values ${values}`);
     return { query, values }
 }
 

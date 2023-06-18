@@ -72,12 +72,12 @@ const getAll = async (req) => {
         'where u.usuarios_id_lider=?', [req.usuario.usuarios_id_lider]);
     console.debug(`response is ${JSON.stringify(response)} \n req.usuario.usuarios_id_lider ${req.usuario.usuarios_id_lider}`);
     let [pedidos] = response;
-    console.log(`found ${pedidos.length} pedidos`)
+    console.debug(`found ${pedidos.length} pedidos`)
 
     // filtrar pedidos de otros operarios o otros encargados 
     pedidos = pedidos.filter(async (pedido) => {
         const b = (await _verificarUsuarioRelacionadoCon(pedido, req))
-        //console.log(`pedido ${JSON.stringify(pedido)}\n b ${b}`);
+        //console.debug(`pedido ${JSON.stringify(pedido)}\n b ${b}`);
         return b
     });
 
@@ -124,7 +124,7 @@ const updateById = async (pedidos_id, datosQueActualizar, req) => {
         // transformar fechas
         Object.keys(pedido).forEach((k, i, arr) => {
             if (typeof pedido[k] == "object") {
-                console.log(moment(pedido[k]).format('YYYY-MM-DD HH:mm:ss'));
+                console.debug(moment(pedido[k]).format('YYYY-MM-DD HH:mm:ss'));
             }
 
         });
@@ -277,9 +277,9 @@ const _verificarNormasDeNegocio = async (pedido) => {
     let salida = moment(pedido.fecha_llegada, "YYYY-MM-DD HH:mm:ss")
     let llegada = moment(pedido.fecha_salida, "YYYY-MM-DD HH:mm:ss")
 
-    /*  console.log(`origen ${JSON.stringify(origen)}\ndestino${JSON.stringify(destino)}`)
-     console.log(`creador ${creador} \n revisador ${JSON.stringify(revisador)}\n aprobador${JSON.stringify(aprobador)}\n`)
-     console.log(`
+    /*  console.debug(`origen ${JSON.stringify(origen)}\ndestino${JSON.stringify(destino)}`)
+     console.debug(`creador ${creador} \n revisador ${JSON.stringify(revisador)}\n aprobador${JSON.stringify(aprobador)}\n`)
+     console.debug(`
         ((creador.usuarios_id_lider == revisador.usuarios_id_lider && aprobador.usuarios_id_lider == creador.usuarios_id_lider) \n 
         ${(creador.usuarios_id_lider == revisador.usuarios_id_lider && aprobador.usuarios_id_lider == creador.usuarios_id_lider)}&&
             (origen.usuarios_id_encargado == revisador.usuarios_id && destino.usuarios_id_encargado == aprobador.usuarios_id) &&
@@ -288,7 +288,7 @@ const _verificarNormasDeNegocio = async (pedido) => {
            \n ${(moment.min(creacion, salida, llegada) == creacion && moment.min(salida, llegada) == salida)} )
             \n origen.usuarios_id_encargado == revisador.usuarios_id ${origen.usuarios_id_encargado == revisador.usuarios_id}\n
             destino.usuarios_id_encargado == aprobador.usuarios_id ${destino.usuarios_id_encargado == aprobador.usuarios_id}`)
-     console.log(`creacion ${creacion}\n salida${salida}\n llegada ${llegada}`) */
+     console.debug(`creacion ${creacion}\n salida${salida}\n llegada ${llegada}`) */
     return ((creador.usuarios_id_lider == revisador.usuarios_id_lider && aprobador.usuarios_id_lider == creador.usuarios_id_lider) &&
         (origen.usuarios_id_encargado == revisador.usuarios_id && destino.usuarios_id_encargado == aprobador.usuarios_id) &&
         (moment.min(creacion, salida, llegada) == creacion && moment.min(salida, llegada) == salida))
@@ -306,11 +306,11 @@ const _verificarUsuarioRelacionadoCon = async (pedido, req) => {
 
 
 const _setStocks = async (pedidos_id, stocks) => {
-    console.log(`_setStocks ${JSON.stringify(stocks)}`)
+    console.debug(`_setStocks ${JSON.stringify(stocks)}`)
 
     // Pedir pedidos anteriores
     let previousStocks = await _readStocks(pedidos_id);
-    console.log('previousStocks' + previousStocks)
+    console.debug('previousStocks' + previousStocks)
     if (previousStocks) {
         // Restaurar los stocks al almacen y borrar los antiguos pedidos_have_stocks  
         await Promise.all(previousStocks.map(async (phs) => {
@@ -323,8 +323,8 @@ const _setStocks = async (pedidos_id, stocks) => {
     // Restar del almacen los nuevos stocks y añadir los pedidos_have_stocks
     stocks.forEach(async (s) => {
         const [{ unidades }] = await _getStockById(s.stocks_id);
-        /*  console.log(`unidades${unidades}, s ${JSON.stringify(s)}`);      
-         console.log(`unidades is ${unidades} s.unidades is ${s.unidades} and unidades - s.unidades is ${unidades - s.unidades}`)
+        /*  console.debug(`unidades${unidades}, s ${JSON.stringify(s)}`);      
+         console.debug(`unidades is ${unidades} s.unidades is ${s.unidades} and unidades - s.unidades is ${unidades - s.unidades}`)
          */
         await db.query('update stocks set unidades = ? where stocks_id = ? ', [unidades - s.unidades, s.stocks_id])
         await db.query('INSERT INTO pedidos_have_stocks ' +
@@ -337,14 +337,14 @@ const _setStocks = async (pedidos_id, stocks) => {
 const _readStocks = async (pedidos_id) => {
     let [stocks] = await db.query('select * from pedidos_have_stocks where pedidos_id = ?', [pedidos_id]);
     let result = []
-    // console.log(stocks)
+    // console.debug(stocks)
     if (stocks) {
         stocks.forEach((stock) => {
-            // console.log(stock)
+            // console.debug(stock)
             result.push({ "unidades_utilizadas": stock.unidades_utilizadas, "posicion": stock.posicion, "stocks_id": stock.stocks_id })
         });
     }
-    // console.log(`result is ${result}`)
+    // console.debug(`result is ${result}`)
     return result
 }
 

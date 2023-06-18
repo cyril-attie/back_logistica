@@ -49,7 +49,7 @@ router.put('/:stocks_id', async (req, res) =>{
         const [result] = await updateById( req.params.stocks_id, req.body,req); 
         res.json(result);
     } catch (error) {
-        console.log(error);
+        console.debug(error);
         res.json({ fatal: error.message });
     }
 	

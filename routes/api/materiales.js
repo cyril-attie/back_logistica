@@ -7,7 +7,7 @@ const { checkJefeDeEquipo } = require('../../utils/middlewares');
 
 // Crear nuevo material
 router.post('/nuevo', async (req, res) => {
-    console.log(JSON.stringify(req.body));
+    console.debug(JSON.stringify(req.body));
 
     try {
         const [result] = await create(req.body);
@@ -51,7 +51,7 @@ router.put('/:materiales_id', async (req, res) => {
         const [result] = await updateById(req.params.materiales_id, req.body);
         res.json(result);
     } catch (error) {
-        console.log(error);
+        console.debug(error);
         res.json({ fatal: error.message });
     }
 

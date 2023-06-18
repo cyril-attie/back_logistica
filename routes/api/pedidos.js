@@ -7,7 +7,7 @@ const { checkOperario } = require('../../utils/middlewares');
 
 // Crear nuevo pedido
 router.post('/nuevo', checkOperario, async (req, res) => {
-    //console.log(JSON.stringify(req.body));
+    //console.debug(JSON.stringify(req.body));
     try {
         const [result] = await create(req.body, req);
         res.json(result);
@@ -44,7 +44,7 @@ router.put('/:pedidos_id', async (req, res) => {
         const [result] = await updateById(req.params.pedidos_id, req.body, req);
         res.json(result);
     } catch (error) {
-        console.log(error);
+        console.debug(error);
         res.json({ fatal: error.message });
     }
 });

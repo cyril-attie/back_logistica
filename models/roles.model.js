@@ -21,7 +21,7 @@ const getRolePermissionsOf = (roles_id)=>{
 }
 
 const getById = (roles_id) => {
-    console.log(roles_id)
+    console.debug(roles_id)
     return db.query('select * from roles where roles_id = ?', [roles_id])
 }
 

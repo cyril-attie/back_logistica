@@ -46,7 +46,7 @@ router.put('/:categoria_id', async (req, res) =>{
         const [result] = await updateById( categoria_id, req.body); 
         res.json(result);
     } catch (error) {
-        console.log(error);
+        console.debug(error);
         res.json({ fatal: error.message });
     }
 	
@@ -60,7 +60,7 @@ router.delete('/:categoria_id', async (req, res) =>{
     try {
         const [result] = await deleteById(categoria_id); 
         res.json(result);
-        // console.log("estoy borrando una categoria", result)
+        // console.debug("estoy borrando una categoria", result)
     } catch (error) {
         res.json({ fatal: error.message });
     }

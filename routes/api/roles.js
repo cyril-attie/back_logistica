@@ -7,7 +7,7 @@ const {getAll,create, getById, updateById, deleteById } = require('../../models/
 
 // Crear nuevo rol
 router.post('/', async (req, res) =>{
-	console.log(JSON.stringify(req.body));
+	console.debug(JSON.stringify(req.body));
     
     try {
         const [result] = await create(req.body);
@@ -51,7 +51,7 @@ router.put('/:roles_id', async (req, res) =>{
         const [result] = await updateById( req.params.roles_id, req.body); 
         res.json(result);
     } catch (error) {
-        console.log(error);
+        console.debug(error);
         res.json({ fatal: error.message });
     }
 	

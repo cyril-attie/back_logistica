@@ -114,7 +114,7 @@ const _getQueryAndValues = (req, stocks_id = 0) => {
         [req.usuario.usuarios_id_lider, req.usuario.usuarios_id_lider] :
         [req.usuario.usuarios_id, req.usuario.usuarios_id];
     stocks_id ? values.push(stocks_id) : 1;
-    //console.log(`query ${query}\n values ${values}`);
+    //console.debug(`query ${query}\n values ${values}`);
     return { query, values }
 }
 
@@ -122,14 +122,14 @@ const encargado_o_jefe = async (almacenes_id, req) => {
     const [[almacen]] = await db.query('select * from almacenes where almacenes_id=?', [almacenes_id]);
     if (!almacen) { throw new Error('Operación inválida: almacen con id '+almacenes_id+' no existe.') }
     const encargadoDeAlmacen = await _getUsuarioById(almacen.usuarios_id_encargado)
-    console.log(JSON.stringify(`req.usuario ${req.usuario}`))
+    console.debug(JSON.stringify(`req.usuario ${req.usuario}`))
     return (req.usuario.usuarios_id == almacen.usuarios_id_encargado || req.usuario.usuario_id == encargadoDeAlmacen.usuarios_id_lider)
 }
 
 const _getById= async (stocks_id)=>{
 
     const [response] = await db.query(' select * from stocks where stocks_id = ? ',[stocks_id]);
-    console.log(response);
+    console.debug(response);
     return response;
 }
 

@@ -28,7 +28,7 @@ router.post('/register', async (req, res) => {
     // Antes de insertar encriptamos la password
     req.body.contrasena = bcrypt.hashSync(req.body.contrasena, 8);
 
-    // console.log(JSON.stringify(req.body));
+    // console.debug(JSON.stringify(req.body));
     try {
         const [result] = await create(req.body,req);
         res.json(result);
