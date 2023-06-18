@@ -36,17 +36,23 @@ GET {{host}}/api/almacenes
 authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJvbGVzX2lkIjoyLCJleHAiOjE2ODk2Njc4OTgsImlhdCI6MTY4NzA3NTg5OH0.Hy2K_OS0k9gU8WgwMuvOCbi5ENZHqH4MmyjdZ-qC3KU
 ###
 // para ver los detalles de un almacen
-GET {{host}}/api/almacenes/2
+GET {{host}}/api/almacenes/28
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MzQsInJvbGVzX2lkIjo0LCJleHAiOjE2ODk1NTMyMjIsImlhdCI6MTY4Njk2MTIyMn0.u5RyhXWfu9Ps6oFcpHC2N4922vWssNyi_DRAEDg3xxU
 
 ###
 // para actualizar los detalles de un almacen
-PUT {{host}}/api/almacenes/2
+PUT {{host}}/api/almacenes/28
 Content-Type: application/json 
 authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJvbGVzX2lkIjoyLCJleHAiOjE2ODk2Njc4OTgsImlhdCI6MTY4NzA3NTg5OH0.Hy2K_OS0k9gU8WgwMuvOCbi5ENZHqH4MmyjdZ-qC3KU
 
 {
-    "pais":"LUNA"
+    "pais":"LUNA",
+    "stocks":[
+            {"materiales_id":4,"unidades": 4000, "posicion":1},
+            {"materiales_id":6, "unidades": 2000, "posicion":3},
+            {"materiales_id":7, "unidades": 2000, "posicion":2}
+        ]
+
 }
 
 

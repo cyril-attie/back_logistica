@@ -1,5 +1,5 @@
 
-const { getAll: getallStocks, create: createStock, encargado_o_jefe } = require("./stocks.model");
+const { getAll: getallStocks, updateById: updateStockById, create: createStock, encargado_o_jefe } = require("./stocks.model");
 const { _getById: _getUsuarioById } = require('./usuarios.model')
 
 const create = async (almacen, req) => {
@@ -128,7 +128,6 @@ const updateById = async (almacenes_id, datosQueActualizar, req) => {
 
     //actualizar los stocks
     if (datosQueActualizar.stocks) {
-        await db.query('DELETE FROM stocks WHERE almacenes_id=?', [almacenes_id]);
         _setStocks(almacenes_id, datosQueActualizar.stocks, req);
     }
 
@@ -160,7 +159,7 @@ const deleteById = async (almacenes_id, req) => {
     if (!encargado_o_jefe(almacenes_id, req)) {
         throw new Error("Operación inválida: borrar un almacen de otro equipo o encargado de almacen. No eres encargado o jefe de encargado de este almacen.")
     }
-    
+
     // POR HACER: ¿QUé pasa si el almacen tiene pedidos?
 
     // Borrar un almacen
@@ -177,22 +176,41 @@ const _getById = async (almacenes_id) => {
     return response;
 }
 
-const _setStocks = (almacenes_id, stocks, req) => {
+const _setStocks = async (almacenes_id, stocks, req) => {
+    let existingStocks = await _readStocks(almacenes_id, req);
+
+    // returns the stocks_id if already Exists
+    const stocks_id_ifAlreadyExists = (s) => {
+        return existingStocks.find(s2 => (s.materiales_id == s2.materiales_id))
+    }
+
+    existingStocks.forEach(async (s) => {
+        await updateStockById(s.stocks_id, { unidades: 0, posicion: 0 }, req)
+    })
+    console.log(JSON.stringify(existingStocks))
     console.log(`_setStocks ${JSON.stringify(stocks)}\n\n almacenes_id ${almacenes_id} `)
     stocks.forEach(async (stock) => {
-        let stock2create = {
-            unidades: stock["unidades"],
-            materiales_id: stock["materiales_id"],
-            "almacenes_id": almacenes_id,
-            posicion: stock["posicion"]
-        };
-        await createStock(stock2create, req);
+        console.log(`stocks_id_ifAlreadyExists(stock) ${JSON.stringify(stocks_id_ifAlreadyExists(stock))}\n
+    STOCK ${JSON.stringify(stock)}`)
+        if (stocks_id_ifAlreadyExists(stock)) {
+            await updateStockById(stocks_id_ifAlreadyExists(stock).stocks_id, { unidades: stock.unidades, posicion: stock.posicion }, req)
+        } else {
+            let stock2create = {
+                unidades: stock["unidades"],
+                materiales_id: stock["materiales_id"],
+                "almacenes_id": almacenes_id,
+                posicion: stock["posicion"]
+            };
+            await createStock(stock2create, req);
+        }
     })
 }
 
 const _readStocks = async (almacenes_id, req) => {
     let [stocks] = await getallStocks(req);
-    stocks = stocks.filter((stock) => stock.almacenes_id == almacenes_id)
+    stocks = stocks.filter((stock) => (stock.almacenes_id == almacenes_id && stock.unidades!=0))
+    
+    stocks.sort((a,b)=>(a.posicion-b.poscion))
     //stocks=stocks.map(extractTheEssential)
     //console.log(`stocks ${JSON.stringify(stocks)}`);
     return stocks

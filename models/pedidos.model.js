@@ -266,6 +266,7 @@ const _getById = async (pedidos_id) => {
     return pedido;
 }
 
+
 const _verificarNormasDeNegocio = async (pedido) => {
     let [creador] = await _getUsuarioById(pedido.usuarios_id_creador);
     let [revisador] = await _getUsuarioById(pedido.usuarios_id_revisador);
