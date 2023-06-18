@@ -70,9 +70,9 @@ const getAll = async (req) => {
         + 'from pedidos as p ' +
         'join usuarios as u on u.usuarios_id=p.usuarios_id_creador ' +
         'where u.usuarios_id_lider=?', [req.usuario.usuarios_id_lider]);
-    console.debug(`response is ${JSON.stringify(response)} \n req.usuario.usuarios_id_lider ${req.usuario.usuarios_id_lider}`);
+   
     let [pedidos] = response;
-    console.debug(`found ${pedidos.length} pedidos`)
+   // console.debug(`found ${pedidos.length} pedidos`)
 
     // filtrar pedidos de otros operarios o otros encargados 
     pedidos = pedidos.filter(async (pedido) => {
@@ -124,7 +124,7 @@ const updateById = async (pedidos_id, datosQueActualizar, req) => {
         // transformar fechas
         Object.keys(pedido).forEach((k, i, arr) => {
             if (typeof pedido[k] == "object") {
-                console.debug(moment(pedido[k]).format('YYYY-MM-DD HH:mm:ss'));
+               pedido[k]=moment(pedido[k]).format('YYYY-MM-DD HH:mm:ss');
             }
 
         });
@@ -306,11 +306,11 @@ const _verificarUsuarioRelacionadoCon = async (pedido, req) => {
 
 
 const _setStocks = async (pedidos_id, stocks) => {
-    console.debug(`_setStocks ${JSON.stringify(stocks)}`)
+    //console.debug(`_setStocks ${JSON.stringify(stocks)}`)
 
     // Pedir pedidos anteriores
     let previousStocks = await _readStocks(pedidos_id);
-    console.debug('previousStocks' + previousStocks)
+    //console.debug('previousStocks' + previousStocks)
     if (previousStocks) {
         // Restaurar los stocks al almacen y borrar los antiguos pedidos_have_stocks  
         await Promise.all(previousStocks.map(async (phs) => {
