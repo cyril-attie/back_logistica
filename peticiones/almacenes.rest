@@ -23,7 +23,7 @@ authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJv
         , "pais":"Es"
         , "coordenadas":{"x":40.71727401,"y" :-74.00898606}
         , "capacidad_almacen":10
-        , "usuarios_id_encargado":26
+        , "usuarios_id_encargado":36
         , "stocks":[
             {"materiales_id":4,"unidades": 4000, "posicion":1},
             {"materiales_id":6, "unidades": 2000, "posicion":2}

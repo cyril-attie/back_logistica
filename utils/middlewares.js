@@ -10,7 +10,6 @@ const { getIdByMetodoRuta } = require('../models/permisos.model');
 
 const checkToken = async (req, res, next) => {
     
-    
     // ¿Viene incluida la cabecera de Authorization?
     if (!req.headers['authorization']) {
         return res.json({ fatal: 'Debes incluir la cabecera de Autorización' });
@@ -31,7 +30,7 @@ const checkToken = async (req, res, next) => {
     // obj dispone de las siguientes claves: user_id, user_role, exp
     const usuarios = await _getById(obj.usuarios_id);
     req.usuario = usuarios[0];
-    //console.log(`req.usuario \n\n ${JSON.stringify(req.usuario)}`)
+    console.log(`req.usuario.usuarios_id \n\n ${JSON.stringify(req.usuario.usuarios_id)}`)
     // Object.keys(req).forEach(k => { try { console.log(`${k} : ${req[k]}`) } catch (e) { 1 } })
     next();
 }
@@ -54,7 +53,6 @@ const checkPermisos = async (req, res, next) => {
     const [[permiso]] = await getIdByMetodoRuta(metodo, ruta);
 
     if (permisos_ids.find(e=>e==permiso.permisos_id)) {
-        console.log("Yes authorized");
         next();
     } else {
         console.log(`permisos_ids ${permisos_ids}\n rol ${roles_id}\n permiso ${JSON.stringify(permiso)}`);
