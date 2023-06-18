@@ -1,5 +1,5 @@
 
-@host=http://113.30.148.96:3000
+@host=http://113.30.148.96
 
 //=====AUTHETICATION========
 POST {{host}}/api/auth/login
@@ -8,7 +8,7 @@ authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJv
 
 
 {
-    "email":"jefedeequipo2@almacen.es",
+    "email":"encargado3@almacen.es",
     "contrasena": "password123"
 }
 

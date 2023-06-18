@@ -2,55 +2,65 @@
 const moment = require("moment")
 const { _getById: _getUsuarioById } = require('./usuarios.model')
 const { _getById: _getAlmacenById } = require('./almacenes.model')
-
+const { _getById: _getStockById, _getStockByAlmacenMaterial } = require('./stocks.model');
+const e = require("express");
 
 const create = async (pedido, req) => {
-    console.log(`pedido ${JSON.stringify(pedido)}`);
-    if ((await _verificarNormasDeNegocio(pedido)) && (await _verificarUsuarioRelacionadoCon(pedido, req))) {
+    // Crear un nuevo pedido
+    console.debug(`crear pedido ${JSON.stringify(pedido)}`);
 
-        let { fecha_salida,
-            fecha_llegada,
-            estado_pedido,
-            medida,
-            fecha_creacion,
-            usuarios_id_creador,
-            usuarios_id_revisador,
-            almacenes_id_origen,
-            almacenes_id_destino,
-            camiones_id,
-            usuarios_id_aprobador,
-            stocks } = pedido;
-
-        let values = [
-            fecha_salida,
-            fecha_llegada,
-            estado_pedido,
-            medida,
-            fecha_creacion,
-            usuarios_id_creador,
-            usuarios_id_revisador,
-            almacenes_id_origen,
-            almacenes_id_destino,
-            camiones_id,
-            usuarios_id_aprobador];
-        let response = await db.query('   INSERT INTO pedidos (fecha_salida,fecha_llegada,\
-estado_pedido,medida,fecha_creacion,usuarios_id_creador,usuarios_id_revisador,\
-almacenes_id_origen,almacenes_id_destino,camiones_id,usuarios_id_aprobador) \
-                        VALUES \
-                        (?,?,?,?,?,?,?,?,?,?,?)',
-            values
-        );
-
-        if ("insertId" in response[0]) {
-            _setStocks(response[0].insertId, stocks)
-        }
-        return response
-    } else {
+    if (!((await _verificarNormasDeNegocio(pedido)) && (await _verificarUsuarioRelacionadoCon(pedido, req)))) {
         throw new Error('Operación inválida: verifica que pedido ' + JSON.stringify(pedido) + ' cumple con las siguientes condiciones.'
             + 'La fecha de creación debe ser anterior a la de salida y esta anterior a la de llegada. ' +
             'El revisador y aprobador deben pertencer al mismo equipo que el creador. ' +
             'El revisador debe ser encargado del almacen de origen y el aprobador ser encargado del almacen de destino.')
     }
+
+    let { fecha_salida,
+        fecha_llegada,
+        estado_pedido,
+        medida,
+        fecha_creacion,
+        usuarios_id_creador,
+        usuarios_id_revisador,
+        almacenes_id_origen,
+        almacenes_id_destino,
+        camiones_id,
+        usuarios_id_aprobador,
+        stocks } = pedido;
+
+    // Siempre se crea en estado_pedido En revisión.
+    estado_pedido = "En revisión";
+    let values = [
+        fecha_salida,
+        fecha_llegada,
+        estado_pedido,
+        medida,
+        fecha_creacion,
+        usuarios_id_creador,
+        usuarios_id_revisador,
+        almacenes_id_origen,
+        almacenes_id_destino,
+        camiones_id,
+        usuarios_id_aprobador];
+
+    //Añadir pedido
+    let response = await db.query('INSERT INTO pedidos (fecha_salida,fecha_llegada, ' +
+        ' estado_pedido,medida,fecha_creacion,usuarios_id_creador,usuarios_id_revisador, ' +
+        ' almacenes_id_origen,almacenes_id_destino,camiones_id,usuarios_id_aprobador) ' +
+        ' VALUES ' +
+        ' (?,?,?,?,?,?,?,?,?,?,?)',
+        values
+    );
+
+    // Añadir los registros de la tabla pedidos_have_stocks
+    if ("insertId" in response[0]) {
+        _setStocks(response[0].insertId, stocks)
+    }
+
+    return response
+
+
 };
 
 
@@ -60,6 +70,7 @@ const getAll = async (req) => {
         + 'from pedidos as p ' +
         'join usuarios as u on u.usuarios_id=p.usuarios_id_creador ' +
         'where u.usuarios_id_lider=?', [req.usuario.usuarios_id_lider]);
+    console.debug(`response is ${JSON.stringify(response)} \n req.usuario.usuarios_id_lider ${req.usuario.usuarios_id_lider}`);
     let [pedidos] = response;
     console.log(`found ${pedidos.length} pedidos`)
 
@@ -84,9 +95,7 @@ const getAll = async (req) => {
 
 const getById = async (pedidos_id, req) => {
     let [[pedido]] = await _getById(pedidos_id);
-    if (!pedido) {
-        throw new Error('Operación inválida: obtener un pedido con id no existente en la base de datos. ¿Está seguro que quiso pedir el pedido con id ' + pedidos_id + '?')
-    }
+
     if ((await _verificarUsuarioRelacionadoCon(pedido, req))) {
         if (pedido) {
             pedido.stocks = await _readStocks(pedidos_id);
@@ -104,6 +113,7 @@ const updateById = async (pedidos_id, datosQueActualizar, req) => {
     // Pedir pedido
     const [[pedido]] = await _getById(pedidos_id);
 
+
     if ((await _verificarUsuarioRelacionadoCon(pedido, req))) {
 
         // Verificar operaciones inválidas
@@ -111,12 +121,65 @@ const updateById = async (pedidos_id, datosQueActualizar, req) => {
             throw new Error("Operación inválida. No se puede actualizar el id del pedido.")
         }
 
+        // transformar fechas
         Object.keys(pedido).forEach((k, i, arr) => {
             if (typeof pedido[k] == "object") {
                 console.log(moment(pedido[k]).format('YYYY-MM-DD HH:mm:ss'));
             }
 
         });
+
+        // Verificar flujo de negocio
+        if (pedido.estado_pedido == 'En revisión' && datosQueActualizar.estado_pedido && datosQueActualizar.estado_pedido != pedido.estado_pedido &&
+            ((datosQueActualizar.estado_pedido != 'En preparación' && datosQueActualizar.estado_pedido != 'Cancelado') || req.usuario.usuarios_id != pedido.usuarios_id_revisador)) {
+
+            throw new Error(String.raw`No se pudo actualizar el estado de 'En revisión' a '${datosQueActualizar.estado_pedido}'. A lo mejor no eres el encargado del almacen de origen.`)
+
+        } else if (pedido.estado_pedido == 'En preparación' && datosQueActualizar.estado_pedido && datosQueActualizar.estado_pedido != pedido.estado_pedido &&
+            (datosQueActualizar.estado_pedido != 'En tránsito' || req.usuario.usuarios_id != pedido.usuarios_id_creador)) {
+
+            throw new Error(String.raw`No se pudo actualizar el estado de 'En preparación' a '${datosQueActualizar.estado_pedido}'. A lo mejor no eres el operario del pedido.`)
+
+        } else if (pedido.estado_pedido == 'En tránsito' && datosQueActualizar.estado_pedido && datosQueActualizar.estado_pedido != pedido.estado_pedido &&
+            (datosQueActualizar.estado_pedido != 'Entregado' || req.usuario.usuarios_id != pedido.usuarios_id_creador)) {
+
+            throw new Error(String.raw`No se pudo actualizar el estado de 'En tránsito' a '${datosQueActualizar.estado_pedido}'. A lo mejor no eres el operario del pedido.`)
+
+        } else if (pedido.estado_pedido == 'Entregado' && datosQueActualizar.estado_pedido && datosQueActualizar.estado_pedido != pedido.estado_pedido &&
+            ((datosQueActualizar.estado_pedido != 'Aprobado' && datosQueActualizar.estado_pedido != 'Rechazado') || req.usuario.usuarios_id != pedido.usuarios_id_aprobador)) {
+
+            throw new Error(String.raw`No se pudo actualizar el estado de 'Entregado' a '${datosQueActualizar.estado_pedido}'. A lo mejor no eres el encargado del almacen de destino.`)
+
+        } else if (['Aprobado', 'Rechazado', 'Cancelado'].includes(pedido.estado) && datosQueActualizar.estado_pedido && datosQueActualizar.estado_pedido != pedido.estado_pedido &&
+            ((datosQueActualizar.estado_pedido != 'Aprobado' && datosQueActualizar.estado_pedido != 'Rechazado') || req.usuario.usuarios_id != pedido.usuarios_id_aprobador)) {
+
+            throw new Error(String.raw`No se puede actualizar el estado de un pedido después de haber sido Aprobado, Rechazado o Cancelado.`)
+
+        } else if (pedido.estado_pedido == 'Entregado' && datosQueActualizar.estado_pedido && datosQueActualizar.estado_pedido != pedido.estado_pedido &&
+            (datosQueActualizar.estado_pedido == 'Aprobado' || req.usuario.usuarios_id != pedido.usuarios_id_aprobador)) {
+            // sumar en almacen destino los stocks
+            let previousStocks = await _readStocks(pedidos_id);
+            await Promise.all(pedido.stocks.map(async (s) => {
+                const [stockDestinacion] = await _getStockByAlmacenMaterial(pedido.almacenes_id_destino, s.mateiales_id);
+                await db.query('update stocks set unidades=? where stocks_id=? ', [stockDestinacion.unidades + s.unidades_utilizadas, stockDestinacion.stocks_id]);
+            }));
+
+
+        } else if (pedido.estado_pedido == 'Entregado' && datosQueActualizar.estado_pedido && datosQueActualizar.estado_pedido != pedido.estado_pedido &&
+            (datosQueActualizar.estado_pedido == 'Rechazado' || req.usuario.usuarios_id != pedido.usuarios_id_aprobador)) {
+            // sumar en almacen de origen los stocks 
+            let previousStocks = await _readStocks(pedidos_id);
+            await Promise.all(pedido.stocks.map(async (s) => {
+                const [{ unidades }] = await _getStockById(s.stocks_id);
+                await db.query('update stocks set unidades=? where stocks_id=? ', [unidades + s.unidades_utilizadas, s.stocks_id]);
+            }));
+        } else if (pedido.estado_pedido != "En revisión" && Object.keys(datosQueActualizar).filter(value => ["fecha_salida", "fecha_llegada", "medida", "fecha_creacion", "usuarios_id_creador", "usuarios_id_revisador",
+            "almacenes_id_origen", "almacenes_id_destino", "camiones_id", "usuarios_id_aprobador"].includes(value))) {
+            throw new Error(String.raw`No se puede actualizar un pedido después de haber sido revisado.`)
+        }
+
+
+
 
         // Crear objeto pedido actualizado
         Object.keys(pedido).forEach((k) => {
@@ -140,7 +203,6 @@ const updateById = async (pedidos_id, datosQueActualizar, req) => {
 
             if (datosQueActualizar.stocks) {
                 //actualizar los stocks
-                await db.query('DELETE FROM pedidos_have_stocks WHERE pedidos_id=?', [pedido.pedidos_id]);
                 await _setStocks(pedidos_id, datosQueActualizar.stocks);
             }
 
@@ -180,24 +242,28 @@ const updateById = async (pedidos_id, datosQueActualizar, req) => {
 const deleteById = async (pedidos_id, req) => {
     // Borrar un pedido
     // Evitar borrar pedidos predeterminados 1,2,3,4. 
-    let [[pedido]] = await _getById(pedidos_id);
 
-    if ((await _verificarUsuarioRelacionadoCon(pedido, req))) {
-        
-        await db.query('DELETE FROM pedidos_have_stocks WHERE pedidos_id=?', [pedidos_id]);
-        return db.query('DELETE from pedidos where pedidos_id = ?', [pedidos_id]);
-    } else {
+
+    if (!(await _verificarUsuarioRelacionadoCon(pedido, req))) {
         throw new Error('Operación inválida: borrar un pedido al que no se está relacionado.' +
             `Para borrar el pedido con id ${pedidos_id} debe ser Jefe de equipo.`)
-
+    } else if (!["En revisión", "Aprobado", "Cancelado", "Rechazado"].includes(pedido.estado_pedido)) {
+        throw new Error(String.raw`No se puede borrar un pedido que no esté en estado 'En revisión', 'Aprobado', 'Cancelado' o 'Rechazado'.`)
     }
+
+    await db.query('DELETE FROM pedidos_have_stocks WHERE pedidos_id=?', [pedidos_id]);
+    return db.query('DELETE from pedidos where pedidos_id = ?', [pedidos_id]);
+
 }
 
 
 
 const _getById = async (pedidos_id) => {
-    return await db.query('select * from pedidos where pedidos_id = ?', [pedidos_id]);
-
+    const pedido = await db.query('select * from pedidos where pedidos_id = ?', [pedidos_id]);
+    if (!pedido) {
+        throw new Error('Operación inválida: obtener un pedido con id no existente en la base de datos. ¿Está seguro que quiso pedir el pedido con id ' + pedidos_id + '?')
+    }
+    return pedido;
 }
 
 const _verificarNormasDeNegocio = async (pedido) => {
@@ -210,18 +276,18 @@ const _verificarNormasDeNegocio = async (pedido) => {
     let salida = moment(pedido.fecha_llegada, "YYYY-MM-DD HH:mm:ss")
     let llegada = moment(pedido.fecha_salida, "YYYY-MM-DD HH:mm:ss")
 
-    console.log(`origen ${JSON.stringify(origen)}\ndestino${JSON.stringify(destino)}` )
-       console.log(`creador ${creador} \n revisador ${JSON.stringify(revisador)}\n aprobador${JSON.stringify(aprobador)}\n`)
-       console.log(`
-       ((creador.usuarios_id_lider == revisador.usuarios_id_lider && aprobador.usuarios_id_lider == creador.usuarios_id_lider) \n 
-       ${(creador.usuarios_id_lider == revisador.usuarios_id_lider && aprobador.usuarios_id_lider == creador.usuarios_id_lider)}&&
-           (origen.usuarios_id_encargado == revisador.usuarios_id && destino.usuarios_id_encargado == aprobador.usuarios_id) &&
-       ${(origen.usuarios_id_encargado == revisador.usuarios_id && destino.usuarios_id_encargado == aprobador.usuarios_id)}
-           (moment.min(creacion, salida, llegada) == creacion && moment.min(salida, llegada) == salida)
-          \n ${(moment.min(creacion, salida, llegada) == creacion && moment.min(salida, llegada) == salida)} )
-           \n origen.usuarios_id_encargado == revisador.usuarios_id ${origen.usuarios_id_encargado == revisador.usuarios_id}\n
-           destino.usuarios_id_encargado == aprobador.usuarios_id ${destino.usuarios_id_encargado == aprobador.usuarios_id}`)
-        console.log(`creacion ${creacion}\n salida${salida}\n llegada ${llegada}`)
+    /*  console.log(`origen ${JSON.stringify(origen)}\ndestino${JSON.stringify(destino)}`)
+     console.log(`creador ${creador} \n revisador ${JSON.stringify(revisador)}\n aprobador${JSON.stringify(aprobador)}\n`)
+     console.log(`
+        ((creador.usuarios_id_lider == revisador.usuarios_id_lider && aprobador.usuarios_id_lider == creador.usuarios_id_lider) \n 
+        ${(creador.usuarios_id_lider == revisador.usuarios_id_lider && aprobador.usuarios_id_lider == creador.usuarios_id_lider)}&&
+            (origen.usuarios_id_encargado == revisador.usuarios_id && destino.usuarios_id_encargado == aprobador.usuarios_id) &&
+        ${(origen.usuarios_id_encargado == revisador.usuarios_id && destino.usuarios_id_encargado == aprobador.usuarios_id)}
+            (moment.min(creacion, salida, llegada) == creacion && moment.min(salida, llegada) == salida)
+           \n ${(moment.min(creacion, salida, llegada) == creacion && moment.min(salida, llegada) == salida)} )
+            \n origen.usuarios_id_encargado == revisador.usuarios_id ${origen.usuarios_id_encargado == revisador.usuarios_id}\n
+            destino.usuarios_id_encargado == aprobador.usuarios_id ${destino.usuarios_id_encargado == aprobador.usuarios_id}`)
+     console.log(`creacion ${creacion}\n salida${salida}\n llegada ${llegada}`) */
     return ((creador.usuarios_id_lider == revisador.usuarios_id_lider && aprobador.usuarios_id_lider == creador.usuarios_id_lider) &&
         (origen.usuarios_id_encargado == revisador.usuarios_id && destino.usuarios_id_encargado == aprobador.usuarios_id) &&
         (moment.min(creacion, salida, llegada) == creacion && moment.min(salida, llegada) == salida))
@@ -238,14 +304,31 @@ const _verificarUsuarioRelacionadoCon = async (pedido, req) => {
 }
 
 
-const _setStocks = (pedidos_id, stocks) => {
+const _setStocks = async (pedidos_id, stocks) => {
     console.log(`_setStocks ${JSON.stringify(stocks)}`)
 
-    stocks.forEach(async (stock) => {
-        console.log(stock)
-        await db.query('   INSERT INTO pedidos_have_stocks \
-        (pedidos_id,stocks_id,unidades_utilizadas,posicion) VALUES (?,?,?,?)',
-            [pedidos_id, stock.stocks_id, stock["unidades"], stock["posicion"]])
+    // Pedir pedidos anteriores
+    let previousStocks = await _readStocks(pedidos_id);
+    console.log('previousStocks' + previousStocks)
+    if (previousStocks) {
+        // Restaurar los stocks al almacen y borrar los antiguos pedidos_have_stocks  
+        await Promise.all(previousStocks.map(async (phs) => {
+            const [{ unidades }] = await _getStockById(phs.stocks_id);
+
+            await db.query('update stocks set unidades=? where stocks_id=? ', [unidades + phs.unidades_utilizadas, phs.stocks_id]);
+            await db.query('delete from pedidos_have_stocks where stocks_id = ? and pedidos_id=?', [phs.stocks_id, pedidos_id])
+        }));
+    }
+    // Restar del almacen los nuevos stocks y añadir los pedidos_have_stocks
+    stocks.forEach(async (s) => {
+        const [{ unidades }] = await _getStockById(s.stocks_id);
+        /*  console.log(`unidades${unidades}, s ${JSON.stringify(s)}`);      
+         console.log(`unidades is ${unidades} s.unidades is ${s.unidades} and unidades - s.unidades is ${unidades - s.unidades}`)
+         */
+        await db.query('update stocks set unidades = ? where stocks_id = ? ', [unidades - s.unidades, s.stocks_id])
+        await db.query('INSERT INTO pedidos_have_stocks ' +
+            '(pedidos_id,stocks_id,unidades_utilizadas,posicion) VALUES (?,?,?,?)',
+            [pedidos_id, s.stocks_id, s["unidades"], s["posicion"]]);
     });
 }
 
@@ -260,7 +343,7 @@ const _readStocks = async (pedidos_id) => {
             result.push({ "unidades_utilizadas": stock.unidades_utilizadas, "posicion": stock.posicion, "stocks_id": stock.stocks_id })
         });
     }
-    //console.log(result)
+    // console.log(`result is ${result}`)
     return result
 }
 

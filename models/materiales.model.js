@@ -4,7 +4,7 @@ const create = (material) => {
         nombre,
         descripcion_material,
         categorias_materiales_id } = material;
-    let values = [estado, peso, nombre,descripcion_material, categorias_materiales_id];
+    let values = [estado, peso, nombre, descripcion_material, categorias_materiales_id];
     return db.query('   INSERT INTO materiales (estado,peso,nombre,descripcion_material,categorias_materiales_id  ) \
                         VALUES \
                         (?, ?,?, ?,?)',
@@ -14,15 +14,18 @@ const create = (material) => {
 
 
 const getAll = () => {
-    return db.query('   SELECT *\
-                        FROM materiales as m'
+    return db.query('SELECT m.*,cm.descripcion as descripcion_categoria,cm.comentario as comentario_categoria ' +
+        'FROM materiales as m ' +
+        'join categorias_materiales as cm'
     );
 }
 
 
 const getById = (materiales_id) => {
-    console.log(materiales_id)
-    return db.query('select * from materiales where materiales_id = ?', [materiales_id])
+    console.debug(materiales_id)
+    return db.query('SELECT m.*,cm.descripcion as descripcion_categoria,cm.comentario as comentario_categoria ' +
+    'FROM materiales as m ' +
+    'join categorias_materiales as cm where materiales_id = ?', [materiales_id])
 }
 
 
@@ -40,7 +43,7 @@ const updateById = async (materiales_id, datosQueActualizar) => {
         datosQueActualizar[k] ? materiale[k] = datosQueActualizar[k] : 1;
     });
 
-    const extractValues = (r) => ["estado", "peso","nombre", "descripcion_material", "categorias_materiales_id","materiales_id"].map(k => r[k]);
+    const extractValues = (r) => ["estado", "peso", "nombre", "descripcion_material", "categorias_materiales_id", "materiales_id"].map(k => r[k]);
     const values = extractValues(materiale);
 
     // Guardar en la base de datos cambiado

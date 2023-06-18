@@ -71,7 +71,6 @@ const updateById = async (stocks_id, datosQueActualizar, req) => {
 
 };
 
-
 const deleteById = async (stocks_id, req) => {
     // Borrar un stock
 
@@ -127,7 +126,19 @@ const encargado_o_jefe = async (almacenes_id, req) => {
     return (req.usuario.usuarios_id == almacen.usuarios_id_encargado || req.usuario.usuario_id == encargadoDeAlmacen.usuarios_id_lider)
 }
 
+const _getById= async (stocks_id)=>{
+
+    const [response] = await db.query(' select * from stocks where stocks_id = ? ',[stocks_id]);
+    console.log(response);
+    return response;
+}
+
+const _getStockByAlmacenMaterial = async (almacenes_id,materiales_id)=>{
+    const [response] = await db.query('select * from stocks where almacenes_id=? and materiales_id=?'[almacenes_id,materiales_id]);
+    return response;
+}
+
 //=============EXPORTS============
 module.exports = {
-    create, getAll, getById, updateById, deleteById, encargado_o_jefe
+    create, getAll, getById,_getById, updateById,_getStockByAlmacenMaterial, deleteById, encargado_o_jefe
 }

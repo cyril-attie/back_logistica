@@ -9,46 +9,31 @@ POST {{host}}/api/pedidos/nuevo
 Content-Type: application/json
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MzQsInJvbGVzX2lkIjo0LCJleHAiOjE2ODk1NTMyMjIsImlhdCI6MTY4Njk2MTIyMn0.u5RyhXWfu9Ps6oFcpHC2N4922vWssNyi_DRAEDg3xxU
 
-{
-    "fecha_salida":"2023-06-18 23:36:00",
-    "fecha_llegada":"2023-06-19 23:36:00",
-    "estado_pedido":"Entregado",
-    "medida":2.3,
-    "fecha_creacion":"2023-06-17 23:36:00",
-    "usuarios_id_creador":34,
-    "usuarios_id_revisador":26,
-    "almacenes_id_origen":9,
-    "almacenes_id_destino":3,
-    "camiones_id":14,
-    "usuarios_id_aprobador":26,
-    "stocks":[{"stocks_id":3,"unidades":30,"posicion":1},
-            {"stocks_id":4,"unidades":60,"posicion":2}]
-}
+{"fecha_salida":"2023-06-18 15:32:01","fecha_llegada":"2023-06-18 15:32:01","estado_pedido":"Entregado","medida":2.3,"fecha_creacion":"2023-06-18 15:32:01","usuarios_id_creador":34,"usuarios_id_revisador":26,"almacenes_id_origen":9,"almacenes_id_destino":3,"camiones_id":14,"usuarios_id_aprobador":26,"stocks":[{"stocks_id":3,"unidades":30,"posicion":1},{"stocks_id":4,"unidades":60,"posicion":2}]}
 
 ###
 //Recupera todos los pedidos
 GET {{host}}/api/pedidos
-authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MzQsInJvbGVzX2lkIjo0LCJleHAiOjE2ODk1NTMyMjIsImlhdCI6MTY4Njk2MTIyMn0.u5RyhXWfu9Ps6oFcpHC2N4922vWssNyi_DRAEDg3xxU
-
-
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MzYsInJvbGVzX2lkIjozLCJleHAiOjE2ODk3MTI3NzksImlhdCI6MTY4NzEyMDc3OX0.dw6QHEm_dPMMF3jfTlP5qGhVGWUWmDRhn2rMOOgc9Xc
 ###
 // para ver los detalles de un pedido
-GET {{host}}/api/pedidos/63
+GET {{host}}/api/pedidos/92
 authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MzQsInJvbGVzX2lkIjo0LCJleHAiOjE2ODk1NTMyMjIsImlhdCI6MTY4Njk2MTIyMn0.u5RyhXWfu9Ps6oFcpHC2N4922vWssNyi_DRAEDg3xxU
 
 ###
 // para actualizar los detalles de un pedido
-PUT {{host}}/api/pedidos/63
+PUT {{host}}/api/pedidos/90
 Content-Type: application/json 
 authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MzQsInJvbGVzX2lkIjo0LCJleHAiOjE2ODk1NTMyMjIsImlhdCI6MTY4Njk2MTIyMn0.u5RyhXWfu9Ps6oFcpHC2N4922vWssNyi_DRAEDg3xxU
 
 {
     "medida":3.14,
-    "stocks":[{"stocks_id":3, "unidades":460,"posicion":1},{"stocks_id":4,"unidades":180,"posicion":2}]
+    "stocks":[{"stocks_id":3, "unidades":4360,"posicion":1},{"stocks_id":4,"unidades":180,"posicion":2}],
+    "estado_pedido":"En tránsito"
 }
 
 
 ###
 // para borrar un pedido
-DELETE {{host}}/api/pedidos/57
+DELETE {{host}}/api/pedidos/90
 authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJvbGVzX2lkIjoyLCJleHAiOjE2ODk1Mzg0NjIsImlhdCI6MTY4Njk0NjQ2Mn0.hZSdW-M7svEtMSh5zZSyKcMlPphq3kfaekHvDNHtH8k

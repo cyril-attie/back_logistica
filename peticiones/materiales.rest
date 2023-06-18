@@ -1,4 +1,4 @@
-@host = http://113.30.148.96:3000
+@host = http://113.30.148.96
 
 
 
@@ -20,7 +20,7 @@ authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MzQsInJv
 ###
 //Recupera todos los materiales
 GET {{host}}/api/materiales
-authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MzQsInJvbGVzX2lkIjo0LCJleHAiOjE2ODk1MjU5ODMsImlhdCI6MTY4NjkzMzk4M30.Ji9AGfgu56Snr5RHn50pVH2Y8-exviYVeBoA6quPZbo
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MzYsInJvbGVzX2lkIjozLCJleHAiOjE2ODk3MTI4NzQsImlhdCI6MTY4NzEyMDg3NH0.X7G2ylNghRMs22oa9Yf3r3UDSYS7bYKvLahX4XapFHE
 ###
 // para ver los detalles de un material
 GET {{host}}/api/materiales/6
