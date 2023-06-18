@@ -1,4 +1,8 @@
-@host = http://113.30.148.96
+//@host = http://113.30.148.96
+
+@host = http://localhost:3000
+
+
 
 
 
@@ -12,13 +16,13 @@ Content-Type: application/json
 authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJvbGVzX2lkIjoyLCJleHAiOjE2ODk1Mzg0NjIsImlhdCI6MTY4Njk0NjQ2Mn0.hZSdW-M7svEtMSh5zZSyKcMlPphq3kfaekHvDNHtH8k
 
 {
-    "nombre_almacen" : "UNIR"
+    "nombre_almacen" : "Nuevo Almacen Chino gran bazar"
         , "calle": "Calle"
         , "codigo_postal":"43104"
         , "localidad":"Rioja"
         , "pais":"Es"
         , "coordenadas":{"x":40.71727401,"y" :-74.00898606}
-        , "capacidad_almacen":1
+        , "capacidad_almacen":10
         , "usuarios_id_encargado":26
         , "stocks":[
             {"materiales_id":4,"unidades": 4000, "posicion":1},
@@ -29,19 +33,17 @@ authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJv
 ###
 //Recupera todos los almacenes
 GET {{host}}/api/almacenes
-authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJvbGVzX2lkIjoyLCJleHAiOjE2ODk1MzQ3OTAsImlhdCI6MTY4Njk0Mjc5MH0.IBDqWTdTYe7LtTe10CpO-97yIsVRXUg5YKYdGqNrwZg
-
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJvbGVzX2lkIjoyLCJleHAiOjE2ODk2Njc4OTgsImlhdCI6MTY4NzA3NTg5OH0.Hy2K_OS0k9gU8WgwMuvOCbi5ENZHqH4MmyjdZ-qC3KU
 ###
 // para ver los detalles de un almacen
-GET {{host}}/api/almacenes/9
+GET {{host}}/api/almacenes/2
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MzQsInJvbGVzX2lkIjo0LCJleHAiOjE2ODk1NTMyMjIsImlhdCI6MTY4Njk2MTIyMn0.u5RyhXWfu9Ps6oFcpHC2N4922vWssNyi_DRAEDg3xxU
 
 ###
 // para actualizar los detalles de un almacen
-PUT {{host}}/api/almacenes/1
+PUT {{host}}/api/almacenes/2
 Content-Type: application/json 
-authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJvbGVzX2lkIjoyLCJleHAiOjE2ODk1Mzg0NjIsImlhdCI6MTY4Njk0NjQ2Mn0.hZSdW-M7svEtMSh5zZSyKcMlPphq3kfaekHvDNHtH8k
-
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJvbGVzX2lkIjoyLCJleHAiOjE2ODk2Njc4OTgsImlhdCI6MTY4NzA3NTg5OH0.Hy2K_OS0k9gU8WgwMuvOCbi5ENZHqH4MmyjdZ-qC3KU
 
 {
     "pais":"LUNA"
@@ -50,5 +52,5 @@ authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJv
 
 ###
 // para borrar un almacen
-DELETE {{host}}/api/almacenes/1
+DELETE {{host}}/api/almacenes/2
 authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJvbGVzX2lkIjoyLCJleHAiOjE2ODk1Mzg0NjIsImlhdCI6MTY4Njk0NjQ2Mn0.hZSdW-M7svEtMSh5zZSyKcMlPphq3kfaekHvDNHtH8k

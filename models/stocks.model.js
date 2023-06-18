@@ -20,26 +20,6 @@ const create = async (stock, req) => {
 };
 
 
-const _getQueryAndValues = (req, stocks_id = 0) => {
-    let query =
-        'select s.*, a.almacenes_id, a.nombre_almacen,a.localidad,a.pais, a.usuarios_id_encargado, ' +
-            'r.descripcion_rol, u.usuarios_id_lider,u2.email ' +
-            'from stocks as s ' +
-            'join almacenes as a on a.almacenes_id=s.almacenes_id ' +
-            'join usuarios as u on a.usuarios_id_encargado=u.usuarios_id ' +
-            'join roles as r on r.roles_id=u.roles_id ' +
-            'join usuarios as u2 on u.usuarios_id_lider=u2.usuarios_id ' +
-            'where (a.usuarios_id_encargado = ? OR u.usuarios_id_lider= ?)'+
-            (stocks_id ? ' AND s.stocks_id = ? ' : '');
-
-    let values = [1, 4].includes(req.usuario.roles_id) ?
-        [req.usuario.usuarios_id_lider, req.usuario.usuarios_id_lider] :
-        [req.usuario.usuarios_id, req.usuario.usuarios_id];
-    stocks_id ? values.push(stocks_id) : 1;
-    console.log(`query ${query}\n values ${values}`);
-    return {query, values}
-}
-
 const getAll = (req) => {
     const { query, values } = _getQueryAndValues(req);
     return db.query(query, values);
@@ -51,22 +31,14 @@ const getById = async (stocks_id, req) => {
     return db.query(query, values);
 }
 
-
-const encargado_o_jefe = async (almacenes_id, req) => {
-    const [[almacen]] = await db.query('select * from almacenes where almacenes_id=?', [almacenes_id]);
-    const encargadoDeAlmacen = await _getUsuarioById(almacen.usuarios_id_encargado)
-
-    return (req.usuario.usuarios_id == almacen.usuarios_id_encargado || req.usuario.usuario_id == encargadoDeAlmacen.usuarios_id_lider)
-}
-
-const updateById = async (stocks_id, datosQueActualizar,req) => {
+const updateById = async (stocks_id, datosQueActualizar, req) => {
     // Verificar operaciones inválidas
     if ('stocks_id' in datosQueActualizar) {
         throw new Error("Operación inválida. No se puede actualizar el id del stock")
     }
 
     // Pedir stock
-    const [[stock]] = await getById(stocks_id,req);
+    const [[stock]] = await getById(stocks_id, req);
 
     const autorizado = encargado_o_jefe(stock.almacenes_id, req);
 
@@ -104,7 +76,7 @@ const deleteById = async (stocks_id, req) => {
     // Borrar un stock
 
     // Pedir stock
-    const [[stock]] = await getById(stocks_id,req);
+    const [[stock]] = await getById(stocks_id, req);
 
     if (!stock) {
         throw new Error(`No stock with id ${stocks_id}`);
@@ -122,6 +94,40 @@ const deleteById = async (stocks_id, req) => {
 }
 
 
+// =========== helpers =========
+
+const _getQueryAndValues = (req, stocks_id = 0) => {
+    let query =
+        'select s.*, a.almacenes_id, a.nombre_almacen,a.localidad,a.pais, a.usuarios_id_encargado, ' +
+        'r.descripcion_rol, u.usuarios_id_lider,u2.email, ' +
+        'm.nombre as nombre_material, m.descripcion_material, cm.descripcion as descripcion_categoria '+
+        'from stocks as s ' +
+        'join almacenes as a on a.almacenes_id=s.almacenes_id ' +
+        'join materiales as m on s.materiales_id=m.materiales_id '+
+        'join categorias_materiales as cm on cm.categorias_materiales_id=m.categorias_materiales_id '+
+        'join usuarios as u on a.usuarios_id_encargado=u.usuarios_id ' +
+        'join roles as r on r.roles_id=u.roles_id ' +
+        'join usuarios as u2 on u.usuarios_id_lider=u2.usuarios_id ' +
+        'where (a.usuarios_id_encargado = ? OR u.usuarios_id_lider= ?)' +
+        (stocks_id ? ' AND s.stocks_id = ? ' : '');
+    
+    let values = [1, 4].includes(req.usuario.roles_id) ?
+        [req.usuario.usuarios_id_lider, req.usuario.usuarios_id_lider] :
+        [req.usuario.usuarios_id, req.usuario.usuarios_id];
+    stocks_id ? values.push(stocks_id) : 1;
+    //console.log(`query ${query}\n values ${values}`);
+    return { query, values }
+}
+
+const encargado_o_jefe = async (almacenes_id, req) => {
+    const [[almacen]] = await db.query('select * from almacenes where almacenes_id=?', [almacenes_id]);
+    if (!almacen) { throw new Error('Operación inválida: almacen con id '+almacenes_id+' no existe.') }
+    const encargadoDeAlmacen = await _getUsuarioById(almacen.usuarios_id_encargado)
+    console.log(JSON.stringify(`req.usuario ${req.usuario}`))
+    return (req.usuario.usuarios_id == almacen.usuarios_id_encargado || req.usuario.usuario_id == encargadoDeAlmacen.usuarios_id_lider)
+}
+
+//=============EXPORTS============
 module.exports = {
-    create, getAll, getById, updateById, deleteById
+    create, getAll, getById, updateById, deleteById, encargado_o_jefe
 }
