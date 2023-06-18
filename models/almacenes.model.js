@@ -53,7 +53,7 @@ const create = async (almacen, req) => {
 const _getByEncargado = async (encargadoId) => {
     return await db.query('select a.*,u.email as email_encargado, u.usuarios_id_lider lider_equipo ' +
         'from almacenes as a join usuarios as u on u.usuarios_id=a.usuarios_id_encargado ' +
-        'where a.usuarios_id_encargado=?', [encargadoId]);
+        'where a.usuarios_id_encargado=? ', [encargadoId]);
 }
 
 
@@ -128,7 +128,7 @@ const updateById = async (almacenes_id, datosQueActualizar, req) => {
 
     //actualizar los stocks
     if (datosQueActualizar.stocks) {
-        db.query('DELETE FROM stocks WHERE almacenes_id=?', [almacenes_id]);
+        await db.query('DELETE FROM stocks WHERE almacenes_id=?', [almacenes_id]);
         _setStocks(almacenes_id, datosQueActualizar.stocks, req);
     }
 
@@ -214,7 +214,7 @@ const _getQueryAndValues = (req) => {
     }
     let query =
         'select a.*,u.email as email_encargado, u.usuarios_id_lider lider_equipo ' +
-        'from almacenes as a join usuarios as u on u.usuarios_id=a.usuarios_id_encargado where u.usuarios_id_lider=?' +
+        'from almacenes as a join usuarios as u on u.usuarios_id=a.usuarios_id_encargado where u.usuarios_id_lider=? ' +
         (encargadoId ? 'and a.usuarios_id_encargado=?' : '');
 
     let values = [4, 1].includes(req.usuario.roles_id) ? [req.usuario.usuarios_id_lider] : [req.usuario.usuarios_id];
