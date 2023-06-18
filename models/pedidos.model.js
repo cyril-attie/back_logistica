@@ -140,8 +140,8 @@ const updateById = async (pedidos_id, datosQueActualizar, req) => {
 
             if (datosQueActualizar.stocks) {
                 //actualizar los stocks
-                db.query('DELETE FROM pedidos_have_stocks WHERE pedidos_id=?', [pedido.pedidos_id]);
-                _setStocks(pedidos_id, datosQueActualizar.stocks);
+                await db.query('DELETE FROM pedidos_have_stocks WHERE pedidos_id=?', [pedido.pedidos_id]);
+                await _setStocks(pedidos_id, datosQueActualizar.stocks);
             }
 
             // Guardar en la base de datos cambiado
@@ -183,7 +183,8 @@ const deleteById = async (pedidos_id, req) => {
     let [[pedido]] = await _getById(pedidos_id);
 
     if ((await _verificarUsuarioRelacionadoCon(pedido, req))) {
-        db.query('DELETE FROM pedidos_have_stocks WHERE pedidos_id=?', [pedidos_id]);
+        
+        await db.query('DELETE FROM pedidos_have_stocks WHERE pedidos_id=?', [pedidos_id]);
         return db.query('DELETE from pedidos where pedidos_id = ?', [pedidos_id]);
     } else {
         throw new Error('Operación inválida: borrar un pedido al que no se está relacionado.' +

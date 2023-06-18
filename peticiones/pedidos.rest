@@ -33,12 +33,12 @@ authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MzQsInJv
 
 ###
 // para ver los detalles de un pedido
-GET {{host}}/api/pedidos/57
+GET {{host}}/api/pedidos/63
 authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MzQsInJvbGVzX2lkIjo0LCJleHAiOjE2ODk1NTMyMjIsImlhdCI6MTY4Njk2MTIyMn0.u5RyhXWfu9Ps6oFcpHC2N4922vWssNyi_DRAEDg3xxU
 
 ###
 // para actualizar los detalles de un pedido
-PUT {{host}}/api/pedidos/57
+PUT {{host}}/api/pedidos/63
 Content-Type: application/json 
 authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MzQsInJvbGVzX2lkIjo0LCJleHAiOjE2ODk1NTMyMjIsImlhdCI6MTY4Njk2MTIyMn0.u5RyhXWfu9Ps6oFcpHC2N4922vWssNyi_DRAEDg3xxU
 
