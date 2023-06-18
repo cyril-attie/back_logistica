@@ -100,7 +100,7 @@ const _getQueryAndValues = (req, stocks_id = 0) => {
     let query =
         'select s.*, a.almacenes_id, a.nombre_almacen,a.localidad,a.pais, a.usuarios_id_encargado, ' +
         'r.descripcion_rol, u.usuarios_id_lider,u2.email, ' +
-        'm.nombre as nombre_material, m.descripcion_material, cm.descripcion as descripcion_categoria '+
+        'm.nombre as nombre_material, m.descripcion_material, cm.categorias_materiales_id,cm.descripcion as descripcion_categoria '+
         'from stocks as s ' +
         'join almacenes as a on a.almacenes_id=s.almacenes_id ' +
         'join materiales as m on s.materiales_id=m.materiales_id '+

@@ -55,7 +55,7 @@ const getAll = async () => {
 
 
 const _setStocks= (pedidos_id,stocks) =>{
-    console.log(`_setStocks ${JSON.stringify(stocks)}`)
+    // console.log(`_setStocks ${JSON.stringify(stocks)}`)
 
     stocks.forEach(async (stock) => {
         console.log(stock)
@@ -69,7 +69,7 @@ const _setStocks= (pedidos_id,stocks) =>{
 const _readStocks = async (pedidos_id) => {
     let [stocks] = await db.query('select * from pedidos_have_stocks where pedidos_id = ?', [pedidos_id]);
     let result = [] 
-    console.log(stocks)
+    // console.log(stocks)
     if (stocks) {
         stocks.forEach((stock) => {
             console.log(stock)
