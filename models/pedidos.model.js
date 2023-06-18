@@ -206,7 +206,9 @@ const _verificarNormasDeNegocio = async (pedido) => {
     let [aprobador] = await _getUsuarioById(pedido.usuarios_id_aprobador);
     let origen = await _getAlmacenById(pedido.almacenes_id_origen);
     let destino = await _getAlmacenById(pedido.almacenes_id_destino)
-    let [creacion, salida, llegada] = [pedido.fecha_creacion, pedido.fecha_llegada, pedido.fecha_salida].map(f => moment(f, "YYYY-MM-DD HH:mm:ss"))
+    let creacion = moment(pedido.fecha_creacion, "YYYY-MM-DD HH:mm:ss")
+    let salida = moment(pedido.fecha_llegada, "YYYY-MM-DD HH:mm:ss")
+    let llegada = moment(pedido.fecha_salida, "YYYY-MM-DD HH:mm:ss")
 
     console.log(`origen ${JSON.stringify(origen)}\ndestino${JSON.stringify(destino)}` )
        console.log(`creador ${creador} \n revisador ${JSON.stringify(revisador)}\n aprobador${JSON.stringify(aprobador)}\n`)
@@ -219,6 +221,7 @@ const _verificarNormasDeNegocio = async (pedido) => {
           \n ${(moment.min(creacion, salida, llegada) == creacion && moment.min(salida, llegada) == salida)} )
            \n origen.usuarios_id_encargado == revisador.usuarios_id ${origen.usuarios_id_encargado == revisador.usuarios_id}\n
            destino.usuarios_id_encargado == aprobador.usuarios_id ${destino.usuarios_id_encargado == aprobador.usuarios_id}`)
+        console.log(`creacion ${creacion}\n salida${salida}\n llegada ${llegada}`)
     return ((creador.usuarios_id_lider == revisador.usuarios_id_lider && aprobador.usuarios_id_lider == creador.usuarios_id_lider) &&
         (origen.usuarios_id_encargado == revisador.usuarios_id && destino.usuarios_id_encargado == aprobador.usuarios_id) &&
         (moment.min(creacion, salida, llegada) == creacion && moment.min(salida, llegada) == salida))

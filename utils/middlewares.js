@@ -8,8 +8,11 @@ const { getIdByMetodoRuta } = require('../models/permisos.model');
 
 
 
+
+
+
 const checkToken = async (req, res, next) => {
-    
+
     // ¿Viene incluida la cabecera de Authorization?
     if (!req.headers['authorization']) {
         return res.json({ fatal: 'Debes incluir la cabecera de Autorización' });
@@ -43,24 +46,24 @@ const checkPermisos = async (req, res, next) => {
     let metodo = req.method;
 
     const [response] = await getRolePermissionsOf(roles_id);
-    if (!response) { 
-        let stringError= `No hay ningún permiso asociado al rol ${roles_id}. 
+    if (!response) {
+        let stringError = `No hay ningún permiso asociado al rol ${roles_id}. 
         Contacta con tu lider de equipo ${req.usuario.lider}`;
         console.log(stringError);
-        res.json({fatal:stringError});
+        res.json({ fatal: stringError });
     }
     const permisos_ids = response.map(row => row.permisos_id);
     const [[permiso]] = await getIdByMetodoRuta(metodo, ruta);
 
-    if (permisos_ids.find(e=>e==permiso.permisos_id)) {
+    if (permisos_ids.find(e => e == permiso.permisos_id)) {
         next();
     } else {
         console.log(`permisos_ids ${permisos_ids}\n rol ${roles_id}\n permiso ${JSON.stringify(permiso)}`);
-        res.json({fatal:`Permisos insuficientes. Hable con el jefe de equipo ${req.usuario.lider} para obtener el permiso ${metodo} ${ruta}.`})
+        res.json({ fatal: `Permisos insuficientes. Hable con el jefe de equipo ${req.usuario.lider} para obtener el permiso ${metodo} ${ruta}.` })
     }
 
     //console.log(`permisos_ids ${JSON.stringify(permisos_ids)}\n\n permiso ${JSON.stringify(permiso)}\n\nmetodo ${metodo}\n ruta ${ruta}\npermiso ${permiso}.`);
-    
+
 }
 
 
@@ -73,7 +76,7 @@ Object.keys(req).forEach((k) => {
 }
 ); */
 
-    
+
 
 
 
