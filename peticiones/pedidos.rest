@@ -21,8 +21,8 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MzQsInJv
     "almacenes_id_destion":3,
     "camiones_id":2,
     "usuario_id_aprobador":28,
-    "stocks":[{"materiales_id":3,"stocks_id":7,"unidades":30,"posicion":1},
-            {"materiales_id":4,"unidades":60,"stocks_id":7,"posicion":2}]
+    "stocks":[{"stocks_id":3,"unidades":30,"posicion":1},
+            {"stocks_id":4,"unidades":60,"posicion":2}]
 }
 
 ###
@@ -33,21 +33,23 @@ authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjcsInJv
 
 ###
 // para ver los detalles de un pedido
-GET {{host}}/api/pedidos/37
+GET {{host}}/api/pedidos/42
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjcsInJvbGVzX2lkIjozLCJleHAiOjE2ODk0NDE5MjAsImlhdCI6MTY4Njg0OTkyMH0.i-_lfyysvqlVasbhP05-LvPavolSmHLYZgYn98jGg5k
+
 
 ###
 // para actualizar los detalles de un pedido
-PUT {{host}}/api/pedidos/11
+PUT {{host}}/api/pedidos/42
 Content-Type: application/json 
 authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjcsInJvbGVzX2lkIjozLCJleHAiOjE2ODk0NDE5MjAsImlhdCI6MTY4Njg0OTkyMH0.i-_lfyysvqlVasbhP05-LvPavolSmHLYZgYn98jGg5k
 
 {
     "medida":3.14,
-    "stocks":{"3":{"unidades":46,"posicion":1},"4": {"unidades":18,"posicion":2}}
+    "stocks":[{"stocks_id":3, "unidades":460,"posicion":1},{"stocks_id":4,"unidades":180,"posicion":2}]
 }
 
 
 ###
 // para borrar un pedido
-DELETE {{host}}/api/pedidos/2
+DELETE {{host}}/api/pedidos/42
 authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJvbGVzX2lkIjoyLCJleHAiOjE2ODk1Mzg0NjIsImlhdCI6MTY4Njk0NjQ2Mn0.hZSdW-M7svEtMSh5zZSyKcMlPphq3kfaekHvDNHtH8k
