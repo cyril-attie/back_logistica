@@ -34,13 +34,12 @@ authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6NDEsInJv
 
 ###
 // para actualizar los detalles de un pedido
-PUT {{host}}/api/pedidos/95
+PUT {{host}}/api/pedidos/102
 Content-Type: application/json 
-authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MzgsInJvbGVzX2lkIjo0LCJleHAiOjE2ODk3NDc4MzQsImlhdCI6MTY4NzE1NTgzNH0.nNDqyeO0hqABhXwILwANoT6Y0wX2Q2_-IArPRUe6cXk
-
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MzYsInJvbGVzX2lkIjozLCJleHAiOjE2ODk3ODY5MzAsImlhdCI6MTY4NzE5NDkzMH0.xIxn-FcS6YOCa9el5LvB6ryOTJJUeNyHLiXzKG8r-1U
 
 {
-    "estado_pedido":"En tránsito"
+    "estado_pedido":"Aprobado"
 }
 
 

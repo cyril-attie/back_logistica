@@ -7,7 +7,7 @@ const apiRouter = require('./routes/api');
 
 const app = express();
 
-var whitelist = ['http://localhost:4200','http://localhost:3000','http://almazenunir.es','http://www.almazenunir.es']
+var whitelist = ['http://localhost:4200','http://localhost:3000','http://113.30.148.96:80','http://almazenunir.es','http://www.almazenunir.es']
 var corsOptions = {
     origin: function (origin, callback) {
         console.log(origin)

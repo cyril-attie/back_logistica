@@ -134,7 +134,8 @@ const _getById= async (stocks_id)=>{
 }
 
 const _getStockByAlmacenMaterial = async (almacenes_id,materiales_id)=>{
-    const [response] = await db.query('select * from stocks where almacenes_id=? and materiales_id=?'[almacenes_id,materiales_id]);
+    //console.log(`_getStockByAlmacenMaterial = async (${almacenes_id},${materiales_id})`)
+    const [response] = await db.query('select * from stocks where almacenes_id=? and materiales_id=?',[almacenes_id,materiales_id]);
     return response;
 }
 

@@ -2,7 +2,7 @@
 const moment = require("moment")
 const { _getById: _getUsuarioById } = require('./usuarios.model')
 const { _getById: _getAlmacenById } = require('./almacenes.model')
-const { _getById: _getStockById, _getStockByAlmacenMaterial } = require('./stocks.model');
+const { _getById: _getStockById, _getStockByAlmacenMaterial ,} = require('./stocks.model');
 const e = require("express");
 
 const create = async (pedido, req) => {
@@ -161,12 +161,33 @@ const updateById = async (pedidos_id, datosQueActualizar, req) => {
 
         } else if (pedido.estado_pedido == 'Entregado' && datosQueActualizar.estado_pedido && datosQueActualizar.estado_pedido != pedido.estado_pedido &&
             (datosQueActualizar.estado_pedido == 'Aprobado' || req.usuario.usuarios_id != pedido.usuarios_id_aprobador)) {
+            
+            console.log(`Reached updateById`)
             // sumar en almacen destino los stocks
             let previousStocks = await _readStocks(pedidos_id);
+            console.log(`_readStocks = ${JSON.stringify(previousStocks)}`)
             if (previousStocks) {
+
                 await Promise.all(previousStocks.map(async (s) => {
-                    const [stockDestinacion] = await _getStockByAlmacenMaterial(pedido.almacenes_id_destino, s.mateiales_id);
-                    await db.query('update stocks set unidades=? where stocks_id=? ', [stockDestinacion.unidades + s.unidades_utilizadas, stockDestinacion.stocks_id]);
+                    
+                    const [stockDestinacion] = await _getStockByAlmacenMaterial(pedido.almacenes_id_destino, s.materiales_id);
+                    console.log(`stockDestinacion ${JSON.stringify(stockDestinacion)}`);
+                    let unidades =0; 
+                    if (stockDestinacion) {
+                        unidades += stockDestinacion.unidades
+                        await db.query('update stocks set unidades=? where almacenes_id=? and materiales_id= ?', [unidades + s.unidades_utilizadas, pedido.almacenes_id_destino, s.materiales_id]);
+                    } else {
+                        let [[posicion]] = await db.query('select max(posicion)+1 from stocks where almacenes_id=?', [ pedido.almacenes_id_destino])
+                        posicion=posicion["max(posicion)+1"]
+                        console.log(`posicion es ${JSON.stringify(posicion)}`);
+
+                        const values=[pedido.almacenes_id_destino, s.materiales_id, s.unidades_utilizadas, posicion]
+                      
+                        await db.query('insert into stocks (almacenes_id, materiales_id,unidades,posicion) values (?,?,?,?) ',values)
+
+                    }
+
+                    
                 }));
             }
 
@@ -351,13 +372,13 @@ const _setStocks = async (pedidos_id, stocks) => {
 
 
 const _readStocks = async (pedidos_id) => {
-    let [stocks] = await db.query('select * from pedidos_have_stocks where pedidos_id = ?', [pedidos_id]);
+    let [stocks] = await db.query('select phs.unidades_utilizadas, phs.posicion, phs.stocks_id, s.materiales_id from pedidos_have_stocks as phs join stocks as s on s.stocks_id=phs.stocks_id where pedidos_id = ?', [pedidos_id]);
     let result = []
     // console.debug(stocks)
     if (stocks) {
         stocks.forEach((stock) => {
             // console.debug(stock)
-            result.push({ "unidades_utilizadas": stock.unidades_utilizadas, "posicion": stock.posicion, "stocks_id": stock.stocks_id })
+            result.push({ "unidades_utilizadas": stock.unidades_utilizadas, "posicion": stock.posicion, "stocks_id": stock.stocks_id, "materiales_id":stock.materiales_id })
         });
     }
     // console.debug(`result is ${result}`)

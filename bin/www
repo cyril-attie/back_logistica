@@ -11,7 +11,9 @@ const http = require('http');
 //Configuración de .env
 require('dotenv').config();
 
-require('../config/db');
+
+
+
 
 
 
@@ -27,14 +29,16 @@ app.set('port', port);
  */
 
 const server = http.createServer(app);
+server.timeout = 30000;
+
+require('../config/db');
 
 /**
  * Listen on provided port, on all network interfaces.
  */
 
 server.listen(port);
-console.debug(server.timeout);
-server.timeout = 3000;
+
 server.on('error', onError);
 server.on('listening', onListening);
 
