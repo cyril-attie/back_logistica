@@ -164,7 +164,7 @@ const updateById = async (pedidos_id, datosQueActualizar, req) => {
             // sumar en almacen destino los stocks
             let previousStocks = await _readStocks(pedidos_id);
             if (previousStocks) {
-                await Promise.all(pedido.previousStocks.map(async (s) => {
+                await Promise.all(previousStocks.map(async (s) => {
                     const [stockDestinacion] = await _getStockByAlmacenMaterial(pedido.almacenes_id_destino, s.mateiales_id);
                     await db.query('update stocks set unidades=? where stocks_id=? ', [stockDestinacion.unidades + s.unidades_utilizadas, stockDestinacion.stocks_id]);
                 }));
