@@ -279,8 +279,8 @@ const _verificarNormasDeNegocio = async (pedido) => {
     let origen = await _getAlmacenById(pedido.almacenes_id_origen);
     let destino = await _getAlmacenById(pedido.almacenes_id_destino)
     let creacion = moment(pedido.fecha_creacion, "YYYY-MM-DD HH:mm:ss")
-    let salida = moment(pedido.fecha_llegada, "YYYY-MM-DD HH:mm:ss")
-    let llegada = moment(pedido.fecha_salida, "YYYY-MM-DD HH:mm:ss")
+    let salida = moment(pedido.fecha_salida, "YYYY-MM-DD HH:mm:ss")
+    let llegada = moment(pedido.fecha_llegada, "YYYY-MM-DD HH:mm:ss")
 
     console.debug(`origen ${JSON.stringify(origen)}\ndestino${JSON.stringify(destino)}`)
     console.debug(`creador ${creador} \n revisador ${JSON.stringify(revisador)}\n aprobador${JSON.stringify(aprobador)}\n`)
