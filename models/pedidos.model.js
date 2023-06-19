@@ -173,14 +173,17 @@ const updateById = async (pedidos_id, datosQueActualizar, req) => {
             (datosQueActualizar.estado_pedido == 'Rechazado' || req.usuario.usuarios_id != pedido.usuarios_id_aprobador)) {
             // sumar en almacen de origen los stocks 
             let previousStocks = await _readStocks(pedidos_id);
-            await Promise.all(pedido.stocks.map(async (s) => {
-                const [{ unidades }] = await _getStockById(s.stocks_id);
-                await db.query('update stocks set unidades=? where stocks_id=? ', [unidades + s.unidades_utilizadas, s.stocks_id]);
-            }));
+            if (stocks) {
+                await Promise.all(pedido.stocks.map(async (s) => {
+                    const [{ unidades }] = await _getStockById(s.stocks_id);
+                    await db.query('update stocks set unidades=? where stocks_id=? ', [unidades + s.unidades_utilizadas, s.stocks_id]);
+                }));
+            }
+
         } else if (pedido.estado_pedido != "En revisión") {
             ["fecha_salida", "fecha_llegada",
                 "medida", "fecha_creacion", "usuarios_id_creador", "usuarios_id_revisador",
-                "almacenes_id_origen", "almacenes_id_destino", "camiones_id", "usuarios_id_aprobador"].forEach(k=>{delete datosQueActualizar[k]})
+                "almacenes_id_origen", "almacenes_id_destino", "camiones_id", "usuarios_id_aprobador"].forEach(k => { delete datosQueActualizar[k] })
         }
 
 
