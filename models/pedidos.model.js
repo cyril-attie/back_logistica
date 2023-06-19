@@ -163,18 +163,19 @@ const updateById = async (pedidos_id, datosQueActualizar, req) => {
             (datosQueActualizar.estado_pedido == 'Aprobado' || req.usuario.usuarios_id != pedido.usuarios_id_aprobador)) {
             // sumar en almacen destino los stocks
             let previousStocks = await _readStocks(pedidos_id);
-            await Promise.all(pedido.stocks.map(async (s) => {
-                const [stockDestinacion] = await _getStockByAlmacenMaterial(pedido.almacenes_id_destino, s.mateiales_id);
-                await db.query('update stocks set unidades=? where stocks_id=? ', [stockDestinacion.unidades + s.unidades_utilizadas, stockDestinacion.stocks_id]);
-            }));
-
+            if (previousStocks) {
+                await Promise.all(pedido.previousStocks.map(async (s) => {
+                    const [stockDestinacion] = await _getStockByAlmacenMaterial(pedido.almacenes_id_destino, s.mateiales_id);
+                    await db.query('update stocks set unidades=? where stocks_id=? ', [stockDestinacion.unidades + s.unidades_utilizadas, stockDestinacion.stocks_id]);
+                }));
+            }
 
         } else if (pedido.estado_pedido == 'Entregado' && datosQueActualizar.estado_pedido && datosQueActualizar.estado_pedido != pedido.estado_pedido &&
             (datosQueActualizar.estado_pedido == 'Rechazado' || req.usuario.usuarios_id != pedido.usuarios_id_aprobador)) {
             // sumar en almacen de origen los stocks 
             let previousStocks = await _readStocks(pedidos_id);
-            if (stocks) {
-                await Promise.all(pedido.stocks.map(async (s) => {
+            if (previousStocks) {
+                await Promise.all(previousStocks.map(async (s) => {
                     const [{ unidades }] = await _getStockById(s.stocks_id);
                     await db.query('update stocks set unidades=? where stocks_id=? ', [unidades + s.unidades_utilizadas, s.stocks_id]);
                 }));
