@@ -33,10 +33,10 @@ authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJv
 ###
 //Recupera todos los almacenes
 GET {{host}}/api/almacenes
-authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJvbGVzX2lkIjoyLCJleHAiOjE2ODk2Njc4OTgsImlhdCI6MTY4NzA3NTg5OH0.Hy2K_OS0k9gU8WgwMuvOCbi5ENZHqH4MmyjdZ-qC3KU
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MzYsInJvbGVzX2lkIjozLCJleHAiOjE2ODk3NjQ5MjYsImlhdCI6MTY4NzE3MjkyNn0.dzqgeceSnR4a03LAdCCxbn-PzG4-Cp2d4IjHkiBJI_E
 ###
 // para ver los detalles de un almacen
-GET {{host}}/api/almacenes/28
+GET {{host}}/api/almacenes/26
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MzQsInJvbGVzX2lkIjo0LCJleHAiOjE2ODk1NTMyMjIsImlhdCI6MTY4Njk2MTIyMn0.u5RyhXWfu9Ps6oFcpHC2N4922vWssNyi_DRAEDg3xxU
 
 ###

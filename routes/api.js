@@ -33,5 +33,4 @@ router.use('/stocks', require('./api/stocks'));
 // Operario crea y ve las que ha creado, Encargado Edita los de su almacen, jefe ve y edita los de todos los almacenes  
 router.use('/pedidos', require('./api/pedidos'));
 
-
 module.exports = router;

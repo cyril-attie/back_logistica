@@ -98,7 +98,6 @@ const updateById = async (almacenes_id, datosQueActualizar, req) => {
 
     console.debug(`almacen ${JSON.stringify(almacen)}\n encargadoAlmacen ${encargadoDeAlmacen}`)
 
-
     // Verificar operaciones inválidas
     if ('almacenes_id' in datosQueActualizar) {
         throw new Error("Operación inválida. No se puede actualizar el id del almacén.")
@@ -208,9 +207,9 @@ const _setStocks = async (almacenes_id, stocks, req) => {
 
 const _readStocks = async (almacenes_id, req) => {
     let [stocks] = await getallStocks(req);
-    stocks = stocks.filter((stock) => (stock.almacenes_id == almacenes_id && stock.unidades!=0))
-    
-    stocks.sort((a,b)=>(a.posicion-b.poscion))
+    stocks = stocks.filter((stock) => (stock.almacenes_id == almacenes_id && stock.unidades != 0))
+
+    stocks.sort((a, b) => (a.posicion - b.poscion))
     //stocks=stocks.map(extractTheEssential)
     //console.debug(`stocks ${JSON.stringify(stocks)}`);
     return stocks
@@ -230,15 +229,16 @@ const _getQueryAndValues = (req) => {
     if (req.usuario.roles_id == 3) {
         encargadoId = req.usuario.usuarios_id;
     }
+
     let query =
         'select a.*,u.email as email_encargado, u.usuarios_id_lider lider_equipo ' +
         'from almacenes as a join usuarios as u on u.usuarios_id=a.usuarios_id_encargado where u.usuarios_id_lider=? ' +
         (encargadoId ? 'and a.usuarios_id_encargado=?' : '');
-
-    let values = [4, 1].includes(req.usuario.roles_id) ? [req.usuario.usuarios_id_lider] : [req.usuario.usuarios_id];
+console.log(`query is ${query}\n encargado is ${encargadoId}`)
+    let values = [4,3, 1].includes(req.usuario.roles_id) ? [req.usuario.usuarios_id_lider] : [req.usuario.usuarios_id];
 
     encargadoId ? values.push(encargadoId) : 1;
-    //console.debug(`query ${query}\n values ${values}`);
+    console.debug(`query ${query}\n values ${values}`);
     return { query, values }
 }
 
