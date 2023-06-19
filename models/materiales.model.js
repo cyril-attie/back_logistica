@@ -16,7 +16,7 @@ const create = (material) => {
 const getAll = () => {
     return db.query('SELECT m.*,cm.descripcion as descripcion_categoria,cm.comentario as comentario_categoria ' +
         'FROM materiales as m ' +
-        'join categorias_materiales as cm'
+        'join categorias_materiales as cm on m.categorias_materiales_id=cm.categorias_materiales_id'
     );
 }
 
@@ -25,7 +25,8 @@ const getById = (materiales_id) => {
     console.debug(materiales_id)
     return db.query('SELECT m.*,cm.descripcion as descripcion_categoria,cm.comentario as comentario_categoria ' +
     'FROM materiales as m ' +
-    'join categorias_materiales as cm where materiales_id = ?', [materiales_id])
+    'join categorias_materiales as cm on m.categorias_materiales_id=cm.categorias_materiales_id'+
+    'where materiales_id = ?', [materiales_id])
 }
 
 

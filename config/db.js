@@ -9,7 +9,7 @@ const DB_ENV= {
 }
 
 //console.debug(JSON.stringify(DB_ENV));
-const conn = mysql2.createConnection(DB_ENV);
+//const conn = mysql2.createConnection(DB_ENV);
 const pool = mysql2.createPool(DB_ENV);
 
 // =================================A colocar en tests=====================
@@ -23,9 +23,6 @@ const checkDB = (async ()=>{
 // =====================================
 
 global.db = pool.promise() ;
-global.conn = conn ;
-
-
-// global.conn = conn ;
+//global.conn = conn ;
 
 

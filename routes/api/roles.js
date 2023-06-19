@@ -36,8 +36,8 @@ router.get('/', async (req, res) =>{
 //Recupera un rol por id
 router.get('/:roles_id', async (req, res) =>{
     try {
-        const [usuario] = await getById(req.params.roles_id); 
-        res.json(usuario);
+        const rol = await getById(req.params.roles_id); 
+        res.json(rol);
     } catch (error) {
         res.json({ fatal: error.message });
     }

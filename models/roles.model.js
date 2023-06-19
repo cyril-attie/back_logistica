@@ -16,13 +16,27 @@ const getAll = () => {
 }
 
 
-const getRolePermissionsOf = (roles_id)=>{
-    return db.query('select permisos_id from roles_have_permisos where roles_id = ?', [roles_id]);
+const getRolePermissionsOf = (roles_id) => {
+    return db.query('select permisos_id from roles_have_permisos '
+        + ' where roles_id = ?', [roles_id]);
 }
 
-const getById = (roles_id) => {
+
+const _getRolePermissionsOf = (roles_id) => {
+    return db.query('select * from roles_have_permisos as rhp ' +
+        ' join permisos as p on p.permisos_id=rhp.permisos_id '
+        + ' where roles_id = ?', [roles_id]);
+}
+
+
+const getById = async (roles_id) => {
     console.debug(roles_id)
-    return db.query('select * from roles where roles_id = ?', [roles_id])
+    let [response] = await db.query('select * from roles where roles_id = ?', [roles_id])
+    let [permisos] = await _getRolePermissionsOf(roles_id)
+    console.log(`response ${JSON.stringify(response)} permisos ${JSON.stringify(permisos)}`)
+    response[0]["permisos"] = permisos
+    console.log(`response ${JSON.stringify(response)} permisos ${JSON.stringify(permisos)}`)
+    return response
 }
 
 
@@ -40,7 +54,7 @@ const updateById = async (roles_id, datosQueActualizar) => {
         datosQueActualizar[k] ? role[k] = datosQueActualizar[k] : 1;
     });
 
-    const extractValues = (r) => ["descripcion_rol", "responsabilidad", "comentario","roles_id"].map(k => r[k]);
+    const extractValues = (r) => ["descripcion_rol", "responsabilidad", "comentario", "roles_id"].map(k => r[k]);
     const values = extractValues(role);
 
     // Guardar en la base de datos cambiado
@@ -61,9 +75,9 @@ const deleteById = async (roles_id) => {
     // Borrar un rol
     // Evitar borrar roles predeterminados 1,2,3,4. 
     if (roles_id < 5) {
-        throw new Error(    "Operación inválida. No se puede borrar un rol predefinido.\
+        throw new Error("Operación inválida. No se puede borrar un rol predefinido.\
                             Para borrar un rol, primero debe ser creado."
-                            );
+        );
     };
 
     return db.query('DELETE from roles where roles_id = ?', [roles_id]);
