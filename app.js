@@ -17,6 +17,9 @@ app.use(function (req, res, next) {
     // Website you wish to allow to connect
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
 
+    // Website you wish to allow to connect
+    res.setHeader('Access-Control-Allow-Origin', 'http://almazenunir.es');
+
     // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
 
@@ -35,7 +38,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'dist/front_logistica/')));
 
 app.use('/api', apiRouter);
 
@@ -44,7 +47,6 @@ app.use('/api', apiRouter);
 
 
 // Al front todo el resto 
-app.use(express.static('dist/front_logistica/'));
 app.get('*', function(req,res) {
     res.sendFile(path.resolve('dist/front_logistica/index.html'));
 });
