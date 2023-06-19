@@ -7,28 +7,39 @@
 // Crear nuevo pedido
 POST {{host}}/api/pedidos/nuevo
 Content-Type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MzQsInJvbGVzX2lkIjo0LCJleHAiOjE2ODk1NTMyMjIsImlhdCI6MTY4Njk2MTIyMn0.u5RyhXWfu9Ps6oFcpHC2N4922vWssNyi_DRAEDg3xxU
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MzgsInJvbGVzX2lkIjo0LCJleHAiOjE2ODk3NDc4MzQsImlhdCI6MTY4NzE1NTgzNH0.nNDqyeO0hqABhXwILwANoT6Y0wX2Q2_-IArPRUe6cXk
 
-{"fecha_salida":"2023-06-18 15:32:01","fecha_llegada":"2023-06-18 15:32:01","estado_pedido":"Entregado","medida":2.3,"fecha_creacion":"2023-06-18 15:32:01","usuarios_id_creador":34,"usuarios_id_revisador":26,"almacenes_id_origen":9,"almacenes_id_destino":3,"camiones_id":14,"usuarios_id_aprobador":26,"stocks":[{"stocks_id":3,"unidades":30,"posicion":1},{"stocks_id":4,"unidades":60,"posicion":2}]}
+{"fecha_salida":"2023-06-20 15:32:01",
+"fecha_llegada":"2023-06-19 15:32:02",
+"medida":2.3,
+"fecha_creacion":"2023-06-18 15:32:00",
+"usuarios_id_creador":38,
+"usuarios_id_revisador":41,
+"almacenes_id_origen":9,
+"almacenes_id_destino":3,
+"camiones_id":14,
+"usuarios_id_aprobador":43,
+"stocks":[{"stocks_id":6,"unidades":30,"posicion":1},{"stocks_id":7,"unidades":60,"posicion":2}]}
 
 ###
 //Recupera todos los pedidos
 GET {{host}}/api/pedidos
-authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MzYsInJvbGVzX2lkIjozLCJleHAiOjE2ODk3MTI3NzksImlhdCI6MTY4NzEyMDc3OX0.dw6QHEm_dPMMF3jfTlP5qGhVGWUWmDRhn2rMOOgc9Xc
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MzgsInJvbGVzX2lkIjo0LCJleHAiOjE2ODk3NDc4MzQsImlhdCI6MTY4NzE1NTgzNH0.nNDqyeO0hqABhXwILwANoT6Y0wX2Q2_-IArPRUe6cXk
+
+
 ###
 // para ver los detalles de un pedido
-GET {{host}}/api/pedidos/92
-authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MzQsInJvbGVzX2lkIjo0LCJleHAiOjE2ODk1NTMyMjIsImlhdCI6MTY4Njk2MTIyMn0.u5RyhXWfu9Ps6oFcpHC2N4922vWssNyi_DRAEDg3xxU
+GET {{host}}/api/pedidos/95
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6NDEsInJvbGVzX2lkIjozLCJleHAiOjE2ODk3NTQ0OTIsImlhdCI6MTY4NzE2MjQ5Mn0.wVWNrRWDZ8QTPUfqTGuu_8zMtqRqL20zEQGhOtcIZPM
 
 ###
 // para actualizar los detalles de un pedido
-PUT {{host}}/api/pedidos/90
+PUT {{host}}/api/pedidos/95
 Content-Type: application/json 
-authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MzQsInJvbGVzX2lkIjo0LCJleHAiOjE2ODk1NTMyMjIsImlhdCI6MTY4Njk2MTIyMn0.u5RyhXWfu9Ps6oFcpHC2N4922vWssNyi_DRAEDg3xxU
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MzgsInJvbGVzX2lkIjo0LCJleHAiOjE2ODk3NDc4MzQsImlhdCI6MTY4NzE1NTgzNH0.nNDqyeO0hqABhXwILwANoT6Y0wX2Q2_-IArPRUe6cXk
+
 
 {
-    "medida":3.14,
-    "stocks":[{"stocks_id":3, "unidades":4360,"posicion":1},{"stocks_id":4,"unidades":180,"posicion":2}],
     "estado_pedido":"En tránsito"
 }
 

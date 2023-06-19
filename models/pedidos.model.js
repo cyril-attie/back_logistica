@@ -70,16 +70,20 @@ const getAll = async (req) => {
         + 'from pedidos as p ' +
         'join usuarios as u on u.usuarios_id=p.usuarios_id_creador ' +
         'where u.usuarios_id_lider=?', [req.usuario.usuarios_id_lider]);
-   
+
     let [pedidos] = response;
-   // console.debug(`found ${pedidos.length} pedidos`)
+    console.debug(`found ${pedidos.length} pedidos`)
+
 
     // filtrar pedidos de otros operarios o otros encargados 
-    pedidos = pedidos.filter(async (pedido) => {
+    filtro = await Promise.all(pedidos.map(async (pedido) => {
         const b = (await _verificarUsuarioRelacionadoCon(pedido, req))
         //console.debug(`pedido ${JSON.stringify(pedido)}\n b ${b}`);
         return b
-    });
+    }));
+    pedidos = pedidos.filter((_, i) => filtro[i]);
+    console.debug(`found ${pedidos.length} pedidos after filtering`)
+
 
     // Añadir stocks a cada pedido
     pedidos = await Promise.all(
@@ -124,7 +128,7 @@ const updateById = async (pedidos_id, datosQueActualizar, req) => {
         // transformar fechas
         Object.keys(pedido).forEach((k, i, arr) => {
             if (typeof pedido[k] == "object") {
-               pedido[k]=moment(pedido[k]).format('YYYY-MM-DD HH:mm:ss');
+                pedido[k] = moment(pedido[k]).format('YYYY-MM-DD HH:mm:ss');
             }
 
         });
@@ -173,9 +177,10 @@ const updateById = async (pedidos_id, datosQueActualizar, req) => {
                 const [{ unidades }] = await _getStockById(s.stocks_id);
                 await db.query('update stocks set unidades=? where stocks_id=? ', [unidades + s.unidades_utilizadas, s.stocks_id]);
             }));
-        } else if (pedido.estado_pedido != "En revisión" && Object.keys(datosQueActualizar).filter(value => ["fecha_salida", "fecha_llegada", "medida", "fecha_creacion", "usuarios_id_creador", "usuarios_id_revisador",
-            "almacenes_id_origen", "almacenes_id_destino", "camiones_id", "usuarios_id_aprobador"].includes(value))) {
-            throw new Error(String.raw`No se puede actualizar un pedido después de haber sido revisado.`)
+        } else if (pedido.estado_pedido != "En revisión") {
+            ["fecha_salida", "fecha_llegada",
+                "medida", "fecha_creacion", "usuarios_id_creador", "usuarios_id_revisador",
+                "almacenes_id_origen", "almacenes_id_destino", "camiones_id", "usuarios_id_aprobador"].forEach(k=>{delete datosQueActualizar[k]})
         }
 
 
@@ -277,9 +282,9 @@ const _verificarNormasDeNegocio = async (pedido) => {
     let salida = moment(pedido.fecha_llegada, "YYYY-MM-DD HH:mm:ss")
     let llegada = moment(pedido.fecha_salida, "YYYY-MM-DD HH:mm:ss")
 
-    /*  console.debug(`origen ${JSON.stringify(origen)}\ndestino${JSON.stringify(destino)}`)
-     console.debug(`creador ${creador} \n revisador ${JSON.stringify(revisador)}\n aprobador${JSON.stringify(aprobador)}\n`)
-     console.debug(`
+    console.debug(`origen ${JSON.stringify(origen)}\ndestino${JSON.stringify(destino)}`)
+    console.debug(`creador ${creador} \n revisador ${JSON.stringify(revisador)}\n aprobador${JSON.stringify(aprobador)}\n`)
+    console.debug(`
         ((creador.usuarios_id_lider == revisador.usuarios_id_lider && aprobador.usuarios_id_lider == creador.usuarios_id_lider) \n 
         ${(creador.usuarios_id_lider == revisador.usuarios_id_lider && aprobador.usuarios_id_lider == creador.usuarios_id_lider)}&&
             (origen.usuarios_id_encargado == revisador.usuarios_id && destino.usuarios_id_encargado == aprobador.usuarios_id) &&
@@ -288,7 +293,7 @@ const _verificarNormasDeNegocio = async (pedido) => {
            \n ${(moment.min(creacion, salida, llegada) == creacion && moment.min(salida, llegada) == salida)} )
             \n origen.usuarios_id_encargado == revisador.usuarios_id ${origen.usuarios_id_encargado == revisador.usuarios_id}\n
             destino.usuarios_id_encargado == aprobador.usuarios_id ${destino.usuarios_id_encargado == aprobador.usuarios_id}`)
-     console.debug(`creacion ${creacion}\n salida${salida}\n llegada ${llegada}`) */
+    console.debug(`creacion ${creacion}\n salida${salida}\n llegada ${llegada}`)
     return ((creador.usuarios_id_lider == revisador.usuarios_id_lider && aprobador.usuarios_id_lider == creador.usuarios_id_lider) &&
         (origen.usuarios_id_encargado == revisador.usuarios_id && destino.usuarios_id_encargado == aprobador.usuarios_id) &&
         (moment.min(creacion, salida, llegada) == creacion && moment.min(salida, llegada) == salida))
@@ -298,10 +303,11 @@ const _verificarNormasDeNegocio = async (pedido) => {
 const _verificarUsuarioRelacionadoCon = async (pedido, req) => {
     const [creador] = await _getUsuarioById(pedido.usuarios_id_creador);
 
-    return (req.usuario.roles_id == 4 && pedido.usuarios_id_creador == req.usuario.usuarios_id) ||
+    let relacionado = ((req.usuario.roles_id == 4 && pedido.usuarios_id_creador == req.usuario.usuarios_id) ||
         ([1, 2].includes(req.usuario.roles_id) && creador.usuarios_id_lider == req.usuario.usuarios_id_lider) ||
-        (req.usuario.roles_id == 3 && [pedido.usuarios_id_aprobador, pedido.usuarios_id_revisador].includes(req.usuario.usuarios_id))
-
+        (req.usuario.roles_id == 3 && [pedido.usuarios_id_aprobador, pedido.usuarios_id_revisador].includes(req.usuario.usuarios_id)))
+    //console.log(`pedido es ${JSON.stringify(pedido)}\n req.usuario es ${JSON.stringify(req.usuario.usuarios_id)}\n relacionado es ${relacionado}`)
+    return relacionado
 }
 
 
@@ -322,14 +328,20 @@ const _setStocks = async (pedidos_id, stocks) => {
     }
     // Restar del almacen los nuevos stocks y añadir los pedidos_have_stocks
     stocks.forEach(async (s) => {
-        const [{ unidades }] = await _getStockById(s.stocks_id);
-        /*  console.debug(`unidades${unidades}, s ${JSON.stringify(s)}`);      
-         console.debug(`unidades is ${unidades} s.unidades is ${s.unidades} and unidades - s.unidades is ${unidades - s.unidades}`)
-         */
-        await db.query('update stocks set unidades = ? where stocks_id = ? ', [unidades - s.unidades, s.stocks_id])
-        await db.query('INSERT INTO pedidos_have_stocks ' +
-            '(pedidos_id,stocks_id,unidades_utilizadas,posicion) VALUES (?,?,?,?)',
-            [pedidos_id, s.stocks_id, s["unidades"], s["posicion"]]);
+        try {
+            console.log(`s ${JSON.stringify(s)}`)
+            const [{ unidades }] = await _getStockById(s.stocks_id);
+            console.log(`s ${JSON.stringify(unidades)}`)
+            /*  console.debug(`unidades${unidades}, s ${JSON.stringify(s)}`);      
+             console.debug(`unidades is ${unidades} s.unidades is ${s.unidades} and unidades - s.unidades is ${unidades - s.unidades}`)
+             */
+            await db.query('update stocks set unidades = ? where stocks_id = ? ', [unidades - s.unidades, s.stocks_id])
+            await db.query('INSERT INTO pedidos_have_stocks ' +
+                '(pedidos_id,stocks_id,unidades_utilizadas,posicion) VALUES (?,?,?,?)',
+                [pedidos_id, s.stocks_id, s["unidades"], s["posicion"]]);
+        } catch (e) {
+            console.error(`No he podido actualizar las unidades del stock ${s}. El error ha sido \n${e}`);
+        }
     });
 }
 
