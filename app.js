@@ -39,4 +39,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api', apiRouter);
 
+
+
+
+
+// Al front todo el resto 
+app.use(express.static('dist/front_logistica/'));
+app.get('*', function(req,res) {
+    res.sendFile(path.resolve('dist/front_logistica/index.html'));
+});
+
 module.exports = app;
