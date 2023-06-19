@@ -33,7 +33,8 @@ authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJv
 ###
 //Recupera todos los almacenes
 GET {{host}}/api/almacenes
-authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MzYsInJvbGVzX2lkIjozLCJleHAiOjE2ODk3NjQ5MjYsImlhdCI6MTY4NzE3MjkyNn0.dzqgeceSnR4a03LAdCCxbn-PzG4-Cp2d4IjHkiBJI_E
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MzYsInJvbGVzX2lkIjozLCJleHAiOjE2ODk3ODI3NDUsImlhdCI6MTY4NzE5MDc0NX0.eH95GtmwrM1Uz--zFN5G-nUtrK3z_GF4t_FPsiD3c3E
+
 ###
 // para ver los detalles de un almacen
 GET {{host}}/api/almacenes/26

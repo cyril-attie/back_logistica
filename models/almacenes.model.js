@@ -226,19 +226,13 @@ const createPoints = (a) => {
 
 const _getQueryAndValues = (req) => {
     let encargadoId;
-    if (req.usuario.roles_id == 3) {
-        encargadoId = req.usuario.usuarios_id;
-    }
 
     let query =
         'select a.*,u.email as email_encargado, u.usuarios_id_lider lider_equipo ' +
-        'from almacenes as a join usuarios as u on u.usuarios_id=a.usuarios_id_encargado where u.usuarios_id_lider=? ' +
-        (encargadoId ? 'and a.usuarios_id_encargado=?' : '');
-console.log(`query is ${query}\n encargado is ${encargadoId}`)
-    let values = [4,3, 1].includes(req.usuario.roles_id) ? [req.usuario.usuarios_id_lider] : [req.usuario.usuarios_id];
+        'from almacenes as a join usuarios as u on u.usuarios_id=a.usuarios_id_encargado where u.usuarios_id_lider=? ' ;
 
-    encargadoId ? values.push(encargadoId) : 1;
-    console.debug(`query ${query}\n values ${values}`);
+    let values = [4, 3, 1].includes(req.usuario.roles_id) ? [req.usuario.usuarios_id_lider] : [req.usuario.usuarios_id];
+
     return { query, values }
 }
 
