@@ -6,7 +6,7 @@ router.use('/auth', require('./api/authentication'));
 
 // rutas comunes a todos los usuarios
 router.use(checkToken);
-router.use('/perfil', require('./api/perfil'));
+router.use('/perfil', require('./api/perfil')); 
 
 // Verificar la authorización al método y ruta llamados en función del rol.
 router.use(checkPermisos);

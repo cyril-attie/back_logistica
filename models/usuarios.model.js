@@ -26,7 +26,7 @@ const getAll = (req) => {
         'from usuarios as u ' +
         'join roles as r on r.roles_id=u.roles_id ' +
         'join usuarios as u2 on u.usuarios_id_lider=u2.usuarios_id ' +
-        'where u.usuarios_id_lider=?', [req.usuario.usuarios_id]
+        'where u.usuarios_id_lider=?', [req.usuario.usuarios_id_lider]
     );
 }
 

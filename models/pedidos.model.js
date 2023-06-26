@@ -330,7 +330,8 @@ const _verificarUsuarioRelacionadoCon = async (pedido, req) => {
 
     let relacionado = ((req.usuario.roles_id == 4 && pedido.usuarios_id_creador == req.usuario.usuarios_id) ||
         ([1, 2].includes(req.usuario.roles_id) && creador.usuarios_id_lider == req.usuario.usuarios_id_lider) ||
-        (req.usuario.roles_id == 3 && [pedido.usuarios_id_aprobador, pedido.usuarios_id_revisador].includes(req.usuario.usuarios_id)))
+        //(req.usuario.roles_id == 3 && [pedido.usuarios_id_aprobador, pedido.usuarios_id_revisador].includes(req.usuario.usuarios_id))
+        ( [pedido.usuarios_id_aprobador, pedido.usuarios_id_revisador].includes(req.usuario.usuarios_id)))
     //console.log(`pedido es ${JSON.stringify(pedido)}\n req.usuario es ${JSON.stringify(req.usuario.usuarios_id)}\n relacionado es ${relacionado}`)
     return relacionado
 }
