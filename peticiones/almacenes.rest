@@ -1,6 +1,6 @@
-//@host = http://113.30.148.96
+@host = http://113.30.148.96
 
-@host = http://localhost:3000
+//@host = http://localhost:3000
 
 
 
@@ -33,13 +33,12 @@ authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJv
 ###
 //Recupera todos los almacenes
 GET {{host}}/api/almacenes
-authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MzYsInJvbGVzX2lkIjozLCJleHAiOjE2ODk3ODI3NDUsImlhdCI6MTY4NzE5MDc0NX0.eH95GtmwrM1Uz--zFN5G-nUtrK3z_GF4t_FPsiD3c3E
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MzAsInJvbGVzX2lkIjozLCJleHAiOjE2OTAzODU2MTUsImlhdCI6MTY4Nzc5MzYxNX0.9YMytCuSm2yh3he-zVdr_BZTdVR0IijnMIppKOJcp1I
 
 ###
 // para ver los detalles de un almacen
-GET {{host}}/api/almacenes/26
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MzQsInJvbGVzX2lkIjo0LCJleHAiOjE2ODk1NTMyMjIsImlhdCI6MTY4Njk2MTIyMn0.u5RyhXWfu9Ps6oFcpHC2N4922vWssNyi_DRAEDg3xxU
-
+GET {{host}}/api/almacenes/2
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MzAsInJvbGVzX2lkIjozLCJleHAiOjE2OTAzODU2MTUsImlhdCI6MTY4Nzc5MzYxNX0.9YMytCuSm2yh3he-zVdr_BZTdVR0IijnMIppKOJcp1I
 ###
 // para actualizar los detalles de un almacen
 PUT {{host}}/api/almacenes/28

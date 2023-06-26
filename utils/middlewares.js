@@ -40,7 +40,7 @@ const checkToken = async (req, res, next) => {
 
 
 const checkPermisos = async (req, res, next) => {
-
+    
     let roles_id = req.usuario.roles_id;
     let ruta = req.originalUrl;
     let metodo = req.method;

@@ -33,9 +33,9 @@ const getById = async (roles_id) => {
     console.debug(roles_id)
     let [response] = await db.query('select * from roles where roles_id = ?', [roles_id])
     let [permisos] = await _getRolePermissionsOf(roles_id)
-    console.log(`response ${JSON.stringify(response)} permisos ${JSON.stringify(permisos)}`)
+    // console.log(`response ${JSON.stringify(response)} permisos ${JSON.stringify(permisos)}`)
     response[0]["permisos"] = permisos
-    console.log(`response ${JSON.stringify(response)} permisos ${JSON.stringify(permisos)}`)
+    // console.log(`response ${JSON.stringify(response)} permisos ${JSON.stringify(permisos)}`)
     return response
 }
 

@@ -21,9 +21,20 @@ const create = async (stock, req) => {
 
 
 const _getAll= (req)=>{
-    return db.query('select * from stocks');
+    let query =
+        'select s.*, a.almacenes_id, a.nombre_almacen,a.localidad,a.pais, a.usuarios_id_encargado, ' +
+        'r.descripcion_rol, u.usuarios_id_lider,u2.email, ' +
+        'm.nombre as nombre_material, m.descripcion_material, cm.categorias_materiales_id,cm.descripcion as descripcion_categoria '+
+        'from stocks as s ' +
+        'join almacenes as a on a.almacenes_id=s.almacenes_id ' +
+        'join materiales as m on s.materiales_id=m.materiales_id '+
+        'join categorias_materiales as cm on cm.categorias_materiales_id=m.categorias_materiales_id '+
+        'join usuarios as u on a.usuarios_id_encargado=u.usuarios_id ' +
+        'join roles as r on r.roles_id=u.roles_id ' +
+        'join usuarios as u2 on u.usuarios_id_lider=u2.usuarios_id ' ;
+    return db.query(query);
 }
-}
+
 
 const getAll = (req) => {
     const { query, values } = _getQueryAndValues(req);

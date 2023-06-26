@@ -1,4 +1,4 @@
-@host = http://localhost:3000
+@host = http://almazenunir.es
 
 
 
@@ -23,9 +23,8 @@ authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJv
 
 ###
 // para ver los detalles de un stock
-GET {{host}}/api/stocks/19
-authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjYsInJvbGVzX2lkIjoyLCJleHAiOjE2ODk2MjAyNjIsImlhdCI6MTY4NzAyODI2M30.F6PvHoZdb5wN7hLNIMG_j-MaBPiRBXomqJHJd_pCknY
-
+GET {{host}}/api/stocks/5
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MjcsInJvbGVzX2lkIjozLCJleHAiOjE2OTAzNzk0OTYsImlhdCI6MTY4Nzc4NzQ5Nn0.AMEdRVBNm5xPiUiSn1VhSSeDaGJ9bcRMd7McPWq6oi8
 ###
 // para actualizar los detalles de un stock
 PUT {{host}}/api/stocks/19
