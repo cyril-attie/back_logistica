@@ -33,7 +33,7 @@ const checkToken = async (req, res, next) => {
     // obj dispone de las siguientes claves: user_id, user_role, exp
     const usuarios = await _getById(obj.usuarios_id);
     req.usuario = usuarios[0];
-    console.debug(`req.usuario.usuarios_id \n\n ${JSON.stringify(req.usuario.usuarios_id)}`)
+    //console.debug(`req.usuario.usuarios_id \n\n ${JSON.stringify(req.usuario.usuarios_id)}`)
     // Object.keys(req).forEach(k => { try { console.debug(`${k} : ${req[k]}`) } catch (e) { 1 } })
     next();
 }
@@ -49,7 +49,7 @@ const checkPermisos = async (req, res, next) => {
     if (!response) {
         let stringError = `No hay ningún permiso asociado al rol ${roles_id}. 
         Contacta con tu lider de equipo ${req.usuario.lider}`;
-        console.debug(stringError);
+       // console.debug(stringError);
         res.json({ fatal: stringError });
     }
     const permisos_ids = response.map(row => row.permisos_id);
@@ -58,7 +58,7 @@ const checkPermisos = async (req, res, next) => {
     if (permisos_ids.find(e => e == permiso.permisos_id)) {
         next();
     } else {
-        console.debug(`permisos_ids ${permisos_ids}\n rol ${roles_id}\n permiso ${JSON.stringify(permiso)}`);
+        //console.debug(`permisos_ids ${permisos_ids}\n rol ${roles_id}\n permiso ${JSON.stringify(permiso)}`);
         res.json({ fatal: `Permisos insuficientes. Hable con el jefe de equipo ${req.usuario.lider} para obtener el permiso ${metodo} ${ruta}.` })
     }
 

@@ -20,6 +20,11 @@ const create = async (stock, req) => {
 };
 
 
+const _getAll= (req)=>{
+    return db.query('select * from stocks');
+}
+}
+
 const getAll = (req) => {
     const { query, values } = _getQueryAndValues(req);
     return db.query(query, values);
@@ -141,5 +146,5 @@ const _getStockByAlmacenMaterial = async (almacenes_id,materiales_id)=>{
 
 //=============EXPORTS============
 module.exports = {
-    create, getAll, getById,_getById, updateById,_getStockByAlmacenMaterial, deleteById, encargado_o_jefe
+    create, getAll, _getAll, getById,_getById, updateById,_getStockByAlmacenMaterial, deleteById, encargado_o_jefe
 }

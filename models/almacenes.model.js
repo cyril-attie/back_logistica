@@ -1,5 +1,5 @@
 
-const { getAll: getallStocks, updateById: updateStockById, create: createStock, encargado_o_jefe } = require("./stocks.model");
+const { _getAll: getallStocks, updateById: updateStockById, create: createStock, encargado_o_jefe } = require("./stocks.model");
 const { _getById: _getUsuarioById } = require('./usuarios.model')
 
 const create = async (almacen, req) => {
@@ -225,7 +225,6 @@ const createPoints = (a) => {
 }
 
 const _getQueryAndValues = (req) => {
-    let encargadoId;
 
     let query =
         'select a.*,u.email as email_encargado, u.usuarios_id_lider lider_equipo ' +

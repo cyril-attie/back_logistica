@@ -1,5 +1,4 @@
-@host=http://localhost:3000
-
+@host=http://almazenunir.es
 
 
 //=====PEDIDOS========
@@ -24,8 +23,7 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MzgsInJv
 ###
 //Recupera todos los pedidos
 GET {{host}}/api/pedidos
-authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MzgsInJvbGVzX2lkIjo0LCJleHAiOjE2ODk3NDc4MzQsImlhdCI6MTY4NzE1NTgzNH0.nNDqyeO0hqABhXwILwANoT6Y0wX2Q2_-IArPRUe6cXk
-
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3Vhcmlvc19pZCI6MzAsInJvbGVzX2lkIjozLCJleHAiOjE2OTAzNzgzMjEsImlhdCI6MTY4Nzc4NjMyMX0.AsomGl267ng0hqS1Rnd4qPahCJuoPIhUvQeVXPRtC1E
 
 ###
 // para ver los detalles de un pedido
